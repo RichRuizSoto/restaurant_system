@@ -1,0 +1,12 @@
+{
+    "watch": ["src"],
+    "ext": "js,json",
+    "ignore": [
+      "src/restaurantes",
+      "src/templates",
+      "logs",
+      "public"
+    ],
+    "exec": "node src/server.js"
+  }
+  

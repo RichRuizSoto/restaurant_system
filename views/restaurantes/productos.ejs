@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestión de Productos</title>
+  <!-- Ruta dinámica para el archivo CSS -->
+  <link rel="stylesheet" href="/<%= slug %>/productos/productos.css">
+  
+  <style>
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+    form { margin-bottom: 20px; }
+    input, select, textarea { display: block; margin: 5px 0 10px; width: 100%; }
+    button { margin-right: 5px; }
+    #mensaje { margin: 10px 0; color: green; font-weight: bold; }
+    .badge { padding: 5px 8px; border-radius: 5px; color: white; font-weight: bold; }
+    .badge-entrada { background-color: #007bff; }
+    .badge-menu { background-color: #28a745; }
+    .badge-combo { background-color: #ffc107; color: black; }
+    .badge-postre { background-color: #e83e8c; }
+    .badge-bebida { background-color: #17a2b8; }
+  </style>
+</head>
+<body>
+  <h1>Gestión de Productos - Admin</h1>
+
+  <div id="mensaje"></div>
+
+  <form id="formProducto">
+    <input type="hidden" name="id_restaurante" id="id_restaurante">
+
+    <label>Nombre del producto:
+      <input type="text" name="nombre_producto" required>
+    </label>
+    <label>Descripción:
+      <textarea name="descripcion"></textarea>
+    </label>
+    <label>Precio:
+      <input type="number" name="precio" step="0.01" required>
+    </label>
+    <label>Categoría:
+      <select name="categoria" required>
+        <option value="">Seleccione una categoría</option>
+        <option value="Entradas">Entradas</option>
+        <option value="Menu">Menu</option>
+        <option value="Combos">Combos</option>
+        <option value="Postres">Postres</option>
+        <option value="Bebidas">Bebidas</option>
+      </select>
+    </label>
+
+    <button type="submit" id="btnGuardar">Agregar Producto</button>
+    <button type="button" id="btnActualizar" style="display: none;">Actualizar Producto</button>
+    <button type="button" id="btnCancelar" style="display: none;">Cancelar</button>
+  </form>
+
+  <input type="text" id="buscador" placeholder="Buscar producto..." oninput="filtrarProductos()" />
+
+  <h2>Lista de Productos</h2>
+  <table id="tablaProductos">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>Categoría</th>
+        <th>Disponible</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  
+  <!-- Ruta estatica para el archivo JS -->
+  <script src="/js/productos.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pedidos Restaurante <%= restId %></title>
+  
+  <!-- Estilo del restaurante específico -->
+  <link rel="stylesheet" href="/<%= slug %>/pedidos/pedidos.css">
+</head>
+<body>
+  <h1>Pedidos del Restaurante ID <%= restId %></h1>
+
+  <% const estados = ['solicitado', 'listo', 'pagado']; %>
+
+  <% estados.forEach(estado => { %>
+    <section id="<%= estado %>-section">
+      <h2>Pedidos <%= estado %></h2>
+      <% if (pedidos[estado] && pedidos[estado].length > 0) { %>
+        <ul>
+          <% pedidos[estado].forEach(pedido => { %>
+            <li id="pedido-<%= pedido.id %>">
+              <div class="pedido-header">
+                <span><strong>Orden:</strong> #<%= pedido.numero_orden %></span>
+                <span><strong>Mesa:</strong> <%= pedido.mesa %></span>
+                <span><strong>Total:</strong> $<%= parseFloat(pedido.total).toFixed(2) %></span>
+                <span><strong>Creado:</strong> <%= new Date(pedido.creado_en).toLocaleString() %></span>
+              </div>
+              <ul class="productos-list">
+                <% pedido.productos.forEach(prod => { %>
+                  <li class="producto-item">
+                    <%= prod.nombre || `Producto ID ${prod.id_producto}` %> × <%= prod.cantidad %> ($<%= prod.precio_unitario || prod.precio %>)
+                  </li>
+                <% }) %>
+              </ul>
+              <% if (estado === 'solicitado') { %>
+                <button class="button" onclick="actualizarEstadoPedido(<%= pedido.id %>, 'listo')">Marcar como listo</button>
+              <% } %>
+              <% if (estado === 'listo') { %>
+                <button class="button" onclick="actualizarEstadoPedido(<%= pedido.id %>, 'pagado')">Marcar como pagado</button>
+              <% } %>
+              <% if (estado === 'pagado') { %>
+                <span>Pedido ya pagado</span>
+              <% } %>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p class="no-pedidos">No hay pedidos en este estado.</p>
+      <% } %>
+    </section>
+  <% }) %>
+
+  <!-- Cargar la librería de Socket.IO -->
+  <script src="/socket.io/socket.io.js"></script>
+
+  <!-- Cargar el archivo JS del restaurante -->
+  <script src="/js/pedidosSocket.js"></script>
+</body>
+</html>

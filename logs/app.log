@@ -1,0 +1,240 @@
+2025-04-21T06:41:57.860Z [31merror[39m: Error al obtener los establecimientos: Establecimiento.listarEstablecimientos is not a function
+2025-04-21T06:42:34.862Z [31merror[39m: Error al obtener los establecimientos: Establecimiento.listarEstablecimientos is not a function
+2025-04-21T06:43:03.869Z [32minfo[39m: Consultando establecimientos en la base de datos
+2025-04-21T06:43:03.871Z [31merror[39m: Error al obtener los establecimientos: Establecimiento.listarEstablecimientos is not a function
+2025-04-21T06:43:14.858Z [31merror[39m: Error al obtener los establecimientos: Establecimiento.listarEstablecimientos is not a function
+2025-04-21T06:45:04.303Z [32minfo[39m: [gestorService] Creando restaurante: Pizzeria Roma2 con estado: activo
+2025-04-21T06:45:04.309Z [32minfo[39m: [gestorService] Restaurante guardado en la base de datos
+2025-04-21T06:45:04.329Z [32minfo[39m: [gestorService] Carpeta del restaurante creada correctamente
+2025-04-21T06:45:57.504Z [32minfo[39m: [gestorService] Creando restaurante: Pizzeria Roma3 con estado: activo
+2025-04-21T06:45:57.511Z [32minfo[39m: [gestorService] Restaurante guardado en la base de datos
+2025-04-21T06:45:57.531Z [32minfo[39m: [gestorService] Carpeta del restaurante creada correctamente
+2025-04-21T06:51:23.249Z [32minfo[39m: [gestorService] Creando restaurante: Pizzeria Roma4 con estado: activo
+2025-04-21T06:51:23.257Z [32minfo[39m: [gestorService] Restaurante guardado en la base de datos
+2025-04-21T06:51:23.275Z [32minfo[39m: [gestorService] Carpeta del restaurante creada correctamente
+2025-04-21T06:53:39.814Z [32minfo[39m: [gestorService] Creando restaurante: Pizzeria Roma5 con estado: activo
+2025-04-21T06:53:39.820Z [32minfo[39m: [gestorService] Restaurante guardado en la base de datos
+2025-04-21T06:53:39.837Z [32minfo[39m: [gestorService] Carpeta del restaurante creada correctamente
+2025-04-21T06:56:39.115Z [32minfo[39m: [gestorService] Creando restaurante: Pizzeria Roma6 con estado: activo
+2025-04-21T06:56:39.120Z [32minfo[39m: [gestorService] Restaurante guardado en la base de datos
+2025-04-21T06:56:39.121Z [32minfo[39m: [restauranteFileManager] Ejecutando crearEstructuraRestaurante con: Pizzeria Roma6
+2025-04-21T06:56:39.123Z [32minfo[39m: [restauranteFileManager] Copiando de /Users/richardruiz/restaurant_system/src/templates/menu a /Users/richardruiz/restaurant_system/src/restaurantes/Pizzeria_Roma6/menu
+2025-04-21T06:56:39.129Z [32minfo[39m: [restauranteFileManager] Copiando de /Users/richardruiz/restaurant_system/src/templates/login a /Users/richardruiz/restaurant_system/src/restaurantes/Pizzeria_Roma6/login
+2025-04-21T06:56:39.133Z [32minfo[39m: [restauranteFileManager] Copiando de /Users/richardruiz/restaurant_system/src/templates/admin a /Users/richardruiz/restaurant_system/src/restaurantes/Pizzeria_Roma6/admin
+2025-04-21T06:56:39.137Z [32minfo[39m: [restauranteFileManager] Copiando de /Users/richardruiz/restaurant_system/src/templates/pedidos a /Users/richardruiz/restaurant_system/src/restaurantes/Pizzeria_Roma6/pedidos
+2025-04-21T06:56:39.140Z [32minfo[39m: ✅ Carpeta creada para "Pizzeria_Roma6" en: /Users/richardruiz/restaurant_system/src/restaurantes/Pizzeria_Roma6
+2025-04-21T06:56:39.140Z [32minfo[39m: [gestorService] Carpeta del restaurante creada correctamente
+2025-04-21T06:57:02.490Z [32minfo[39m: [gestorService] Creando restaurante: Pizzeria Roma7 con estado: activo
+2025-04-21T06:57:02.497Z [32minfo[39m: [gestorService] Restaurante guardado en la base de datos
+2025-04-21T06:57:02.498Z [32minfo[39m: [restauranteFileManager] Ejecutando crearEstructuraRestaurante con: Pizzeria Roma7
+2025-04-21T06:57:02.500Z [32minfo[39m: [restauranteFileManager] Copiando de /Users/richardruiz/restaurant_system/src/templates/menu a /Users/richardruiz/restaurant_system/src/restaurantes/Pizzeria_Roma7/menu
+2025-04-21T06:57:02.511Z [32minfo[39m: [restauranteFileManager] Copiando de /Users/richardruiz/restaurant_system/src/templates/login a /Users/richardruiz/restaurant_system/src/restaurantes/Pizzeria_Roma7/login
+2025-04-21T06:57:02.516Z [32minfo[39m: [restauranteFileManager] Copiando de /Users/richardruiz/restaurant_system/src/templates/admin a /Users/richardruiz/restaurant_system/src/restaurantes/Pizzeria_Roma7/admin
+2025-04-21T06:57:02.522Z [32minfo[39m: [restauranteFileManager] Copiando de /Users/richardruiz/restaurant_system/src/templates/pedidos a /Users/richardruiz/restaurant_system/src/restaurantes/Pizzeria_Roma7/pedidos
+2025-04-21T06:57:02.526Z [32minfo[39m: ✅ Carpeta creada para "Pizzeria_Roma7" en: /Users/richardruiz/restaurant_system/src/restaurantes/Pizzeria_Roma7
+2025-04-21T06:57:02.527Z [32minfo[39m: [gestorService] Carpeta del restaurante creada correctamente
+2025-04-21T07:02:07.888Z [32minfo[39m: Conexión exitosa a la base de datos
+2025-04-21T16:33:43.913Z [32minfo[39m: [gestorController] Recibida petición para crear restaurante: Pizzeria Roma
+2025-04-21T16:33:43.915Z [32minfo[39m: [gestorService] Creando restaurante: Pizzeria Roma con estado: activo
+2025-04-21T16:33:43.930Z [32minfo[39m: [gestorService] Restaurante guardado en la base de datos
+2025-04-21T16:33:43.935Z [32minfo[39m: [restauranteFileManager] Ejecutando crearEstructuraRestaurante con: Pizzeria Roma
+2025-04-21T16:33:43.936Z [32minfo[39m: [restauranteFileManager] Copiando de /Users/richardruiz/restaurant_system/src/templates/menu a /Users/richardruiz/restaurant_system/src/restaurantes/Pizzeria_Roma/menu
+2025-04-21T16:33:43.944Z [32minfo[39m: [restauranteFileManager] Copiando de /Users/richardruiz/restaurant_system/src/templates/login a /Users/richardruiz/restaurant_system/src/restaurantes/Pizzeria_Roma/login
+2025-04-21T16:33:43.946Z [32minfo[39m: [restauranteFileManager] Copiando de /Users/richardruiz/restaurant_system/src/templates/admin a /Users/richardruiz/restaurant_system/src/restaurantes/Pizzeria_Roma/admin
+2025-04-21T16:33:43.950Z [32minfo[39m: [restauranteFileManager] Copiando de /Users/richardruiz/restaurant_system/src/templates/pedidos a /Users/richardruiz/restaurant_system/src/restaurantes/Pizzeria_Roma/pedidos
+2025-04-21T16:33:43.953Z [32minfo[39m: ✅ Carpeta creada para "Pizzeria_Roma" en: /Users/richardruiz/restaurant_system/src/restaurantes/Pizzeria_Roma
+2025-04-21T16:33:43.954Z [32minfo[39m: [gestorService] Carpeta del restaurante creada correctamente
+2025-04-21T16:33:43.955Z [32minfo[39m: [gestorController] Restaurante creado correctamente
+2025-04-22T17:24:26.691Z [32minfo[39m: [restauranteFileManager] Creando carpeta para: Pizzeria Roma3
+2025-04-22T17:24:26.697Z [32minfo[39m: [restauranteFileManager] Copiando login.css a /Users/richardruiz/restaurant_system/src/restaurantes/Pizzeria_Roma3/login.css
+2025-04-22T17:24:26.701Z [32minfo[39m: [restauranteFileManager] Copiando menu.css a /Users/richardruiz/restaurant_system/src/restaurantes/Pizzeria_Roma3/menu.css
+2025-04-22T17:24:26.702Z [32minfo[39m: [restauranteFileManager] Copiando pedidos.css a /Users/richardruiz/restaurant_system/src/restaurantes/Pizzeria_Roma3/pedidos.css
+2025-04-22T17:24:26.704Z [32minfo[39m: [restauranteFileManager] Copiando productos.css a /Users/richardruiz/restaurant_system/src/restaurantes/Pizzeria_Roma3/productos.css
+2025-04-22T17:24:26.707Z [32minfo[39m: ✅ Estilos copiados en: /Users/richardruiz/restaurant_system/src/restaurantes/Pizzeria_Roma3
+2025-04-22T17:24:40.703Z [32minfo[39m: [restauranteFileManager] Creando carpeta para: Pizzeria Roma2
+2025-04-22T17:24:40.706Z [32minfo[39m: [restauranteFileManager] Copiando login.css a /Users/richardruiz/restaurant_system/src/restaurantes/Pizzeria_Roma2/login.css
+2025-04-22T17:24:40.715Z [32minfo[39m: [restauranteFileManager] Copiando menu.css a /Users/richardruiz/restaurant_system/src/restaurantes/Pizzeria_Roma2/menu.css
+2025-04-22T17:24:40.718Z [32minfo[39m: [restauranteFileManager] Copiando pedidos.css a /Users/richardruiz/restaurant_system/src/restaurantes/Pizzeria_Roma2/pedidos.css
+2025-04-22T17:24:40.720Z [32minfo[39m: [restauranteFileManager] Copiando productos.css a /Users/richardruiz/restaurant_system/src/restaurantes/Pizzeria_Roma2/productos.css
+2025-04-22T17:24:40.723Z [32minfo[39m: ✅ Estilos copiados en: /Users/richardruiz/restaurant_system/src/restaurantes/Pizzeria_Roma2
+2025-04-22T19:31:26.727Z [32minfo[39m: [restauranteFileManager] Creando carpeta pública para: Pizza_Loca
+2025-04-22T19:31:26.734Z [31merror[39m: ❌ Error al copiar la plantilla: ENOENT: no such file or directory, lstat '/Users/richardruiz/restaurant_system/src/views'
+2025-04-22T19:31:41.158Z [32minfo[39m: [restauranteFileManager] Creando carpeta pública para: Pizza_Loca
+2025-04-22T19:31:41.160Z [31merror[39m: ❌ Error al copiar la plantilla: ENOENT: no such file or directory, lstat '/Users/richardruiz/restaurant_system/src/views'
+2025-04-22T19:35:15.217Z [32minfo[39m: [restauranteFileManager] Creando carpeta pública para: Pizza_Loca
+2025-04-22T19:35:15.245Z [32minfo[39m: ✅ Archivos copiados a: /Users/richardruiz/restaurant_system/src/public/Pizza_Loca
+2025-04-22T19:42:29.625Z [32minfo[39m: [restauranteFileManager] Creando carpeta pública para: Pizza_Loca
+2025-04-22T19:42:29.629Z [31merror[39m: [restauranteFileManager] Error: La carpeta del restaurante "Pizza_Loca" ya existe en /public.
+2025-04-22T19:47:22.261Z [32minfo[39m: [restauranteFileManager] Creando carpeta pública para: Pizza_Loca
+2025-04-22T19:47:22.264Z [31merror[39m: [restauranteFileManager] Error: La carpeta del restaurante "Pizza_Loca" ya existe en /public.
+2025-04-22T19:59:36.359Z [32minfo[39m: [restauranteFileManager] Creando carpeta pública para: Pizza_Loca
+2025-04-22T19:59:36.361Z [31merror[39m: [restauranteFileManager] Error: La carpeta del restaurante "Pizza_Loca" ya existe en /public.
+2025-04-23T04:00:35.886Z [32minfo[39m: [restauranteFileManager] Creando carpeta pública para: Restaurante_La_Sazon
+2025-04-23T04:00:35.893Z [32minfo[39m: [restauranteFileManager] Copiando archivos desde: /Users/richardruiz/restaurant_system/views/admin
+2025-04-23T04:00:35.912Z [32minfo[39m: [restauranteFileManager] Copiando archivos desde: /Users/richardruiz/restaurant_system/views/login
+2025-04-23T04:00:35.918Z [32minfo[39m: [restauranteFileManager] Copiando archivos desde: /Users/richardruiz/restaurant_system/views/menu
+2025-04-23T04:00:35.923Z [32minfo[39m: [restauranteFileManager] Copiando archivos desde: /Users/richardruiz/restaurant_system/views/productos
+2025-04-23T04:00:35.929Z [32minfo[39m: [restauranteFileManager] Copiando archivos desde: /Users/richardruiz/restaurant_system/views/pedidos
+2025-04-23T04:00:35.934Z [32minfo[39m: ✅ Archivos copiados a: /Users/richardruiz/restaurant_system/src/public/Restaurante_La_Sazon
+2025-04-23T05:12:39.506Z [32minfo[39m: [restauranteFileManager] Creando carpeta pública para: pizzeria-italiana
+2025-04-23T05:12:39.509Z [32minfo[39m: [restauranteFileManager] Copiando archivos desde: /Users/richardruiz/restaurant_system/views/admin
+2025-04-23T05:12:39.517Z [32minfo[39m: [restauranteFileManager] Copiando archivos desde: /Users/richardruiz/restaurant_system/views/login
+2025-04-23T05:12:39.523Z [32minfo[39m: [restauranteFileManager] Copiando archivos desde: /Users/richardruiz/restaurant_system/views/menu
+2025-04-23T05:12:39.527Z [32minfo[39m: [restauranteFileManager] Copiando archivos desde: /Users/richardruiz/restaurant_system/views/productos
+2025-04-23T05:12:39.533Z [32minfo[39m: [restauranteFileManager] Copiando archivos desde: /Users/richardruiz/restaurant_system/views/pedidos
+2025-04-23T05:12:39.538Z [32minfo[39m: ✅ Archivos copiados a: /Users/richardruiz/restaurant_system/src/public/pizzeria-italiana
+2025-04-23T05:58:03.855Z [32minfo[39m: [restauranteFileManager] Creando carpeta pública para: restaurante_test
+2025-04-23T05:58:03.858Z [32minfo[39m: [restauranteFileManager] Copiando archivos desde: /Users/richardruiz/restaurant_system/views/admin
+2025-04-23T05:58:03.868Z [32minfo[39m: [restauranteFileManager] Copiando archivos desde: /Users/richardruiz/restaurant_system/views/login
+2025-04-23T05:58:03.875Z [32minfo[39m: [restauranteFileManager] Copiando archivos desde: /Users/richardruiz/restaurant_system/views/menu
+2025-04-23T05:58:03.881Z [32minfo[39m: [restauranteFileManager] Copiando archivos desde: /Users/richardruiz/restaurant_system/views/productos
+2025-04-23T05:58:03.888Z [32minfo[39m: [restauranteFileManager] Copiando archivos desde: /Users/richardruiz/restaurant_system/views/pedidos
+2025-04-23T05:58:03.902Z [32minfo[39m: [restauranteFileManager] Slug insertado dinámicamente en productos.html
+2025-04-23T05:58:03.902Z [32minfo[39m: ✅ Archivos copiados y personalizados en: /Users/richardruiz/restaurant_system/src/public/restaurante_test
+2025-04-23T06:40:08.562Z [32minfo[39m: [restauranteFileManager] Creando carpeta pública para: restaurante_test
+2025-04-23T06:40:08.565Z [31merror[39m: [restauranteFileManager] Error: La carpeta del restaurante "restaurante_test" ya existe en /public.
+2025-04-23T06:41:46.289Z [32minfo[39m: [restauranteFileManager] Creando carpeta pública para: restaurante_test
+2025-04-23T06:41:46.292Z [31merror[39m: [restauranteFileManager] Error: La carpeta del restaurante "restaurante_test" ya existe en /public.
+2025-04-23T06:42:48.055Z [32minfo[39m: [restauranteFileManager] Creando carpeta pública para: restaurante_test1
+2025-04-23T06:42:48.058Z [32minfo[39m: [restauranteFileManager] Copiando archivos desde: /Users/richardruiz/restaurant_system/views/admin
+2025-04-23T06:42:48.068Z [32minfo[39m: [restauranteFileManager] Copiando archivos desde: /Users/richardruiz/restaurant_system/views/login
+2025-04-23T06:42:48.077Z [32minfo[39m: [restauranteFileManager] Copiando archivos desde: /Users/richardruiz/restaurant_system/views/menu
+2025-04-23T06:42:48.088Z [32minfo[39m: [restauranteFileManager] Copiando archivos desde: /Users/richardruiz/restaurant_system/views/productos
+2025-04-23T06:42:48.093Z [32minfo[39m: [restauranteFileManager] Copiando archivos desde: /Users/richardruiz/restaurant_system/views/pedidos
+2025-04-23T06:42:48.102Z [32minfo[39m: [restauranteFileManager] Slug insertado dinámicamente en productos.html
+2025-04-23T06:42:48.103Z [32minfo[39m: ✅ Archivos copiados y personalizados en: /Users/richardruiz/restaurant_system/src/public/restaurante_test1
+2025-04-23T21:17:28.878Z [32minfo[39m: [restauranteFileManager] Creando carpeta pública para: restaurante_test_final
+2025-04-23T21:17:28.883Z [33mwarn[39m: [restauranteFileManager] No se encontró la carpeta: /Users/richardruiz/restaurant_system/views/admin
+2025-04-23T21:17:28.883Z [33mwarn[39m: [restauranteFileManager] No se encontró la carpeta: /Users/richardruiz/restaurant_system/views/login
+2025-04-23T21:17:28.884Z [33mwarn[39m: [restauranteFileManager] No se encontró la carpeta: /Users/richardruiz/restaurant_system/views/menu
+2025-04-23T21:17:28.885Z [33mwarn[39m: [restauranteFileManager] No se encontró la carpeta: /Users/richardruiz/restaurant_system/views/productos
+2025-04-23T21:17:28.885Z [33mwarn[39m: [restauranteFileManager] No se encontró la carpeta: /Users/richardruiz/restaurant_system/views/pedidos
+2025-04-23T21:17:28.885Z [33mwarn[39m: [restauranteFileManager] productos.html no encontrado para insertar slug
+2025-04-23T21:17:28.886Z [32minfo[39m: ✅ Archivos copiados y personalizados en: /Users/richardruiz/restaurant_system/src/public/restaurante_test_final
+2025-04-24T20:25:34.078Z [32minfo[39m: [restauranteFileManager] Creando carpeta pública para: mi_restaurante
+2025-04-24T20:25:34.083Z [33mwarn[39m: [restauranteFileManager] No se encontró la carpeta: /Users/richardruiz/restaurant_system/views/admin
+2025-04-24T20:25:34.085Z [33mwarn[39m: [restauranteFileManager] No se encontró la carpeta: /Users/richardruiz/restaurant_system/views/login
+2025-04-24T20:25:34.087Z [33mwarn[39m: [restauranteFileManager] No se encontró la carpeta: /Users/richardruiz/restaurant_system/views/menu
+2025-04-24T20:25:34.087Z [33mwarn[39m: [restauranteFileManager] No se encontró la carpeta: /Users/richardruiz/restaurant_system/views/productos
+2025-04-24T20:25:34.087Z [33mwarn[39m: [restauranteFileManager] No se encontró la carpeta: /Users/richardruiz/restaurant_system/views/pedidos
+2025-04-24T20:25:34.088Z [33mwarn[39m: [restauranteFileManager] productos.html no encontrado para insertar slug
+2025-04-24T20:25:34.088Z [32minfo[39m: ✅ Archivos copiados y personalizados en: /Users/richardruiz/restaurant_system/src/public/mi_restaurante
+2025-04-24T20:41:36.569Z [32minfo[39m: [restauranteFileManager] Creando carpeta pública para: sushi_bar
+2025-04-24T20:41:36.574Z [33mwarn[39m: [restauranteFileManager] No se encontró la carpeta: /Users/richardruiz/restaurant_system/views/admin
+2025-04-24T20:41:36.575Z [33mwarn[39m: [restauranteFileManager] No se encontró la carpeta: /Users/richardruiz/restaurant_system/views/login
+2025-04-24T20:41:36.576Z [33mwarn[39m: [restauranteFileManager] No se encontró la carpeta: /Users/richardruiz/restaurant_system/views/menu
+2025-04-24T20:41:36.576Z [33mwarn[39m: [restauranteFileManager] No se encontró la carpeta: /Users/richardruiz/restaurant_system/views/productos
+2025-04-24T20:41:36.576Z [33mwarn[39m: [restauranteFileManager] No se encontró la carpeta: /Users/richardruiz/restaurant_system/views/pedidos
+2025-04-24T20:41:36.577Z [33mwarn[39m: [restauranteFileManager] productos.html no encontrado para insertar slug
+2025-04-24T20:41:36.577Z [32minfo[39m: ✅ Archivos copiados y personalizados en: /Users/richardruiz/restaurant_system/src/public/sushi_bar
+2025-04-25T04:26:17.181Z [32minfo[39m: [restauranteFileManager] Creando carpeta pública para: la_sazon
+2025-04-25T04:26:17.183Z [33mwarn[39m: [restauranteFileManager] No se encontró la carpeta: /Users/richardruiz/restaurant_system/views/admin
+2025-04-25T04:26:17.184Z [33mwarn[39m: [restauranteFileManager] No se encontró la carpeta: /Users/richardruiz/restaurant_system/views/login
+2025-04-25T04:26:17.185Z [33mwarn[39m: [restauranteFileManager] No se encontró la carpeta: /Users/richardruiz/restaurant_system/views/menu
+2025-04-25T04:26:17.185Z [33mwarn[39m: [restauranteFileManager] No se encontró la carpeta: /Users/richardruiz/restaurant_system/views/productos
+2025-04-25T04:26:17.185Z [33mwarn[39m: [restauranteFileManager] No se encontró la carpeta: /Users/richardruiz/restaurant_system/views/pedidos
+2025-04-25T04:26:17.186Z [33mwarn[39m: [restauranteFileManager] productos.html no encontrado para insertar slug
+2025-04-25T04:26:17.186Z [32minfo[39m: ✅ Archivos copiados y personalizados en: /Users/richardruiz/restaurant_system/src/public/la_sazon
+2025-04-25T04:30:11.706Z [32minfo[39m: [restauranteFileManager] Creando carpeta pública para: la_sazon1
+2025-04-25T04:30:11.710Z [32minfo[39m: [restauranteFileManager] Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/admin
+2025-04-25T04:30:11.724Z [32minfo[39m: [restauranteFileManager] Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/login
+2025-04-25T04:30:11.730Z [32minfo[39m: [restauranteFileManager] Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/menu
+2025-04-25T04:30:11.737Z [32minfo[39m: [restauranteFileManager] Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/productos
+2025-04-25T04:30:11.742Z [32minfo[39m: [restauranteFileManager] Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/pedidos
+2025-04-25T04:30:11.748Z [33mwarn[39m: [restauranteFileManager] productos.html no encontrado para insertar slug
+2025-04-25T04:30:11.748Z [32minfo[39m: ✅ Archivos copiados y personalizados en: /Users/richardruiz/restaurant_system/src/public/la_sazon1
+2025-04-25T05:24:19.088Z [32minfo[39m: 🛑 Eliminando estructura de archivos para el restaurante: la_sazon
+2025-04-25T05:24:19.092Z [32minfo[39m: ✅ Estructura de archivos eliminada para el restaurante: la_sazon
+2025-04-25T05:27:31.906Z [32minfo[39m: 🟢 Creando carpeta pública para el restaurante: nuevo_restaurante_ejemplo
+2025-04-25T05:27:31.908Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/admin a /Users/richardruiz/restaurant_system/src/public/nuevo_restaurante_ejemplo/admin
+2025-04-25T05:27:31.917Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/login a /Users/richardruiz/restaurant_system/src/public/nuevo_restaurante_ejemplo/login
+2025-04-25T05:27:31.923Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/menu a /Users/richardruiz/restaurant_system/src/public/nuevo_restaurante_ejemplo/menu
+2025-04-25T05:27:31.929Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/productos a /Users/richardruiz/restaurant_system/src/public/nuevo_restaurante_ejemplo/productos
+2025-04-25T05:27:31.935Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/pedidos a /Users/richardruiz/restaurant_system/src/public/nuevo_restaurante_ejemplo/pedidos
+2025-04-25T05:27:31.940Z [33mwarn[39m: ⚠️ productos.html no encontrado en /Users/richardruiz/restaurant_system/src/public/nuevo_restaurante_ejemplo/productos/productos.html para insertar el slug
+2025-04-25T05:27:31.941Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/nuevo_restaurante_ejemplo
+2025-04-25T05:51:03.036Z [32minfo[39m: 🟢 Creando carpeta pública para el restaurante: pizzeria_roma
+2025-04-25T05:51:03.040Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/admin a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/admin
+2025-04-25T05:51:03.056Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/login a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/login
+2025-04-25T05:51:03.062Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/menu a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/menu
+2025-04-25T05:51:03.069Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/productos a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/productos
+2025-04-25T05:51:03.075Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/pedidos a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/pedidos
+2025-04-25T05:51:03.080Z [33mwarn[39m: ⚠️ productos.html no encontrado en /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/productos/productos.html para insertar el slug
+2025-04-25T05:51:03.080Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/pizzeria_roma
+2025-04-25T05:56:14.416Z [32minfo[39m: 🛑 Eliminando estructura de archivos para el restaurante: pizzeria_roma
+2025-04-25T05:56:14.433Z [32minfo[39m: ✅ Estructura de archivos eliminada para el restaurante: pizzeria_roma
+2025-04-25T05:57:15.468Z [32minfo[39m: 🛑 Eliminando estructura de archivos para el restaurante: pizzeria_roma
+2025-04-25T05:57:15.471Z [31merror[39m: ❌ Error: La carpeta del restaurante "pizzeria_roma" no existe en /public.
+2025-04-25T05:57:15.471Z [31merror[39m: ❌ Error al eliminar la estructura de archivos: La carpeta del restaurante "pizzeria_roma" no existe en /public.
+2025-04-25T06:35:05.318Z [32minfo[39m: 🛑 Eliminando estructura de archivos para el restaurante: pizzeria_roma
+2025-04-25T06:35:05.320Z [31merror[39m: ❌ Error: La carpeta del restaurante "pizzeria_roma" no existe en /public.
+2025-04-25T06:35:05.320Z [31merror[39m: ❌ Error al eliminar la estructura de archivos: La carpeta del restaurante "pizzeria_roma" no existe en /public.
+2025-04-25T06:37:37.247Z [32minfo[39m: 🟢 Creando carpeta pública para el restaurante: pizzeria_roma
+2025-04-25T06:37:37.249Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/admin a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/admin
+2025-04-25T06:37:37.258Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/login a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/login
+2025-04-25T06:37:37.263Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/menu a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/menu
+2025-04-25T06:37:37.266Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/productos a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/productos
+2025-04-25T06:37:37.271Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/pedidos a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/pedidos
+2025-04-25T06:37:37.275Z [33mwarn[39m: ⚠️ productos.html no encontrado en /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/productos/productos.html para insertar el slug
+2025-04-25T06:37:37.276Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/pizzeria_roma
+2025-04-25T07:19:45.178Z [32minfo[39m: 🛑 Eliminando estructura de archivos para el restaurante: pizzeria_roma
+2025-04-25T07:19:45.185Z [32minfo[39m: ✅ Estructura de archivos eliminada para el restaurante: pizzeria_roma
+2025-04-25T07:22:32.820Z [32minfo[39m: 🟢 Creando carpeta pública para el restaurante: taqueria_el_buen_pastor
+2025-04-25T07:22:32.823Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/admin a /Users/richardruiz/restaurant_system/src/public/taqueria_el_buen_pastor/admin
+2025-04-25T07:22:32.830Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/login a /Users/richardruiz/restaurant_system/src/public/taqueria_el_buen_pastor/login
+2025-04-25T07:22:32.834Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/menu a /Users/richardruiz/restaurant_system/src/public/taqueria_el_buen_pastor/menu
+2025-04-25T07:22:32.838Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/productos a /Users/richardruiz/restaurant_system/src/public/taqueria_el_buen_pastor/productos
+2025-04-25T07:22:32.844Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/pedidos a /Users/richardruiz/restaurant_system/src/public/taqueria_el_buen_pastor/pedidos
+2025-04-25T07:22:32.849Z [33mwarn[39m: ⚠️ productos.html no encontrado en /Users/richardruiz/restaurant_system/src/public/taqueria_el_buen_pastor/productos/productos.html para insertar el slug
+2025-04-25T07:22:32.850Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/taqueria_el_buen_pastor
+2025-04-25T07:31:32.757Z [32minfo[39m: 🛑 Eliminando estructura de archivos para el restaurante: taqueria_el_buen_pastor
+2025-04-25T07:31:32.763Z [32minfo[39m: ✅ Estructura de archivos eliminada para el restaurante: taqueria_el_buen_pastor
+2025-04-25T07:33:07.841Z [32minfo[39m: 🟢 Creando carpeta pública para el restaurante: pizzeria_roma
+2025-04-25T07:33:07.843Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/admin a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/admin
+2025-04-25T07:33:07.848Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/login a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/login
+2025-04-25T07:33:07.853Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/menu a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/menu
+2025-04-25T07:33:07.858Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/productos a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/productos
+2025-04-25T07:33:07.861Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/pedidos a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/pedidos
+2025-04-25T07:33:07.864Z [33mwarn[39m: ⚠️ productos.html no encontrado en /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/productos/productos.html para insertar el slug
+2025-04-25T07:33:07.864Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/pizzeria_roma
+2025-04-25T07:33:50.151Z [32minfo[39m: 🛑 Eliminando estructura de archivos para el restaurante: pizzeria_roma
+2025-04-25T07:33:50.155Z [32minfo[39m: ✅ Estructura de archivos eliminada para el restaurante: pizzeria_roma
+2025-04-26T08:07:41.801Z [32minfo[39m: 🟢 Creando carpeta pública para el restaurante: pizzeria_roma
+2025-04-26T08:07:41.806Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/admin a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/admin
+2025-04-26T08:07:41.815Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/login a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/login
+2025-04-26T08:07:41.819Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/menu a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/menu
+2025-04-26T08:07:41.822Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/productos a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/productos
+2025-04-26T08:07:41.827Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/pedidos a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/pedidos
+2025-04-26T08:07:41.833Z [33mwarn[39m: ⚠️ productos.html no encontrado en /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/productos/productos.html para insertar el slug
+2025-04-26T08:07:41.833Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/pizzeria_roma
+2025-04-28T04:47:18.782Z [32minfo[39m: 🟢 Creando carpeta pública para el restaurante: nuevo_restaurante_test
+2025-04-28T04:47:18.789Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/admin a /Users/richardruiz/restaurant_system/src/public/nuevo_restaurante_test/admin
+2025-04-28T04:47:18.803Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/login a /Users/richardruiz/restaurant_system/src/public/nuevo_restaurante_test/login
+2025-04-28T04:47:18.808Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/menu a /Users/richardruiz/restaurant_system/src/public/nuevo_restaurante_test/menu
+2025-04-28T04:47:18.821Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/productos a /Users/richardruiz/restaurant_system/src/public/nuevo_restaurante_test/productos
+2025-04-28T04:47:18.827Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/pedidos a /Users/richardruiz/restaurant_system/src/public/nuevo_restaurante_test/pedidos
+2025-04-28T04:47:18.832Z [33mwarn[39m: ⚠️ productos.html no encontrado en /Users/richardruiz/restaurant_system/src/public/nuevo_restaurante_test/productos/productos.html para insertar el slug
+2025-04-28T04:47:18.832Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/nuevo_restaurante_test
+2025-04-28T04:49:10.393Z [32minfo[39m: 🛑 Eliminando estructura de archivos para el restaurante: nuevo_restaurante_test
+2025-04-28T04:49:10.402Z [32minfo[39m: ✅ Estructura de archivos eliminada para el restaurante: nuevo_restaurante_test
+2025-04-28T05:06:38.100Z [32minfo[39m: 🟢 Creando carpeta pública para el restaurante: pizzeria_roma
+2025-04-28T05:06:38.102Z [31merror[39m: ❌ Error: La carpeta del restaurante "pizzeria_roma" ya existe en /public.
+2025-04-28T05:06:38.102Z [31merror[39m: ❌ Error al verificar si existe la carpeta: La carpeta del restaurante "pizzeria_roma" ya existe en /public.
+2025-04-28T05:14:01.369Z [32minfo[39m: 🛑 Eliminando estructura de archivos para el restaurante: pizzeria_roma
+2025-04-28T05:14:01.373Z [32minfo[39m: ✅ Estructura de archivos eliminada para el restaurante: pizzeria_roma
+2025-04-28T05:23:31.081Z [32minfo[39m: 🟢 Creando carpeta pública para el restaurante: pizzeria_roma
+2025-04-28T05:23:31.084Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/admin a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/admin
+2025-04-28T05:23:31.092Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/login a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/login
+2025-04-28T05:23:31.096Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/menu a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/menu
+2025-04-28T05:23:31.100Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/productos a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/productos
+2025-04-28T05:23:31.106Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/pedidos a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/pedidos
+2025-04-28T05:23:31.112Z [33mwarn[39m: ⚠️ productos.html no encontrado en /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/productos/productos.html para insertar el slug
+2025-04-28T05:23:31.112Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/pizzeria_roma
+2025-04-28T06:57:36.501Z [32minfo[39m: 🟢 Creando carpeta pública para el restaurante: pizzeria_roma3
+2025-04-28T06:57:36.505Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/admin a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma3/admin
+2025-04-28T06:57:36.511Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/login a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma3/login
+2025-04-28T06:57:36.515Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/menu a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma3/menu
+2025-04-28T06:57:36.524Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/productos a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma3/productos
+2025-04-28T06:57:36.527Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/pedidos a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma3/pedidos
+2025-04-28T06:57:36.532Z [33mwarn[39m: ⚠️ productos.html no encontrado en /Users/richardruiz/restaurant_system/src/public/pizzeria_roma3/productos/productos.html para insertar el slug
+2025-04-28T06:57:36.533Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/pizzeria_roma3

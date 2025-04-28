@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Menú de <%= restaurante.nombre %></title>
+  <link rel="stylesheet" href="/<%= slug %>/menu/menu.css">
+</head>
+<body>
+  <h1>Menú de <%= restaurante.nombre %></h1>
+
+  <!-- Información del restaurante -->
+  <section>
+    <h2>Detalles del Restaurante</h2>
+    <p><strong>Nombre:</strong> <%= restaurante.nombre %></p>
+    <p><strong>Estado:</strong> <%= restaurante.estado %></p>
+    <p><strong>Creado el:</strong> <%= new Date(restaurante.creado_en).toLocaleDateString('es-ES') %></p>
+    <p><strong>Slug:</strong> <%= restaurante.slug %></p>
+  </section>
+
+  <!-- Menú agrupado por categorías -->
+  <% for (const categoria in productosPorCategoria) { %>
+    <section>
+      <h2><%= categoria %></h2>
+      <% productosPorCategoria[categoria].forEach(producto => { %>
+        <div class="producto">
+          <h3><%= producto.nombre_producto %></h3>
+          <p><%= producto.descripcion %></p>
+          <p><strong>$<%= producto.precio %></strong></p>
+          <button class="btn-agregar" data-producto='<%- JSON.stringify(producto) %>'>Agregar</button>
+        </div>
+      <% }) %>
+    </section>
+  <% } %>
+
+  <hr>
+
+  <!-- Resumen del carrito -->
+  <section id="carrito">
+    <h2>🛒 Tu Pedido</h2>
+    <label for="mesa">Número de mesa:</label>
+    <input type="number" id="mesa" min="1" value="1" style="margin-bottom: 10px;"><br>
+
+    <ul id="lista-carrito">
+      <!-- Productos agregados se insertarán aquí -->
+    </ul>
+
+    <p><strong>Total: $<span id="total-carrito">0.00</span></strong></p>
+    <button id="btn-enviar-pedido">Enviar Pedido</button>
+  </section>
+
+  <!-- Contenedor para las notificaciones -->
+  <div id="notification-container"></div>
+
+  <!-- Pasar el ID del restaurante al JS -->
+  <script>
+    window.restauranteId = <%= restaurante.id %>;
+  </script>
+
+  <!-- Tu script personalizado debe ir al final para asegurar que el DOM esté listo -->
+  <script src="/js/menu.js"></script>
+</body>
+</html>

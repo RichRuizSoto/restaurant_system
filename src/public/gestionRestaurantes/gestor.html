@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Establecimientos</title>
+  <link rel="stylesheet" href="/gestionRestaurantes/gestor.css">
+</head>
+<body>
+  <h1>Gestión de Establecimientos</h1>
+
+  <!-- Formulario para crear un nuevo establecimiento -->
+  <form id="formCrearEstablecimiento">
+    <label for="nombre">Nombre del Establecimiento:</label>
+    <input type="text" id="nombre" name="nombre" required>
+    
+    <label for="estado">Estado del Establecimiento:</label>
+    <select id="estado" name="estado">
+      <option value="activo">Activo</option>
+      <option value="desactivo">Desactivado</option>
+    </select>
+    
+    <button type="submit">Crear Establecimiento</button>
+  </form>
+
+  <hr>
+
+  <!-- Lista de establecimientos -->
+  <h2>Establecimientos Registrados</h2>
+  <ul id="establecimientos-lista">
+
+  </ul>
+  
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/gestionRestaurantes/gestor.js"></script>
+</body>
+</html>
