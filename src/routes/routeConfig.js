@@ -6,7 +6,7 @@ const pedidosRoutes = require('./api/pedidos');  // Verifica que esta importaci�
 const restauranteViewRoutes = require('./views/restaurantes');
 const gestorViewRoutes = require('./views/gestores');
 const menuRoutes = require('./views/menu');
-const pedidosViewRoutes = require('./api/pedidos');  // Verifica que esta importación sea correcta
+const pedidosViewRoutes = require('./views/pedidos'); // Corregido
 
 
 module.exports = (app) => {
@@ -20,5 +20,5 @@ module.exports = (app) => {
   app.use('/restaurantes', restauranteViewRoutes);  // Rutas para ver restaurantes (páginas)
   app.use('/gestores', gestorViewRoutes);           // Rutas para la vista de gestores (páginas)
   app.use('/menu', menuRoutes);
-//  app.use('/pedidos', pedidosViewRoutes);  // Aquí usas pedidosRoutes en lugar de menuRoutes
+  app.use('/pedidos', pedidosViewRoutes);
 };

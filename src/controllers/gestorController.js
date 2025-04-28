@@ -12,22 +12,17 @@ const crearRestaurante = async (req, res) => {
 
   try {
     const nuevoEstablecimiento = await gestorService.crearEstablecimiento(nombre, estado);
-
-    // 🔧 Crear la estructura de archivos del restaurante
-    try {
-      const slug = await crearEstructuraRestaurante(nombre);
-      nuevoEstablecimiento.slug = slug; // Agregamos el slug al objeto de respuesta
-    } catch (err) {
-      console.error('⚠️ No se pudo crear estructura de archivos del restaurante:', err.message);
-      // Si es crítico que se cree la estructura, puedes lanzar un error aquí
-    }
-
     return res.status(201).json(nuevoEstablecimiento); // Devolvemos el establecimiento recién creado
   } catch (error) {
     console.error('Error creando establecimiento:', error);
+    // Aquí manejamos el caso de que el restaurante ya exista
+    if (error.message === 'Ya existe un restaurante con ese nombre') {
+      return res.status(400).json({ error: 'Ya existe un restaurante con ese nombre' });
+    }
     return res.status(500).json({ error: 'No se pudo crear el establecimiento' });
   }
 };
+
 
 
 // Obtener todos los establecimientos
