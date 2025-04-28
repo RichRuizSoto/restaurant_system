@@ -1,0 +1,37 @@
+/* Estilos adicionales para los botones */
+.pedido-header {
+    font-weight: bold;
+  }
+  
+  .button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .button:hover {
+    background-color: #45a049;
+  }
+  
+  .no-pedidos {
+    font-style: italic;
+    color: #777;
+  }
+  
+  .productos-list {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .producto-item {
+    margin-bottom: 5px;
+  }
+  

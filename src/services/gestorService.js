@@ -1,17 +1,52 @@
 const Establecimiento = require('../models/Establecimiento'); // Importamos el modelo
 const productosService = require('./productosService');
+const db = require('../core/config/database'); // Ya tienes la conexión a la base de datos configurada
+const slugify = require('slugify');
 
-// Crear un establecimiento
-const crearEstablecimiento = async (nombre, estado = 'activo') => {
+const existeRestaurante = async (nombre) => {
   try {
-    // Utilizamos el modelo para crear el establecimiento
-    const nuevoEstablecimiento = await Establecimiento.crearEstablecimiento(nombre, estado);
-    return nuevoEstablecimiento; // Retorna el nuevo establecimiento creado
-  } catch (error) {
-    console.error('Error en gestorService al crear el establecimiento:', error);
-    throw new Error('No se pudo crear el establecimiento');
+    const nombreNormalizado = nombre.trim().toLowerCase();
+    const [rows] = await db.query('SELECT * FROM establecimientos WHERE LOWER(nombre) = ?', [nombreNormalizado]);
+    return rows.length > 0;
+  } catch (err) {
+    console.error('Error al verificar si el restaurante ya existe:', err);
+    throw new Error('Error al verificar el establecimiento');
   }
 };
+
+const crearEstablecimiento = async (nombre, estado = 'activo') => {
+  try {
+    const nombreNormalizado = nombre.trim(); // importante: mantenemos el original para guardar
+
+    const existe = await existeRestaurante(nombreNormalizado);
+    if (existe) {
+      throw new Error('Ya existe un restaurante con ese nombre');
+    }
+
+    const slug = slugify(nombreNormalizado, {
+      lower: true,
+      strict: true,
+      replacement: '_',
+    });
+
+    const [result] = await db.query(
+      'INSERT INTO establecimientos (nombre, estado, slug, creado_en) VALUES (?, ?, ?, NOW())',
+      [nombreNormalizado, estado, slug]
+    );
+
+    return {
+      id: result.insertId,
+      nombre: nombreNormalizado,
+      estado,
+      slug,
+    };
+  } catch (err) {
+    console.error('Error al crear el establecimiento:', err);
+    throw new Error(err.message || 'No se pudo crear el establecimiento');
+  }
+};
+
+
 
 // Listar todos los establecimientos
 const listarEstablecimientos = async () => {
