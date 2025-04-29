@@ -29,22 +29,46 @@ function setupSocket(server, app) {
 
     // Evento para actualizar el estado de un pedido
     socket.on('actualizarEstadoPedido', async (idPedido, nuevoEstado) => {
-      // Actualizar el estado del pedido en la base de datos
-      await db.query('UPDATE pedidos SET estado = ? WHERE id = ?', [nuevoEstado, idPedido]);
+      try {
+        // Comprobar si el pedido existe
+        const [pedidoResult] = await db.query('SELECT * FROM pedidos WHERE id = ?', [idPedido]);
+        if (pedidoResult.length === 0) {
+          console.warn(`⚠️ Pedido con ID ${idPedido} no encontrado`);
+          return;
+        }
 
-      // Obtener los productos asociados al pedido
-      const productos = await obtenerProductosDePedido(idPedido);
+        // Actualizar el estado del pedido
+        const [updateResult] = await db.query('UPDATE pedidos SET estado = ? WHERE id = ?', [nuevoEstado, idPedido]);
 
-      // Emitir el evento a todos los clientes con el nuevo estado y los productos
-      io.emit('estadoPedidoActualizado', {
-        idPedido,
-        nuevoEstado,
-        productos: productos.map(prod => ({
-          id_producto: prod.id_producto,
-          cantidad: prod.cantidad,
-          precio_unitario: prod.precio_unitario
-        })),
-      });
+        // Si no se actualizó nada, no emitir el evento
+        if (updateResult.affectedRows === 0) {
+          console.warn(`⚠️ No se actualizó el estado del pedido con ID ${idPedido}`);
+          return;
+        }
+
+        // Obtener los productos del pedido
+        const productos = await obtenerProductosDePedido(idPedido);
+
+        // Obtener los datos básicos del pedido (número de orden, mesa, total, etc.)
+        const [[pedido]] = await db.query('SELECT numero_orden, mesa, total, creado_en FROM pedidos WHERE id = ?', [idPedido]);
+
+        // Emitir el evento con la información actualizada
+        io.emit('estadoPedidoActualizado', {
+          idPedido,
+          nuevoEstado,
+          numero_orden: pedido.numero_orden,
+          mesa: pedido.mesa,
+          total: pedido.total,
+          creado_en: pedido.creado_en,
+          productos: productos.map(prod => ({
+            id_producto: prod.id_producto,
+            cantidad: prod.cantidad,
+            precio_unitario: prod.precio_unitario
+          }))
+        });
+      } catch (err) {
+        console.error('❌ [Error en socket.actualizarEstadoPedido]', err);
+      }
     });
 
     socket.on('disconnect', () => {

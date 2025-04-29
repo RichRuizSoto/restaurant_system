@@ -9,20 +9,49 @@ exports.recibirPedido = async (req, res) => {
   try {
     const pedido = req.body;
 
-    if (!pedido.id_restaurante || !Array.isArray(pedido.productos) || pedido.productos.length === 0 || typeof pedido.total !== 'number') {
+    // Validación de estructura básica del pedido
+    if (
+      !pedido.id_restaurante ||
+      typeof pedido.total !== 'number' ||
+      !Array.isArray(pedido.productos) ||
+      pedido.productos.length === 0
+    ) {
       return res.status(400).json({ mensaje: 'Pedido inválido: faltan datos requeridos' });
     }
 
+    // Validar los productos
+    for (const prod of pedido.productos) {
+      if (
+        !prod.id_producto ||
+        typeof prod.cantidad !== 'number' ||
+        typeof prod.precio !== 'number'
+      ) {
+        return res.status(400).json({ mensaje: 'Producto inválido en el pedido' });
+      }
+    }
+
+    // Crear el pedido (lógica interna ya maneja concurrencia y errores)
     const nuevoPedido = await pedidosService.crearPedido(pedido);
+
+    // Emitir evento a sockets solo si todo sale bien
     const io = getSocket();
     io.emit('nuevoPedido', nuevoPedido);
 
-    res.status(201).json({ pedido: nuevoPedido });
+    res.status(201).json({ 
+      pedido: nuevoPedido,
+      numero_orden: nuevoPedido.numero_orden // ✅ Añadido explícitamente
+    });
+    
+
   } catch (err) {
     console.error('❌ [Error en recibirPedido]', err);
-    res.status(500).json({ mensaje: 'Error al procesar el pedido', detalle: err.message });
+    res.status(500).json({
+      mensaje: 'Error al procesar el pedido',
+      detalle: err.message
+    });
   }
 };
+
 
 // 🔍 Obtener pedido por número de orden
 exports.obtenerPedidoPorNumero = async (req, res) => {

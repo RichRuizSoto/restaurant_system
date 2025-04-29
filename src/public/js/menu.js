@@ -133,11 +133,11 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify(pedido)
       });
 
-      const data = await res.json();
+      const { pedido, numero_orden } = await res.json();
       console.log('Respuesta del servidor:', data); // Verifica la respuesta completa
 
       if (res.ok) {
-        showNotification(`✅ Pedido enviado. N° orden: ${data.numero_orden}`, 'success');
+        showNotification(`✅ Pedido enviado. N° orden: ${numero_orden}`, 'success');
         carrito = []; // Limpiar el carrito después de enviar el pedido
         guardarCarrito();
         renderizarCarrito();

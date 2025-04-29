@@ -1,6 +1,5 @@
 const db = require('../core/config/database');
 
-
 // Crear un nuevo pedido
 exports.crearPedido = async (pedido) => {
   const conn = await db.getConnection();
@@ -8,31 +7,61 @@ exports.crearPedido = async (pedido) => {
     await conn.beginTransaction();
 
     // Validación mínima
-    if (!pedido.id_restaurante || !pedido.productos || !Array.isArray(pedido.productos) || pedido.productos.length === 0) {
+    if (
+      !pedido.id_restaurante ||
+      !pedido.productos ||
+      !Array.isArray(pedido.productos) ||
+      pedido.productos.length === 0
+    ) {
       throw new Error('Pedido inválido: faltan datos requeridos');
     }
 
-    // Obtener el número de orden siguiente
-    const [ultimo] = await conn.query(
-      'SELECT MAX(numero_orden) AS max FROM pedidos WHERE id_restaurante = ?',
-      [pedido.id_restaurante]  // Usamos 'id_restaurante' aquí
-    );
-    const numeroOrden = (ultimo[0].max || 0) + 1;
+    let numeroOrden;
+    let insertado = false;
+    let intentos = 0;
+    let pedidoId;
 
-    // Insertar en 'pedidos'
-    const [result] = await conn.query(
-      `INSERT INTO pedidos 
-        (id_restaurante, numero_orden, mesa, total, estado, creado_en)
-       VALUES (?, ?, ?, ?, 'solicitado', NOW())`,
-      [
-        pedido.id_restaurante,  // Usamos 'id_restaurante' aquí
-        numeroOrden,
-        pedido.mesa || 1,
-        pedido.total
-      ]
-    );
+    // Reintentos en caso de colisión por duplicado
+    while (!insertado && intentos < 5) {
+      intentos++;
 
-    const idPedido = result.insertId;
+      const [ultimo] = await conn.query(
+        `SELECT MAX(numero_orden) AS max
+         FROM pedidos
+         WHERE id_restaurante = ?
+           AND DATE(creado_en) = CURDATE()`,
+        [pedido.id_restaurante]
+      );
+
+      numeroOrden = (ultimo[0].max || 0) + 1;
+
+      try {
+        const [result] = await conn.query(
+          `INSERT INTO pedidos 
+            (id_restaurante, numero_orden, mesa, total, estado, creado_en)
+           VALUES (?, ?, ?, ?, 'solicitado', NOW())`,
+          [
+            pedido.id_restaurante,
+            numeroOrden,
+            pedido.mesa || 1,
+            pedido.total
+          ]
+        );
+
+        pedidoId = result.insertId;
+        insertado = true;
+
+      } catch (err) {
+        if (err.code !== 'ER_DUP_ENTRY') {
+          throw err; // Otro error inesperado
+        }
+        // Duplicado de numero_orden, reintenta
+      }
+    }
+
+    if (!insertado) {
+      throw new Error('No se pudo generar un número de orden único después de varios intentos');
+    }
 
     // Insertar productos en 'detalle_pedido'
     for (const producto of pedido.productos) {
@@ -49,7 +78,7 @@ exports.crearPedido = async (pedido) => {
           (id_pedido, id_producto, cantidad, precio_unitario)
          VALUES (?, ?, ?, ?)`,
         [
-          idPedido,
+          pedidoId,
           producto.id_producto,
           producto.cantidad,
           producto.precio
@@ -62,7 +91,7 @@ exports.crearPedido = async (pedido) => {
     return {
       numero_orden: numeroOrden,
       total: pedido.total,
-      pedidoId: idPedido,
+      pedidoId,
       productos: pedido.productos
     };
 
@@ -74,6 +103,7 @@ exports.crearPedido = async (pedido) => {
     conn.release();
   }
 };
+
 
 
 // Obtener un pedido por número de orden
