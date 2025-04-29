@@ -119,4 +119,34 @@ const eliminarEstructuraRestaurante = async (nombreRestaurante) => {
   }
 };
 
-module.exports = { crearEstructuraRestaurante, eliminarEstructuraRestaurante };
+const renombrarEstructuraRestaurante = async (nombreAnterior, nombreNuevo) => {
+  const slugAnterior = generarSlug(nombreAnterior);
+  const slugNuevo = generarSlug(nombreNuevo);
+
+  const origen = path.join(DESTINO_PUBLIC, slugAnterior);
+  const destino = path.join(DESTINO_PUBLIC, slugNuevo);
+
+  try {
+    const existeOrigen = await fse.pathExists(origen);
+    if (!existeOrigen) {
+      throw new Error(`La carpeta original "${slugAnterior}" no existe`);
+    }
+
+    const existeDestino = await fse.pathExists(destino);
+    if (existeDestino) {
+      throw new Error(`Ya existe una carpeta con el nombre nuevo "${slugNuevo}"`);
+    }
+
+    await fse.move(origen, destino);
+    logger.info(`🔄 Carpeta renombrada de ${slugAnterior} a ${slugNuevo}`);
+  } catch (error) {
+    logger.error(`❌ Error al renombrar la estructura: ${error.message}`);
+    throw error;
+  }
+
+  return slugNuevo;
+};
+
+
+
+module.exports = { crearEstructuraRestaurante, eliminarEstructuraRestaurante, renombrarEstructuraRestaurante };

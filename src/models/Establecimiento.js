@@ -1,5 +1,8 @@
 const db = require('../core/config/database'); // Ya tienes la conexión a la base de datos configurada
 const slugify = require('slugify'); // Librería para generar slugs
+const {
+  renombrarEstructuraRestaurante
+} = require('../utils/restauranteFileManager');
 
 // Obtiene todos los establecimientos desde la base de datos
 const listarEstablecimientos = async () => {
@@ -54,24 +57,34 @@ const obtenerEstablecimientoPorId = async (id) => {
 // Actualiza un establecimiento
 const actualizarEstablecimiento = async (id, datosActualizados) => {
   try {
+    const establecimientoActual = await obtenerEstablecimientoPorId(id);
+    const slugViejo = establecimientoActual.slug;
+
+    // Si se actualiza el nombre, hay que regenerar el slug y mover la carpeta
+    if (datosActualizados.nombre) {
+      const nuevoSlug = slugify(datosActualizados.nombre, {
+        lower: true,
+        strict: true,
+        replacement: '_',
+      });
+
+      await renombrarEstructuraRestaurante(establecimientoActual.nombre, datosActualizados.nombre);
+      datosActualizados.slug = nuevoSlug;
+    }
+
+    // Luego continúa con la actualización en la base de datos
     const campos = [];
     const valores = [];
 
-    // Construir el SQL dinámicamente
     for (const [clave, valor] of Object.entries(datosActualizados)) {
       campos.push(`${clave} = ?`);
       valores.push(valor);
     }
 
-    if (campos.length === 0) {
-      throw new Error('No se proporcionaron datos para actualizar');
-    }
-
-    // Aseguramos que el ID esté al final en el WHERE
     valores.push(id);
 
     const sql = `UPDATE establecimientos SET ${campos.join(', ')} WHERE id = ?`;
-    await db.query(sql, valores); // Utilizamos query directamente, ya que db.query ya maneja promesas
+    await db.query(sql, valores);
 
     return { id, ...datosActualizados };
   } catch (err) {

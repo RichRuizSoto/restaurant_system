@@ -246,3 +246,4 @@
 2025-04-28T18:15:23.269Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/pedidos a /Users/richardruiz/restaurant_system/src/public/pizza_planet/pedidos
 2025-04-28T18:15:23.274Z [33mwarn[39m: ⚠️ productos.html no encontrado en /Users/richardruiz/restaurant_system/src/public/pizza_planet/productos/productos.html para insertar el slug
 2025-04-28T18:15:23.274Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/pizza_planet
+2025-04-29T17:43:54.266Z [32minfo[39m: 🔄 Carpeta renombrada de pizzeria_roma a pizzeria_roma_actualizada
