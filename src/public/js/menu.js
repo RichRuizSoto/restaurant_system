@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const pedido = {
       id_restaurante: window.restauranteId, // Usamos la variable del restauranteId en el JS
-      numero_orden: 'ORD' + new Date().getTime(), // Generación de un número de orden único
+//      numero_orden: 'ORD' + new Date().getTime(), // Generación de un número de orden único
       productos: carrito.map(p => ({
         id_producto: p.id_producto,
         cantidad: p.cantidad,
@@ -134,7 +134,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       const { data, numero_orden } = await res.json();
-      console.log('Respuesta del servidor:', data); // Verifica la respuesta completa
 
       if (res.ok) {
         showNotification(`✅ Pedido enviado. N° orden: ${numero_orden}`, 'success');
