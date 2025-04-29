@@ -247,3 +247,18 @@
 2025-04-28T18:15:23.274Z [33mwarn[39m: ⚠️ productos.html no encontrado en /Users/richardruiz/restaurant_system/src/public/pizza_planet/productos/productos.html para insertar el slug
 2025-04-28T18:15:23.274Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/pizza_planet
 2025-04-29T17:43:54.266Z [32minfo[39m: 🔄 Carpeta renombrada de pizzeria_roma a pizzeria_roma_actualizada
+2025-04-29T20:59:08.247Z [32minfo[39m: 🔄 Carpeta renombrada de pizzeria_roma3 a pizza_roma_3
+2025-04-29T20:59:39.154Z [32minfo[39m: 🛑 Eliminando estructura de archivos para el restaurante: pizza_roma_3
+2025-04-29T20:59:39.164Z [32minfo[39m: ✅ Estructura de archivos eliminada para el restaurante: pizza_roma_3
+2025-04-29T21:08:37.204Z [32minfo[39m: 🟢 Creando carpeta pública para el restaurante: fas
+2025-04-29T21:08:37.207Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/admin a /Users/richardruiz/restaurant_system/src/public/fas/admin
+2025-04-29T21:08:37.217Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/login a /Users/richardruiz/restaurant_system/src/public/fas/login
+2025-04-29T21:08:37.221Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/menu a /Users/richardruiz/restaurant_system/src/public/fas/menu
+2025-04-29T21:08:37.225Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/productos a /Users/richardruiz/restaurant_system/src/public/fas/productos
+2025-04-29T21:08:37.230Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/pedidos a /Users/richardruiz/restaurant_system/src/public/fas/pedidos
+2025-04-29T21:08:37.235Z [33mwarn[39m: ⚠️ productos.html no encontrado en /Users/richardruiz/restaurant_system/src/public/fas/productos/productos.html para insertar el slug
+2025-04-29T21:08:37.235Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/fas
+2025-04-29T21:08:57.155Z [32minfo[39m: 🛑 Eliminando estructura de archivos para el restaurante: fdafasd
+2025-04-29T21:08:57.156Z [31merror[39m: ❌ Error: La carpeta del restaurante "fdafasd" no existe en /public.
+2025-04-29T21:08:57.157Z [31merror[39m: ❌ Error al eliminar la estructura de archivos: La carpeta del restaurante "fdafasd" no existe en /public.
+2025-04-29T21:09:21.648Z [32minfo[39m: 🔄 Carpeta renombrada de fas a fadsfasdf

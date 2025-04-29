@@ -66,7 +66,8 @@ $form.addEventListener('submit', async (event) => {
     const data = await res.json();
 
     if (!res.ok) {
-      alert(data.error || 'Error al crear el establecimiento');
+      console.warn('[Frontend] No se pudo eliminar el establecimiento:', data.error);
+      alert(`❌ No se pudo eliminar:\n${data.error}`);
       return;
     }
 

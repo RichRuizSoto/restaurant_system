@@ -5,23 +5,31 @@ const { crearEstructuraRestaurante, eliminarEstructuraRestaurante } = require('.
 const crearRestaurante = async (req, res) => {
   const { nombre, estado = 'activo' } = req.body;
 
-  // Verificar que el nombre sea una cadena no vacía
   if (typeof nombre !== 'string' || nombre.trim() === '') {
     return res.status(400).json({ error: 'El nombre del establecimiento no es válido' });
   }
 
   try {
     const nuevoEstablecimiento = await gestorService.crearEstablecimiento(nombre, estado);
-    return res.status(201).json(nuevoEstablecimiento); // Devolvemos el establecimiento recién creado
+
+    try {
+      const slug = await crearEstructuraRestaurante(nombre);  // ✅ Crear carpeta después de insertar
+      nuevoEstablecimiento.slug = slug;  // opcional: incluir el slug en la respuesta
+    } catch (err) {
+      console.error('⚠️ Error al crear la carpeta del restaurante:', err.message);
+      // Aquí puedes decidir si devuelves error o sigues
+    }
+
+    return res.status(201).json(nuevoEstablecimiento);
   } catch (error) {
     console.error('Error creando establecimiento:', error);
-    // Aquí manejamos el caso de que el restaurante ya exista
     if (error.message === 'Ya existe un restaurante con ese nombre') {
       return res.status(400).json({ error: 'Ya existe un restaurante con ese nombre' });
     }
     return res.status(500).json({ error: 'No se pudo crear el establecimiento' });
   }
 };
+
 
 
 
@@ -78,8 +86,9 @@ const eliminarEstablecimiento = async (req, res) => {
     // Verificar si existen productos asociados al restaurante
     const productos = await gestorService.obtenerProductosPorRestaurante(id);
     if (productos.length > 0) {
-      // Eliminar los productos asociados antes de eliminar el restaurante
-      await gestorService.eliminarProductosPorRestaurante(id);
+      return res.status(400).json({ 
+        error: 'No se puede eliminar el establecimiento porque hay productos asociados. Elimínalos primero.'
+      });
     }
 
     // Eliminar la estructura de archivos del restaurante
