@@ -55,7 +55,7 @@ ${prod.nombre || `Producto ID ${prod.id_producto}`} × ${prod.cantidad} ($${prod
   }
 
   // Notificar al usuario sin hacer uso de alert()
-  notificarEstadoActualizado(idPedido, nuevoEstado);
+  notificarEstadoActualizado(idPedido, nuevoEstado, numero_orden); // ✅ le pasamos numero_orden como tercer argumento
 });
 
 // Función para actualizar el estado del pedido
@@ -71,7 +71,7 @@ function actualizarEstadoPedido(idPedido, nuevoEstado) {
   .then(data => {
     if (data.pedido) {
       // Notificar al usuario si el estado del pedido fue actualizado con éxito
-      notificarEstadoActualizado(idPedido, nuevoEstado);
+      notificarEstadoActualizado(idPedido, nuevoEstado, data.pedido.numero_orden);
     }
   })
   .catch(error => {
@@ -82,8 +82,8 @@ function actualizarEstadoPedido(idPedido, nuevoEstado) {
 }
 
 // Función para mostrar una notificación al usuario (sin usar alert())
-function notificarEstadoActualizado(idPedido, nuevoEstado) {
-  const mensaje = `El estado del pedido #${idPedido} ha sido actualizado a ${nuevoEstado}.`;
+function notificarEstadoActualizado(idPedido, nuevoEstado, numero_orden) {
+  const mensaje = `El estado del pedido #${numero_orden} ha sido actualizado a ${nuevoEstado}.`;
   
   // Mostrar el mensaje en la página (en lugar de usar alert)
   const notificationElement = document.createElement('div');
