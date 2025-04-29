@@ -164,12 +164,17 @@ exports.renderizarVistaPedidos = async (req, res, next) => {
       pagado: []
     };
 
+    // 🟢 Agregar productos a cada pedido
     for (const pedido of pedidos) {
+      const productos = await pedidosService.obtenerProductosPorPedido(pedido.id);
+      pedido.productos = productos;
+
       if (agrupados[pedido.estado]) {
         agrupados[pedido.estado].push(pedido);
       }
     }
 
+    // Ordenar pedidos por fecha
     for (const estado of Object.keys(agrupados)) {
       agrupados[estado].sort((a, b) => new Date(a.creado_en) - new Date(b.creado_en));
     }

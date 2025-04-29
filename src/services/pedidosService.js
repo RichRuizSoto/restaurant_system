@@ -212,12 +212,48 @@ exports.obtenerPedidosPorRestaurante = async (restId) => {
   return Object.values(pedidosMap);
 };
 
-// Actualizar estado de un pedido
+// Actualizar estado de un pedido y devolver con productos
 exports.cambiarEstadoPedido = async (idPedido, nuevoEstado) => {
-  // Validar que el nuevo estado sea válido (esto debería estar en el controlador)
+  // Actualizar el estado
   await db.query('UPDATE pedidos SET estado = ? WHERE id = ?', [nuevoEstado, idPedido]);
 
-  // Retornar el pedido actualizado
+  // Obtener el pedido actualizado
   const [rows] = await db.query('SELECT * FROM pedidos WHERE id = ?', [idPedido]);
-  return rows[0];
+  const pedido = rows[0];
+
+  if (!pedido) return null;
+
+  // Obtener los productos asociados al pedido
+  const [productos] = await db.query(`
+    SELECT dp.id_producto, dp.cantidad, dp.precio_unitario, pr.nombre_producto
+    FROM detalle_pedido dp
+    JOIN productos pr ON dp.id_producto = pr.id
+    WHERE dp.id_pedido = ?
+  `, [idPedido]);
+
+  pedido.productos = productos.map(p => ({
+    id_producto: p.id_producto,
+    cantidad: p.cantidad,
+    precio_unitario: p.precio_unitario,
+    nombre: p.nombre_producto
+  }));
+
+  return pedido;
+};
+
+// Obtener los productos de un pedido específico por ID
+exports.obtenerProductosPorPedido = async (idPedido) => {
+  const [productos] = await db.query(`
+    SELECT dp.id_producto, dp.cantidad, dp.precio_unitario, pr.nombre_producto
+    FROM detalle_pedido dp
+    JOIN productos pr ON dp.id_producto = pr.id
+    WHERE dp.id_pedido = ?
+  `, [idPedido]);
+
+  return productos.map(p => ({
+    id_producto: p.id_producto,
+    cantidad: p.cantidad,
+    precio_unitario: p.precio_unitario,
+    nombre: p.nombre_producto
+  }));
 };

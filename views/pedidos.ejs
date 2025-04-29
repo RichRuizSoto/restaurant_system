@@ -16,38 +16,45 @@
   <% estados.forEach(estado => { %>
     <section id="<%= estado %>-section">
       <h2>Pedidos <%= estado %></h2>
-      <% if (pedidos[estado] && pedidos[estado].length > 0) { %>
-        <ul>
+      <ul>
+        <% if (Array.isArray(pedidos[estado]) && pedidos[estado].length > 0) { %>
           <% pedidos[estado].forEach(pedido => { %>
             <li id="pedido-<%= pedido.id %>">
               <div class="pedido-header">
                 <span><strong>Orden:</strong> #<%= pedido.numero_orden %></span>
                 <span><strong>Mesa:</strong> <%= pedido.mesa %></span>
                 <span><strong>Total:</strong> $<%= parseFloat(pedido.total).toFixed(2) %></span>
-                <span><strong>Creado:</strong> <%= new Date(pedido.creado_en).toLocaleString() %></span>
+                <span><strong>Creado:</strong> 
+                  <%= pedido.creado_en ? new Date(pedido.creado_en).toLocaleString() : 'Fecha no disponible' %>
+                </span>
               </div>
               <ul class="productos-list">
-                <% pedido.productos.forEach(prod => { %>
-                  <li class="producto-item">
-                    <%= prod.nombre || `Producto ID ${prod.id_producto}` %> × <%= prod.cantidad %> ($<%= prod.precio_unitario || prod.precio %>)
-                  </li>
-                <% }) %>
+                <% if (Array.isArray(pedido.productos) && pedido.productos.length > 0) { %>
+                  <% pedido.productos.forEach(prod => { %>
+                    <li class="producto-item">
+                      <%= (prod.nombre && prod.nombre.trim()) ? prod.nombre : `Producto ID ${prod.id_producto}` %> × 
+                      <%= prod.cantidad %> 
+                      ($<%= prod.precio_unitario ?? prod.precio ?? '---' %>)
+                    </li>
+                  <% }) %>
+                <% } else { %>
+                  <li>No hay productos disponibles</li>
+                <% } %>
               </ul>
+
               <% if (estado === 'solicitado') { %>
                 <button class="button" onclick="actualizarEstadoPedido(<%= pedido.id %>, 'listo')">Marcar como listo</button>
-              <% } %>
-              <% if (estado === 'listo') { %>
+              <% } else if (estado === 'listo') { %>
                 <button class="button" onclick="actualizarEstadoPedido(<%= pedido.id %>, 'pagado')">Marcar como pagado</button>
-              <% } %>
-              <% if (estado === 'pagado') { %>
+              <% } else if (estado === 'pagado') { %>
                 <span>Pedido ya pagado</span>
               <% } %>
             </li>
           <% }) %>
-        </ul>
-      <% } else { %>
-        <p class="no-pedidos">No hay pedidos en este estado.</p>
-      <% } %>
+        <% } else { %>
+          <li class="no-pedidos">No hay pedidos en este estado.</li>
+        <% } %>
+      </ul>
     </section>
   <% }) %>
 

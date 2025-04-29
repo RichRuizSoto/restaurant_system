@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify(pedido)
       });
 
-      const { pedido, numero_orden } = await res.json();
+      const { data, numero_orden } = await res.json();
       console.log('Respuesta del servidor:', data); // Verifica la respuesta completa
 
       if (res.ok) {
