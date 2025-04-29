@@ -18,5 +18,6 @@ const obtenerRestaurantePorSlug = async (slug) => {
 
 module.exports = {
   obtenerRestaurantePorSlug,
-  obtenerIdRestaurantePorSlug
+  obtenerIdRestaurantePorSlug,
+  obtenerRestaurantePorId
 };

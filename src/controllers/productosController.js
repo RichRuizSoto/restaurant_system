@@ -1,5 +1,5 @@
 const productosService = require('../services/productosService');
-
+const restauranteService = require('../services/restaurantesService');
 
 // 🟢 Crear producto
 exports.agregarProducto = async (req, res, next) => {
@@ -103,14 +103,28 @@ exports.eliminarProductosPorRestaurante = async (req, res, next) => {
 
 
 // 📦 Obtener productos desde API (para frontend)
-exports.obtenerPorRestaurante = async (req, res, next) => {
+exports.obtenerProductosPorRestaurante = async (req, res, next) => {
   const { idRestaurante } = req.params;
 
   try {
-    const productos = await productosService.obtenerProductosFrontPorRestaurante(idRestaurante);
+    // Verifica si el restaurante existe por ID
+    const restaurante = await restauranteService.obtenerRestaurantePorId(idRestaurante);
+
+    if (!restaurante) {
+      return res.status(404).json({ mensaje: 'Restaurante no encontrado.' });
+    }
+
+    // Obtener productos del restaurante
+    const productos = await productosService.obtenerProductosPorRestaurante(idRestaurante);
+
+    if (!productos || productos.length === 0) {
+      return res.status(200).json([]);  // No hay productos pero el restaurante existe
+    }
+
+    // Si todo es correcto, enviar productos
     res.json(productos);
   } catch (error) {
-    console.error('❌ Error al obtener productos por restaurante:', error);
-    res.status(500).json({ error: 'Error al consultar productos' });
+    console.error('[obtenerProductosPorRestaurante] ❌ Error:', error);
+    res.status(500).json({ error: 'Error al obtener productos' });
   }
 };

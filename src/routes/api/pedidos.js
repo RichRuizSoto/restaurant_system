@@ -17,7 +17,4 @@ router.get('/estado/:restId', pedidosController.obtenerPedidosPorEstado);
 // 🔁 Cambiar estado de un pedido
 router.put('/:id/estado', pedidosController.actualizarEstadoPedido);
 
-//router.get('/vista/:slug', pedidosController.renderizarVistaPedidos);
-
-
 module.exports = router;

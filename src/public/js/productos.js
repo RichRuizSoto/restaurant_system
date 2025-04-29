@@ -32,45 +32,54 @@ async function obtenerProductos() {
   if (!idRestaurante) return;
 
   console.log("Obteniendo productos para restaurante:", idRestaurante);
-  const res = await fetch(`/api/productos/${idRestaurante}`);
-  
-  if (!res.ok) {
-    console.error("Error al obtener los productos", await res.json());
-    return;
-  }
-  
-  const productos = await res.json();
-  console.log("Productos recibidos:", productos);
 
-  const tbody = document.querySelector('#tablaProductos tbody');
-  tbody.innerHTML = ''; // Limpiar la tabla antes de llenarla
+  try {
+    const res = await fetch(`/api/productos/${idRestaurante}`);
+    const data = await res.json();
 
-  if (productos && productos.length > 0) {
-    productos.forEach(p => {
-      const precio = parseFloat(p.precio);
-      tbody.innerHTML += `
-        <tr>
-          <td>${p.id}</td>
-          <td>${p.nombre_producto}</td>
-          <td>${p.descripcion || ''}</td>
-          <td>$${precio.toFixed(2)}</td>
-          <td><span class="${obtenerClaseCategoria(p.categoria)}">${p.categoria}</span></td>
-          <td>${p.disponible ? 'Sí' : 'No'}</td>
-          <td>
-            <button onclick="cargarProducto(${p.id})">Editar</button>
-            <button onclick="eliminarProducto(${p.id})">Eliminar</button>
-            <button onclick="toggleDisponibilidad(${p.id}, ${p.disponible})">
-              ${p.disponible ? 'Desactivar' : 'Activar'}
-            </button>
-          </td>
-        </tr>
-      `;
-    });
-  } else {
-    console.log("No hay productos para mostrar");
-    // Opcional: Muestra un mensaje en la UI si no hay productos.
+    if (!res.ok) {
+      console.warn("[Frontend] No se encontraron productos:", data?.mensaje);
+      mostrarMensaje(data?.mensaje || 'No hay productos disponibles.', 'error');
+      return;
+    }
+
+    const productos = data;
+
+    console.log("Productos recibidos:", productos);
+
+    const tbody = document.querySelector('#tablaProductos tbody');
+    tbody.innerHTML = ''; // Limpiar la tabla
+
+    if (productos.length > 0) {
+      productos.forEach(p => {
+        const precio = parseFloat(p.precio);
+        tbody.innerHTML += `
+          <tr>
+            <td>${p.id}</td>
+            <td>${p.nombre_producto}</td>
+            <td>${p.descripcion || ''}</td>
+            <td>$${precio.toFixed(2)}</td>
+            <td><span class="${obtenerClaseCategoria(p.categoria)}">${p.categoria}</span></td>
+            <td>${p.disponible ? 'Sí' : 'No'}</td>
+            <td>
+              <button onclick="cargarProducto(${p.id})">Editar</button>
+              <button onclick="eliminarProducto(${p.id})">Eliminar</button>
+              <button onclick="toggleDisponibilidad(${p.id}, ${p.disponible})">
+                ${p.disponible ? 'Desactivar' : 'Activar'}
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+    } else {
+      mostrarMensaje("No hay productos disponibles aún.");
+    }
+  } catch (err) {
+    console.error('[obtenerProductos] ❌ Error:', err);
+    mostrarMensaje('Error al cargar productos', 'error');
   }
 }
+
 
 
 async function cargarProducto(id) {
