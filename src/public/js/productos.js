@@ -63,7 +63,6 @@ async function obtenerProductos() {
             <td>${p.disponible ? 'Sí' : 'No'}</td>
             <td>
               <button onclick="cargarProducto(${p.id})">Editar</button>
-              <button onclick="eliminarProducto(${p.id})">Eliminar</button>
               <button onclick="toggleDisponibilidad(${p.id}, ${p.disponible})">
                 ${p.disponible ? 'Desactivar' : 'Activar'}
               </button>
@@ -80,6 +79,7 @@ async function obtenerProductos() {
   }
 }
 
+//<button onclick="eliminarProducto(${p.id})">Eliminar</button>
 
 
 async function cargarProducto(id) {

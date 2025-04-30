@@ -34,20 +34,13 @@ exports.recibirPedido = async (req, res) => {
 const nuevoPedido = await pedidosService.crearPedido(pedido);
 
 // 2. Obtener los productos del pedido si aún no están incluidos
-const productos = await pedidosService.obtenerProductosPorPedido(nuevoPedido.id);
+//const productos = await pedidosService.obtenerProductosPorPedido(nuevoPedido.id);
 
 // 3. Emitir evento con estructura completa esperada por el frontend
 const io = getSocket();
-io.emit('nuevoPedido', {
-  id: nuevoPedido.id,
-  numero_orden: nuevoPedido.numero_orden,
-  mesa: nuevoPedido.mesa,
-  productos: productos,
-  total: nuevoPedido.total,
-  creado_en: nuevoPedido.creado_en,
-  estado: nuevoPedido.estado
-});
-    console.log('✅ Evento nuevoPedido emitido');
+console.log('📡 Emitiendo nuevoPedido con datos completos:', nuevoPedido);
+
+io.emit('nuevoPedido', nuevoPedido);
     
     res.status(201).json({ 
       pedido: nuevoPedido,
