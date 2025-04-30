@@ -50,12 +50,9 @@ exports.crearPedido = async (pedido) => {
 
         pedidoId = result.insertId;
         insertado = true;
-
       } catch (err) {
-        if (err.code !== 'ER_DUP_ENTRY') {
-          throw err; // Otro error inesperado
-        }
-        // Duplicado de numero_orden, reintenta
+        if (err.code !== 'ER_DUP_ENTRY') throw err;
+        // Si es duplicado, intentamos otra vez
       }
     }
 
@@ -63,7 +60,7 @@ exports.crearPedido = async (pedido) => {
       throw new Error('No se pudo generar un número de orden único después de varios intentos');
     }
 
-    // Insertar productos en 'detalle_pedido'
+    // Insertar productos en detalle_pedido
     for (const producto of pedido.productos) {
       if (
         !producto.id_producto ||
@@ -75,7 +72,7 @@ exports.crearPedido = async (pedido) => {
 
       await conn.query(
         `INSERT INTO detalle_pedido 
-          (id_pedido, id_producto, cantidad, precio_unitario)
+         (id_pedido, id_producto, cantidad, precio_unitario)
          VALUES (?, ?, ?, ?)`,
         [
           pedidoId,
@@ -88,12 +85,9 @@ exports.crearPedido = async (pedido) => {
 
     await conn.commit();
 
-    return {
-      numero_orden: numeroOrden,
-      total: pedido.total,
-      pedidoId,
-      productos: pedido.productos
-    };
+    // ✅ Devuelve el pedido completo para que lo use el frontend
+    const pedidoCompleto = await exports.obtenerPedidoPorId(pedidoId);
+    return pedidoCompleto;
 
   } catch (err) {
     await conn.rollback();
@@ -103,6 +97,7 @@ exports.crearPedido = async (pedido) => {
     conn.release();
   }
 };
+
 
 
 
@@ -256,4 +251,4 @@ exports.obtenerProductosPorPedido = async (idPedido) => {
     precio_unitario: p.precio_unitario,
     nombre: p.nombre_producto
   }));
-};
+}; 

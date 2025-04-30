@@ -1,4 +1,4 @@
-const gestorService = require('../services/gestorService'); 
+const gestorService = require('../services/gestorService');
 const { crearEstructuraRestaurante, eliminarEstructuraRestaurante } = require('../utils/restauranteFileManager');
 
 // Crear un establecimiento
@@ -73,6 +73,7 @@ const actualizarEstablecimiento = async (req, res) => {
   }
 };
 
+/*
 const eliminarEstablecimiento = async (req, res) => {
   const { id } = req.params;
 
@@ -86,7 +87,7 @@ const eliminarEstablecimiento = async (req, res) => {
     // Verificar si existen productos asociados al restaurante
     const productos = await gestorService.obtenerProductosPorRestaurante(id);
     if (productos.length > 0) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         error: 'No se puede eliminar el establecimiento porque hay productos asociados. Elimínalos primero.'
       });
     }
@@ -109,15 +110,16 @@ const eliminarEstablecimiento = async (req, res) => {
   } catch (error) {
     console.error('Error al eliminar el establecimiento:', error);
     res.status(500).json({ error: 'No se pudo eliminar el establecimiento' });
+
   }
 };
-
+*/
 
 
 module.exports = {
   crearRestaurante,
   listarEstablecimientos,
   obtenerEstablecimientoPorId,
-  actualizarEstablecimiento,
-  eliminarEstablecimiento
+  actualizarEstablecimiento
+  //eliminarEstablecimiento
 };
