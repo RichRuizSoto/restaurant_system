@@ -163,13 +163,23 @@ document.addEventListener('DOMContentLoaded', () => {
   function cargarCarrito() {
     try {
       const data = localStorage.getItem('carrito');
-      return data ? JSON.parse(data) : [];
+      if (!data) return [];
+  
+      const parsed = JSON.parse(data);
+      if (parsed.restauranteId !== window.restauranteId) {
+        // Si cambió de restaurante, limpiamos el carrito viejo
+        localStorage.removeItem('carrito');
+        return [];
+      }
+  
+      return parsed.items || [];
     } catch (err) {
       console.error('❌ Error al cargar carrito desde localStorage', err);
       showNotification('Error al cargar el carrito. Inténtalo nuevamente', 'error');
       return [];
     }
   }
+  
 
   // Mostrar el carrito si ya hay datos
   renderizarCarrito();
