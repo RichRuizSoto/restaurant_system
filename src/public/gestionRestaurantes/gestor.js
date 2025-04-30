@@ -27,16 +27,18 @@ function renderizarLista(establecimientos) {
     li.textContent = `${nombre} (${estado}) - Creado el: ${new Date(creado_en).toLocaleString()}`;
     
     // Botones para editar y eliminar
+    /*
     const btnEliminar = document.createElement('button');
     btnEliminar.textContent = 'Eliminar';
     btnEliminar.addEventListener('click', () => eliminarEstablecimiento(id));
+    */
 
     const btnEditar = document.createElement('button');
     btnEditar.textContent = 'Editar';
     btnEditar.addEventListener('click', () => editarEstablecimiento(id));
 
     li.appendChild(btnEditar);
-    li.appendChild(btnEliminar);
+    //li.appendChild(btnEliminar);
     
     $lista.appendChild(li);
   });
@@ -80,6 +82,7 @@ $form.addEventListener('submit', async (event) => {
   }
 });
 
+/*
 // Eliminar un establecimiento
 async function eliminarEstablecimiento(id) {
   try {
@@ -101,6 +104,7 @@ async function eliminarEstablecimiento(id) {
     alert('Error inesperado al eliminar el establecimiento');
   }
 }
+*/
 
 // Editar un establecimiento (versión mejorada)
 async function editarEstablecimiento(id) {
