@@ -54,21 +54,22 @@ async function obtenerProductos() {
       productos.forEach(p => {
         const precio = parseFloat(p.precio);
         tbody.innerHTML += `
-          <tr>
-            <td>${p.id}</td>
-            <td>${p.nombre_producto}</td>
-            <td>${p.descripcion || ''}</td>
-            <td>$${precio.toFixed(2)}</td>
-            <td><span class="${obtenerClaseCategoria(p.categoria)}">${p.categoria}</span></td>
-            <td>${p.disponible ? 'Sí' : 'No'}</td>
-            <td>
-              <button onclick="cargarProducto(${p.id})">Editar</button>
-              <button onclick="toggleDisponibilidad(${p.id}, ${p.disponible})">
-                ${p.disponible ? 'Desactivar' : 'Activar'}
-              </button>
-            </td>
-          </tr>
-        `;
+  <tr>
+    <td>${p.id}</td>
+    <td>${p.nombre_producto}</td>
+    <td>${p.descripcion || ''}</td>
+    <td>$${precio.toFixed(2)}</td>
+    <td><span class="${obtenerClaseCategoria(p.categoria)}">${p.categoria}</span></td>
+    <td>${p.disponible ? 'Sí' : 'No'}</td>
+    <td>
+      <button onclick="cargarProducto(${p.id})">Editar</button>
+      <button onclick="toggleDisponibilidad(${p.id}, ${p.disponible})" data-estado="${p.disponible ? 'desactivar' : 'activar'}">
+        ${p.disponible ? 'Desactivar' : 'Activar'}
+      </button>
+    </td>
+  </tr>
+`;
+
       });
     } else {
       mostrarMensaje("No hay productos disponibles aún.");
