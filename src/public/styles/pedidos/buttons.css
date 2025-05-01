@@ -1,0 +1,65 @@
+/* --- Estilo de botones generales --- */
+
+/* Estilos base para los botones */
+.button {
+    background-color: #1e7ebc; /* Color de fondo principal */
+    color: #fff; /* Color del texto */
+    border: none;
+    padding: 0.6rem 1.5rem; /* Padding ajustado con rem para escalabilidad */
+    font-size: 1rem;
+    border-radius: 0.375rem; /* Bordes redondeados más suaves */
+    cursor: pointer;
+    display: inline-block; /* Para evitar que los botones afecten el flujo de otros elementos */
+    text-align: center;
+    text-decoration: none; /* Aseguramos que no haya subrayado si el botón es un enlace */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transición para color y escala */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil para dar un toque de profundidad */
+  }
+  
+  .button:hover,
+  .button:focus {
+    background-color: #145a8c; /* Color de fondo al pasar el mouse */
+    outline: none;
+    transform: translateY(-2px); /* Efecto sutil de "levitar" cuando se pasa el mouse */
+  }
+  
+  .button:active {
+    transform: translateY(2px); /* Efecto de "presionar" el botón */
+  }
+  
+  .button:disabled {
+    background-color: #ccc; /* Fondo gris cuando está deshabilitado */
+    color: #777; /* Texto más claro */
+    cursor: not-allowed;
+    box-shadow: none; /* Eliminamos la sombra cuando está deshabilitado */
+  }
+  
+  /* Botones de tipo primario, para usar en situaciones destacadas */
+  .button.primary {
+    background-color: #3498db; /* Color más destacado */
+    border-radius: 0.375rem;
+  }
+  
+  .button.primary:hover {
+    background-color: #2980b9; /* Color de hover del botón primario */
+  }
+  
+  .button.primary:disabled {
+    background-color: #b0c6d4; /* Fondo gris más claro para el botón primario deshabilitado */
+  }
+  
+  /* Botones de tipo secundario, para uso menos prominente */
+  .button.secondary {
+    background-color: #f1f1f1; /* Fondo gris claro */
+    color: #2c3e50; /* Texto oscuro para contraste */
+    border: 1px solid #ccc; /* Borde sutil */
+  }
+  
+  .button.secondary:hover {
+    background-color: #ecf0f1; /* Hover más claro */
+  }
+  
+  .button.secondary:disabled {
+    background-color: #e0e0e0; /* Fondo gris más claro cuando está deshabilitado */
+  }
+  

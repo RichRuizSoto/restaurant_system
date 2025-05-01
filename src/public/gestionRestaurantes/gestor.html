@@ -64,26 +64,24 @@
   <div class="container mb-5">
     <h2 class="text-center mb-4">Establecimientos Registrados</h2>
     <ul id="establecimientos-lista" class="list-group">
-      <% establecimientos.forEach(function(establecimiento) { %>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <div class="restaurant-info">
-            <h4><%= establecimiento.nombre %></h4>
-            <p>Estado: <%= establecimiento.estado === 'activo' ? 'Activo' : 'Desactivado' %></p>
-          </div>
+      <!-- Aquí deberás insertar manualmente o con JS los establecimientos -->
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div class="restaurant-info">
+          <h4>Nombre del Establecimiento</h4>
+          <p>Estado: Activo</p>
+        </div>
 
-          <div class="buttons">
-            <button class="btn btn-warning" aria-label="Editar Establecimiento">
-              <i class="fas fa-edit"></i> Editar
-            </button>
-          </div>
-        </li>
-      <% }); %>
+        <div class="buttons">
+          <button class="btn btn-warning" aria-label="Editar Establecimiento">
+            <i class="fas fa-edit"></i> Editar
+          </button>
+        </div>
+      </li>
     </ul>
   </div>
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
   <script src="/socket.io/socket.io.js"></script>
   <script src="/gestionRestaurantes/app/gestor.js"></script>
 </body>

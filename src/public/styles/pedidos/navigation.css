@@ -1,0 +1,74 @@
+/* --- Estilo para la barra de navegación --- */
+
+/* Contenedor de los botones de navegación */
+.nav-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 2rem; /* Usamos 'rem' para una mejor escalabilidad */
+    margin-bottom: 2rem; /* Ajuste con 'rem' para flexibilidad */
+    flex-wrap: wrap; /* Aseguramos que los botones se ajusten en pantallas pequeñas */
+}
+
+/* Estilos base para cada botón de navegación */
+.nav-button {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1e7ebc;
+    position: relative;
+    padding: 0.5rem 1rem; /* Ajustamos el padding con rem para escalabilidad */
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s ease; /* Transiciones más suaves */
+    text-transform: uppercase; /* Hacer los textos en mayúsculas para mayor claridad */
+    letter-spacing: 0.5px; /* Mejor legibilidad */
+    outline: none; /* Eliminamos el outline por defecto que aparece en botones seleccionados */
+}
+
+/* Línea de subrayado animada */
+.nav-button:after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #1e7ebc;
+    transition: width 0.3s ease;
+}
+
+/* Efectos al pasar el mouse o al enfocar */
+.nav-button:hover,
+.nav-button:focus {
+    color: #145a8c;
+    transform: translateY(-2px); /* Sutil elevación al pasar el mouse */
+}
+
+/* Animación de la línea de subrayado en el estado hover o cuando está activo */
+.nav-button:hover:after,
+.nav-button.active:after {
+    width: 100%;
+}
+
+/* Estado activo del botón (con línea subrayada) */
+.nav-button.active {
+    color: #145a8c;
+    font-weight: 700; /* Resaltar el texto en estado activo */
+}
+
+/* Mejorando la accesibilidad: enfoque visual claro */
+.nav-button:focus-visible {
+    box-shadow: 0 0 0 2px rgba(30, 126, 188, 0.5); /* Sombra sutil para el enfoque */
+}
+
+/* Adaptabilidad en pantallas pequeñas */
+@media (max-width: 768px) {
+    .nav-buttons {
+        gap: 1rem; /* Reducimos el espacio entre botones en pantallas más pequeñas */
+    }
+    
+    .nav-button {
+        font-size: 1rem; /* Reducimos el tamaño de la fuente en pantallas más pequeñas */
+        padding: 0.4rem 0.8rem; /* Reducimos el padding */
+    }
+}

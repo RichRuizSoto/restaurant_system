@@ -1,0 +1,64 @@
+/* Variables */
+:root {
+    --primary-color: #555;
+    --secondary-color: #444;
+    --neutral-color: #999;
+    --border-color: #ecf0f1;
+    --highlight-color: #e74c3c; /* Color llamativo para el número de orden */
+    --highlight-bg: #fff; /* Fondo blanco para contraste */
+    --font-size: 1rem;
+    --font-size-large: 1.25rem; /* Tamaño de fuente más grande para el número de orden */
+    --spacing-small: 8px;
+    --spacing-medium: 15px;
+    --padding-header: 10px;
+    --padding-list: 20px;
+    --padding-no-pedidos: 20px 0;
+    --font-style-italic: italic;
+  }
+  
+  /* Encabezado de pedido */
+  .pedido-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: var(--spacing-medium);
+    padding-bottom: var(--padding-header);
+  }
+  
+  .pedido-header span {
+    font-size: var(--font-size);
+    color: var(--primary-color);
+  }
+  
+  /* Número de orden destacado */
+  .pedido-header .order-number {
+    font-size: var(--font-size-large);
+    font-weight: bold;
+    color: var(--highlight-color);
+    background-color: var(--highlight-bg);
+    border-radius: 5px;
+    padding: 5px 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Lista de productos */
+  .productos-list {
+    list-style: none;
+    padding-left: var(--padding-list);
+    margin: var(--spacing-medium) 0;
+  }
+  
+  .producto-item {
+    font-size: var(--font-size);
+    color: var(--secondary-color);
+    margin-bottom: var(--spacing-small);
+  }
+  
+  /* Mensaje sin pedidos */
+  .no-pedidos {
+    color: var(--neutral-color);
+    font-style: var(--font-style-italic);
+    text-align: center;
+    padding: var(--padding-no-pedidos);
+  }
+  

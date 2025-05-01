@@ -1,0 +1,50 @@
+/* Reset global */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif; /* Establece una fuente básica */
+  line-height: 1.5; /* Asegura un espacio adecuado entre las líneas */
+}
+
+ul, ol {
+  list-style: none; /* Elimina los estilos predeterminados de las listas */
+}
+
+a {
+  text-decoration: none; /* Elimina los subrayados por defecto de los enlaces */
+  color: inherit; /* Hace que los enlaces hereden el color del texto de su contenedor */
+}
+
+img {
+  max-width: 100%; /* Asegura que las imágenes no se desborden */
+  height: auto; /* Mantiene la proporción original de la imagen */
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+table {
+  border-collapse: collapse; /* Elimina los espacios entre celdas en las tablas */
+  width: 100%; /* Hace que las tablas ocupen todo el espacio disponible */
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: #ddd;
+}

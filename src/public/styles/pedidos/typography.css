@@ -1,0 +1,35 @@
+/* Variables para colores y tamaños */
+:root {
+    --primary-color: #1a252f; /* Color principal para h1 */
+    --secondary-color: #104063; /* Color para h2 */
+    --border-color: #dfe6ec; /* Color de la línea de h2 */
+    --font-weight-bold: 600;
+    --font-size-h1: 2.75rem;
+    --font-size-h2: 1.6rem;
+    --spacing-bottom: 20px;
+    --spacing-h2-padding-bottom: 8px;
+  }
+  
+  /* Estilos generales para encabezados */
+  h1, h2 {
+    font-weight: var(--font-weight-bold);
+    text-align: center;
+    margin-bottom: var(--spacing-bottom);
+  }
+  
+  /* Estilos específicos para h1 */
+  h1 {
+    font-size: var(--font-size-h1);
+    color: var(--primary-color);
+  }
+  
+  /* Estilos específicos para h2 */
+  h2 {
+    font-size: var(--font-size-h2);
+    color: var(--secondary-color);
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: var(--spacing-h2-padding-bottom);
+    margin-bottom: var(--spacing-bottom);
+  }
+  

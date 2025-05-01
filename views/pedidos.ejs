@@ -3,89 +3,94 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pedidos Restaurante <%= restId %></title>
-  <link rel="stylesheet" href="/styles/pedidos/pedidos.css">
+  <title>Pedidos Restaurante</title>
+
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <!-- Otros estilos -->
+  <link rel="stylesheet" href="/styles/pedidos/reset.css">
+  <link rel="stylesheet" href="/styles/pedidos/base.css">
+  <link rel="stylesheet" href="/styles/pedidos/sections.css">
+  <link rel="stylesheet" href="/styles/pedidos/pedido.css">
+  <link rel="stylesheet" href="/styles/pedidos/buttons.css">
+  <link rel="stylesheet" href="/styles/pedidos/notifications.css">
+    <link rel="stylesheet" href="/styles/pedidos/navigation.css">
+    <link rel="stylesheet" href="/styles/pedidos/typography.css">
+  <link rel="stylesheet" href="/styles/pedidos/responsive.css">
 </head>
 <body>
-  <h1>Pedidos del Restaurante ID <%= restId %></h1>
+  <main>
 
-  <!-- Barra de navegación -->
-  <div class="nav-buttons">
-    <button class="nav-button active" data-seccion="solicitado" id="btn-solicitado">Solicitado</button>
-    <button class="nav-button" data-seccion="listo" id="btn-listo">Listo</button>
-    <button class="nav-button" data-seccion="pagado" id="btn-pagado">Pagado</button>
-  </div>
+    <!-- Navegación -->
+    <nav class="nav-buttons" role="tablist" aria-label="Estados de pedidos">
+      <button class="nav-button active" role="tab" aria-selected="true" data-seccion="solicitado" id="btn-solicitado">
+        <i class="fas fa-hourglass-start"></i> Solicitado
+      </button>
+      <button class="nav-button" role="tab" aria-selected="false" data-seccion="listo" id="btn-listo">
+        <i class="fas fa-check-circle"></i> Listo
+      </button>
+      <button class="nav-button" role="tab" aria-selected="false" data-seccion="pagado" id="btn-pagado">
+        <i class="fas fa-credit-card"></i> Pagado
+      </button>
+    </nav>
 
-  <% const estados = ['solicitado', 'listo', 'pagado']; %>
+    <!-- Secciones de pedidos -->
+    <% const estados = ['solicitado', 'listo', 'pagado']; %>
+    <% estados.forEach(estado => { %>
+      <section id="<%= estado %>-section" class="pedido-section <%= estado === 'solicitado' ? 'active' : '' %>" aria-labelledby="btn-<%= estado %>">
+        <h2>Pedidos <%= estado %></h2>
+        <ul class="pedido-lista">
+          <% if (Array.isArray(pedidos[estado]) && pedidos[estado].length > 0) { %>
+            <% pedidos[estado].forEach(pedido => { %>
+              <li id="pedido-<%= pedido.id %>" class="pedido-item">
+                <div class="pedido-header">
+                  <span><strong>Orden:</strong> #<%= pedido.numero_orden %></span>
+                  <span><strong>Mesa:</strong> <%= pedido.mesa %></span>
+                  <span><strong>Total:</strong> $<%= parseFloat(pedido.total).toFixed(2) %></span>
+                  <span><strong>Creado:</strong> <%= pedido.creado_en ? new Date(pedido.creado_en).toLocaleString() : 'Fecha no disponible' %></span>
+                </div>
 
-  <% estados.forEach(estado => { %>
-    <section id="<%= estado %>-section" class="pedido-section <%= estado === 'solicitado' ? 'active' : '' %>">
-      <h2>Pedidos <%= estado %></h2>
-      <ul>
-        <% if (Array.isArray(pedidos[estado]) && pedidos[estado].length > 0) { %>
-          <% pedidos[estado].forEach(pedido => { %>
-            <li id="pedido-<%= pedido.id %>" class="pedido-item">
-              <div class="pedido-header">
-                <span><strong>Orden:</strong> #<%= pedido.numero_orden %></span>
-                <span><strong>Mesa:</strong> <%= pedido.mesa %></span>
-                <span><strong>Total:</strong> $<%= parseFloat(pedido.total).toFixed(2) %></span>
-                <span><strong>Creado:</strong> <%= pedido.creado_en ? new Date(pedido.creado_en).toLocaleString() : 'Fecha no disponible' %></span>
-              </div>
-              <ul class="productos-list">
-                <% if (Array.isArray(pedido.productos) && pedido.productos.length > 0) { %>
-                  <% pedido.productos.forEach(prod => { %>
-                    <li class="producto-item">
-                      <%= (prod.nombre && prod.nombre.trim()) ? prod.nombre : `Producto ID ${prod.id_producto}` %> × <%= prod.cantidad %> 
-                      ($<%= prod.precio_unitario ?? prod.precio ?? '---' %>)
-                    </li>
-                  <% }) %>
-                <% } else { %>
-                  <li>No hay productos disponibles</li>
-                <% } %>
-              </ul>
+                <ul class="productos-list">
+                  <% if (Array.isArray(pedido.productos) && pedido.productos.length > 0) { %>
+                    <% pedido.productos.forEach(prod => { %>
+                      <li class="producto-item">
+                        <%= (prod.nombre && prod.nombre.trim()) ? prod.nombre : `Producto ID ${prod.id_producto}` %> × <%= prod.cantidad %> 
+                        ($<%= prod.precio_unitario ?? prod.precio ?? '---' %>)
+                      </li>
+                    <% }) %>
+                  <% } else { %>
+                    <li class="producto-item">No hay productos disponibles</li>
+                  <% } %>
+                </ul>
 
-              <% if (estado === 'solicitado') { %>
-                <button class="button" onclick="actualizarEstadoPedido(<%= pedido.id %>, 'listo')">Marcar como listo</button>
-              <% } else if (estado === 'listo') { %>
-                <button class="button" onclick="actualizarEstadoPedido(<%= pedido.id %>, 'pagado')">Marcar como pagado</button>
-              <% } else if (estado === 'pagado') { %>
-                <span>Pedido ya pagado</span>
-              <% } %>
-            </li>
-          <% }) %>
-        <% } else { %>
-          <li class="no-pedidos">No hay pedidos en este estado.</li>
-        <% } %>
-      </ul>
-    </section>
-  <% }) %>
+                <div class="pedido-acciones">
+                  <% if (estado === 'solicitado') { %>
+                    <button class="button" onclick="actualizarEstadoPedido(<%= pedido.id %>, 'listo')">
+                      <i class="fas fa-check"></i> Marcar como listo
+                    </button>
+                  <% } else if (estado === 'listo') { %>
+                    <button class="button" onclick="actualizarEstadoPedido(<%= pedido.id %>, 'pagado')">
+                      <i class="fas fa-credit-card"></i> Marcar como pagado
+                    </button>
+                  <% } else if (estado === 'pagado') { %>
+                    <span class="estado-finalizado">
+                      <i class="fas fa-thumbs-up"></i> Pedido ya pagado
+                    </span>
+                  <% } %>
+                </div>
+              </li>
+            <% }) %>
+          <% } else { %>
+            <li class="no-pedidos">No hay pedidos en este estado.</li>
+          <% } %>
+        </ul>
+      </section>
+    <% }) %>
+  </main>
 
+  <!-- Scripts -->
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/pedidosSocket.js"></script>
-
-  <script>
-    // Lógica para cambiar sección activa
-    document.addEventListener('DOMContentLoaded', () => {
-      const botones = document.querySelectorAll('.nav-button');
-      const secciones = document.querySelectorAll('.pedido-section');
-
-      botones.forEach(boton => {
-        boton.addEventListener('click', () => {
-          const estado = boton.dataset.seccion;
-
-          // Desactivar todos los botones y secciones
-          botones.forEach(b => b.classList.remove('active'));
-          secciones.forEach(s => s.classList.remove('active'));
-
-          // Activar los seleccionados
-          boton.classList.add('active');
-          const seccionActiva = document.getElementById(`${estado}-section`);
-          if (seccionActiva) {
-            seccionActiva.classList.add('active');
-          }
-        });
-      });
-    });
-  </script>
 </body>
 </html>
