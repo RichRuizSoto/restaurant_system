@@ -43,7 +43,6 @@ socket.on('nuevoPedido', (data) => {
   notificarEstadoActualizado(id, estado, numero_orden);
 });
 
-
 // 🟢 Escuchar el evento cuando el estado de un pedido cambia
 socket.on('estadoPedidoActualizado', (data) => {
   console.log('[WebSocket] Pedido actualizado recibido:', data);
@@ -139,3 +138,30 @@ function mostrarMensajeError(mensaje) {
     errorElement.remove();
   }, 5000);
 }
+
+// Función para cambiar la sección activa (basada en el botón seleccionado)
+function cambiarSeccionActiva(seccion) {
+  const secciones = document.querySelectorAll('.pedido-section');
+  const botones = document.querySelectorAll('.nav-button');
+
+  // Ocultar todas las secciones
+  secciones.forEach(sec => sec.classList.remove('active'));
+  botones.forEach(boton => boton.classList.remove('active'));
+
+  // Mostrar la sección seleccionada y activar el botón correspondiente
+  document.getElementById(`${seccion}-section`).classList.add('active');
+  document.querySelector(`.nav-button[data-seccion="${seccion}"]`).classList.add('active');
+}
+
+// Asociar eventos a los botones de navegación
+document.querySelectorAll('.nav-button').forEach(boton => {
+  boton.addEventListener('click', (e) => {
+    const seccion = e.target.getAttribute('data-seccion');
+    cambiarSeccionActiva(seccion);
+  });
+});
+
+// Llamar a cambiarSeccionActiva con 'solicitado' como sección activa inicial
+document.addEventListener('DOMContentLoaded', () => {
+  cambiarSeccionActiva('solicitado');
+});
