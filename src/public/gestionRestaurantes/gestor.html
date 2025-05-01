@@ -3,77 +3,88 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Gestión de Establecimientos</title>
 
-  <!-- Vinculando con Bootstrap para estilos modernos y responsivos -->
+  <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- Vinculando iconos Font Awesome para botones y otros iconos -->
+  <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
-  <!-- Vinculando los archivos CSS externos -->
+  <!-- Estilos personalizados -->
+  <link rel="stylesheet" href="/gestionRestaurantes/styles/reset.css">
   <link rel="stylesheet" href="/gestionRestaurantes/styles/responsive.css">
   <link rel="stylesheet" href="/gestionRestaurantes/styles/form.css">
   <link rel="stylesheet" href="/gestionRestaurantes/styles/buttons.css">
   <link rel="stylesheet" href="/gestionRestaurantes/styles/list.css">
-  <link rel="stylesheet" href="/gestionRestaurantes/styles/reset.css">
 </head>
 
 <body>
+  <!-- Formulario de creación -->
+  <div class="container-fluid px-5 mt-5">
+    <h2 class="text-center mb-4">Crear Nuevo Establecimiento</h2>
 
-  <div class="container mt-5">
-    <!-- Formulario para crear un nuevo establecimiento -->
-    <div class="row justify-content-center">
-      <div class="col-12 col-md-8 col-lg-6"> <!-- Cambiado para aprovechar el 100% del ancho en móviles -->
-        <h2 class="text-center mb-4">Crear Nuevo Establecimiento</h2>
-        <form id="formCrearEstablecimiento" class="form-container">
-          <div class="form-group mb-3">
-            <label for="nombre">Nombre del Establecimiento:</label>
-            <input type="text" id="nombre" name="nombre" class="form-control" required placeholder="Nombre del establecimiento">
-          </div>
-
-          <div class="form-group mb-3">
-            <label for="estado">Estado del Establecimiento:</label>
-            <select id="estado" name="estado" class="form-select" required>
-              <option value="activo">Activo</option>
-              <option value="desactivo">Desactivado</option>
-            </select>
-          </div>
-
-          <button type="submit" class="btn btn-primary w-100" aria-label="Crear Establecimiento">
-            <i class="fas fa-plus-circle"></i> Crear Establecimiento
-          </button>
-        </form>
+    <form id="formCrearEstablecimiento" class="form-container needs-validation" novalidate>
+      <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input
+          type="text"
+          id="nombre"
+          name="nombre"
+          class="form-control"
+          required
+          placeholder="Nombre del establecimiento"
+        >
+        <div class="invalid-feedback">
+          Por favor ingresa el nombre del establecimiento.
+        </div>
       </div>
-    </div>
 
-    <hr class="my-5">
+      <div class="form-group">
+        <label for="estado">Estado:</label>
+        <select id="estado" name="estado" class="form-select" required>
+          <option value="">Selecciona una opción</option>
+          <option value="activo">Activo</option>
+          <option value="desactivo">Desactivado</option>
+        </select>
+        <div class="invalid-feedback">
+          Selecciona un estado válido.
+        </div>
+      </div>
 
-    <!-- Lista de establecimientos -->
-    <div class="list-container mb-5">
-      <h2 class="text-center mb-4">Establecimientos Registrados</h2>
-      <ul id="establecimientos-lista" class="list-group">
-        <!-- Ejemplo de un elemento -->
+      <button type="submit" class="btn btn-primary" aria-label="Crear Establecimiento">
+        <i class="fas fa-plus-circle"></i> Crear
+      </button>
+    </form>
+  </div>
+
+  <hr class="my-5">
+
+  <!-- Lista de establecimientos -->
+  <div class="container mb-5">
+    <h2 class="text-center mb-4">Establecimientos Registrados</h2>
+    <ul id="establecimientos-lista" class="list-group">
+      <% establecimientos.forEach(function(establecimiento) { %>
         <li class="list-group-item d-flex justify-content-between align-items-center">
           <div class="restaurant-info">
-            <h4>Restaurante Ejemplo</h4>
-            <p>Estado: Activo</p>
+            <h4><%= establecimiento.nombre %></h4>
+            <p>Estado: <%= establecimiento.estado === 'activo' ? 'Activo' : 'Desactivado' %></p>
           </div>
 
-          <!-- Solo botón de editar -->
           <div class="buttons">
             <button class="btn btn-warning" aria-label="Editar Establecimiento">
               <i class="fas fa-edit"></i> Editar
             </button>
           </div>
         </li>
-      </ul>
-    </div>
+      <% }); %>
+    </ul>
   </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="/gestionRestaurantes/app/gestor.js"></script>
-
 </body>
 </html>

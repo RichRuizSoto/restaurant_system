@@ -21,7 +21,12 @@ async function cargarEstablecimientos() {
 
 // 🧱 Renderizar lista en el DOM
 function renderizarLista(establecimientos) {
+  // Usamos un fragmento de documento para evitar manipular el DOM directamente muchas veces
+  const fragmento = document.createDocumentFragment();
+
+  // Limpiamos la lista antes de agregar los elementos
   $lista.innerHTML = '';
+
   establecimientos.forEach(({ id, nombre, estado, creado_en }) => {
     const li = document.createElement('li');
     li.className = 'list-group-item d-flex justify-content-between align-items-center';
@@ -46,9 +51,14 @@ function renderizarLista(establecimientos) {
     li.appendChild(infoDiv);
     li.appendChild(btnGroup);
 
-    $lista.appendChild(li);
+    // Agregamos el <li> al fragmento en lugar de al DOM directamente
+    fragmento.appendChild(li);
   });
+
+  // Finalmente agregamos todo el contenido de una vez al DOM
+  $lista.appendChild(fragmento);
 }
+
 
 // ✅ Evento al enviar el formulario
 $form.addEventListener('submit', async (event) => {
