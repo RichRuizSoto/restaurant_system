@@ -1,0 +1,72 @@
+/* ===========================
+   Archivo: reset.css
+   Estilo base (Reset / Normalize simplificado)
+   =========================== */
+
+/* Box-sizing universal y eliminación de márgenes/padding */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Quitar subrayado y establecer color heredado para enlaces */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Establecer tipografía base y antialiasing */
+html {
+    font-size: 100%; /* 16px por defecto */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Aplicar estilos base al body */
+body {
+    line-height: 1.6;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #ffffff;
+    color: #212529;
+    min-height: 100vh;
+}
+
+/* Imágenes y medios con comportamiento responsivo */
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Quitar estilos de lista predeterminados */
+ul,
+ol {
+    list-style: none;
+}
+
+/* Eliminar bordes y estilos por defecto de botones y formularios */
+button,
+input,
+select,
+textarea {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: none;
+    outline: none;
+}
+
+/* Eliminar estilo de foco por defecto en botones (accesibilidad personalizada se puede añadir aparte) */
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+}

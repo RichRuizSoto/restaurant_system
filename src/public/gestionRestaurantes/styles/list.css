@@ -1,0 +1,30 @@
+/* ===========================
+   Archivo: lista-restaurantes.css
+   Estilos para la lista de establecimientos
+   =========================== */
+
+/* Elemento individual de la lista */
+.list-group-item {
+    background-color: #f5f5f5; /* Fondo claro y neutro */
+    color: #333; /* Texto oscuro para mejor legibilidad */
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+/* Hover para mejor interacción */
+.list-group-item:hover {
+    background-color: #ebebeb;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* Responsive: ajuste en pantallas medianas en adelante */
+@media (min-width: 768px) {
+    .list-group-item {
+        padding: 1.25rem;
+    }
+}

@@ -42,7 +42,7 @@ const crearEstructuraRestaurante = async (nombreRestaurante) => {
   try {
     await fse.mkdirp(destino); // Crea la carpeta principal del restaurante
 
-    const carpetas = ['admin', 'login', 'menu', 'productos', 'pedidos'];
+    const carpetas = ['login', 'menu', 'productos', 'pedidos'];
 
     for (const carpeta of carpetas) {
       const origenCarpeta = path.join(PLANTILLA_ORIGEN, carpeta);

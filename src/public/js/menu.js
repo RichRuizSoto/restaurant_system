@@ -3,25 +3,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const totalCarrito = document.getElementById('total-carrito');
   const btnEnviar = document.getElementById('btn-enviar-pedido');
   const mesaInput = document.getElementById('mesa');
+  const restauranteId = window.restauranteId;
   let carrito = cargarCarrito();
 
-  // Función para mostrar notificaciones
+  // Mostrar notificación
   function showNotification(message, type = 'success') {
+    const container = document.getElementById('notification-container');
     const notification = document.createElement('div');
     notification.classList.add('notification', type);
     notification.textContent = message;
-
-    const container = document.getElementById('notification-container');
     container.appendChild(notification);
 
-    setTimeout(() => {
-      notification.classList.add('show');
-    }, 10);
+    requestAnimationFrame(() => notification.classList.add('show'));
 
     setTimeout(() => {
       notification.classList.remove('show');
       setTimeout(() => notification.remove(), 500);
-    }, 5000);
+    }, 4000);
   }
 
   // Escuchar botones "Agregar"
@@ -32,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Agregar productos al carrito
+  // Agregar producto al carrito
   function agregarAlCarrito(producto) {
     const existente = carrito.find(p => p.id_producto === producto.id);
     if (existente) {
@@ -47,9 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     guardarCarrito();
     renderizarCarrito();
+    showNotification(`${producto.nombre_producto} agregado al carrito 🛒`);
   }
 
-  // Renderizar carrito
+  // Renderizar productos del carrito
   function renderizarCarrito() {
     listaCarrito.innerHTML = '';
     let total = 0;
@@ -71,23 +70,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     totalCarrito.textContent = total.toFixed(2);
 
+    // Quitar producto
     document.querySelectorAll('.quitar').forEach(btn => {
       btn.addEventListener('click', e => {
         const i = parseInt(e.currentTarget.dataset.index);
-        carrito.splice(i, 1);
+        const eliminado = carrito.splice(i, 1);
         guardarCarrito();
         renderizarCarrito();
+        showNotification(`${eliminado[0].nombre} eliminado del carrito`, 'warning');
       });
     });
 
+    // Disminuir cantidad
     document.querySelectorAll('.disminuir').forEach(btn => {
       btn.addEventListener('click', e => {
         const i = parseInt(e.currentTarget.dataset.index);
-        if (carrito[i].cantidad > 1) {
-          carrito[i].cantidad -= 1;
+        const item = carrito[i];
+
+        if (item.cantidad > 1) {
+          item.cantidad -= 1;
+          showNotification(`Cantidad de ${item.nombre} reducida`, 'info');
         } else {
           carrito.splice(i, 1);
+          showNotification(`${item.nombre} eliminado del carrito`, 'warning');
         }
+
         guardarCarrito();
         renderizarCarrito();
       });
@@ -97,17 +104,18 @@ document.addEventListener('DOMContentLoaded', () => {
   // Enviar pedido
   btnEnviar.addEventListener('click', async () => {
     const mesa = parseInt(mesaInput.value);
-    if (isNaN(mesa) || mesa <= 0) {
-      return showNotification('Por favor, ingresa un número de mesa válido', 'error');
+    if (!mesa || mesa <= 0) {
+      return showNotification('Por favor ingresa un número de mesa válido', 'error');
     }
 
     if (carrito.length === 0) {
-      return showNotification('No hay productos en el carrito', 'warning');
+      return showNotification('El carrito está vacío', 'warning');
     }
 
     const total = parseFloat(totalCarrito.textContent);
     const pedido = {
-      id_restaurante: window.restauranteId,
+      id_restaurante: restauranteId,
+      mesa,
       productos: carrito.map(p => ({
         id_producto: p.id_producto,
         cantidad: p.cantidad,
@@ -127,46 +135,41 @@ document.addEventListener('DOMContentLoaded', () => {
       const { data, numero_orden } = await res.json();
 
       if (res.ok) {
-        showNotification(`✅ Pedido enviado. N° orden: ${numero_orden}`, 'success');
+        showNotification(`✅ Pedido enviado con éxito. N° orden: ${numero_orden}`, 'success');
         carrito = [];
         guardarCarrito();
         renderizarCarrito();
       } else {
-        showNotification(data.mensaje || 'Error al enviar el pedido', 'error');
-        console.log('Error en el envío del pedido:', data);
+        showNotification(data?.mensaje || 'Error al enviar el pedido', 'error');
       }
-    } catch (error) {
-      console.error('❌ Error al enviar el pedido:', error);
-      showNotification('Error de conexión con el servidor', 'error');
+    } catch (err) {
+      console.error('❌ Error al enviar el pedido:', err);
+      showNotification('Error de conexión. Inténtalo nuevamente.', 'error');
     }
   });
 
-  // Guardar carrito
+  // Guardar carrito en localStorage
   function guardarCarrito() {
     try {
-      localStorage.setItem('carrito', JSON.stringify(carrito));
+      const data = {
+        restauranteId,
+        items: carrito
+      };
+      localStorage.setItem('carrito', JSON.stringify(data));
     } catch (err) {
-      console.error('❌ Error al guardar carrito en localStorage', err);
-      showNotification('No se pudo guardar el carrito. Inténtalo nuevamente', 'error');
+      console.error('❌ Error al guardar carrito:', err);
+      showNotification('No se pudo guardar el carrito', 'error');
     }
   }
 
-  // Cargar carrito
+  // Cargar carrito desde localStorage
   function cargarCarrito() {
     try {
-      const data = localStorage.getItem('carrito');
-      if (!data) return [];
-
-      const parsed = JSON.parse(data);
-      if (parsed.restauranteId !== window.restauranteId) {
-        localStorage.removeItem('carrito');
-        return [];
-      }
-
-      return parsed.items || [];
+      const data = JSON.parse(localStorage.getItem('carrito'));
+      if (!data || data.restauranteId !== restauranteId) return [];
+      return data.items || [];
     } catch (err) {
-      console.error('❌ Error al cargar carrito desde localStorage', err);
-      showNotification('Error al cargar el carrito. Inténtalo nuevamente', 'error');
+      console.error('❌ Error al cargar carrito:', err);
       return [];
     }
   }

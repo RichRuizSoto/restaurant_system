@@ -24,22 +24,28 @@ function renderizarLista(establecimientos) {
   $lista.innerHTML = '';
   establecimientos.forEach(({ id, nombre, estado, creado_en }) => {
     const li = document.createElement('li');
-    li.textContent = `${nombre} (${estado}) - Creado el: ${new Date(creado_en).toLocaleString()}`;
-    
-    // Botones para editar y eliminar
-    /*
-    const btnEliminar = document.createElement('button');
-    btnEliminar.textContent = 'Eliminar';
-    btnEliminar.addEventListener('click', () => eliminarEstablecimiento(id));
-    */
+    li.className = 'list-group-item d-flex justify-content-between align-items-center';
+
+    const infoDiv = document.createElement('div');
+    infoDiv.className = 'restaurant-info';
+    infoDiv.innerHTML = `
+      <h4>${nombre}</h4>
+      <p>Estado: ${estado} - Creado el: ${new Date(creado_en).toLocaleString()}</p>
+    `;
+
+    const btnGroup = document.createElement('div');
+    btnGroup.className = 'buttons';
 
     const btnEditar = document.createElement('button');
-    btnEditar.textContent = 'Editar';
+    btnEditar.className = 'btn btn-warning';
+    btnEditar.setAttribute('aria-label', 'Editar Establecimiento');
+    btnEditar.innerHTML = '<i class="fas fa-edit"></i> Editar';
     btnEditar.addEventListener('click', () => editarEstablecimiento(id));
 
-    li.appendChild(btnEditar);
-    //li.appendChild(btnEliminar);
-    
+    btnGroup.appendChild(btnEditar);
+    li.appendChild(infoDiv);
+    li.appendChild(btnGroup);
+
     $lista.appendChild(li);
   });
 }
@@ -68,8 +74,8 @@ $form.addEventListener('submit', async (event) => {
     const data = await res.json();
 
     if (!res.ok) {
-      console.warn('[Frontend] No se pudo eliminar el establecimiento:', data.error);
-      alert(`❌ No se pudo eliminar:\n${data.error}`);
+      console.warn('[Frontend] No se pudo crear el establecimiento:', data.error);
+      alert(`❌ No se pudo crear:\n${data.error}`);
       return;
     }
 
@@ -82,31 +88,7 @@ $form.addEventListener('submit', async (event) => {
   }
 });
 
-/*
-// Eliminar un establecimiento
-async function eliminarEstablecimiento(id) {
-  try {
-    const res = await fetch(`/api/gestor/establecimientos/${id}`, {
-      method: 'DELETE'
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      alert(data.error || 'Error al eliminar el establecimiento');
-      return;
-    }
-
-    alert('Establecimiento eliminado con éxito');
-    cargarEstablecimientos(); // Actualiza la lista
-  } catch (err) {
-    console.error('[Frontend] Error al eliminar el establecimiento:', err);
-    alert('Error inesperado al eliminar el establecimiento');
-  }
-}
-*/
-
-// Editar un establecimiento (versión mejorada)
+// Editar un establecimiento
 async function editarEstablecimiento(id) {
   const nombreNuevo = prompt('Nuevo nombre del establecimiento:')?.trim();
   const estadoNuevo = prompt('Nuevo estado del establecimiento (activo/desactivo):')?.trim();
@@ -139,7 +121,6 @@ async function editarEstablecimiento(id) {
     alert('Error inesperado al actualizar el establecimiento');
   }
 }
-
 
 // 🔌 WebSocket: escuchar evento de actualización
 socket.on('actualizarEstablecimientos', () => {

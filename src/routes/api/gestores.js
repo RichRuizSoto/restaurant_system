@@ -9,6 +9,5 @@ router.post('/crear', validarRestaurante, gestorController.crearRestaurante);
 router.get('/establecimientos', gestorController.listarEstablecimientos);
 router.get('/establecimientos/:id', gestorController.obtenerEstablecimientoPorId);
 router.put('/establecimientos/:id', gestorController.actualizarEstablecimiento);
-//router.delete('/establecimientos/:id', gestorController.eliminarEstablecimiento);
 
 module.exports = router;

@@ -3,14 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <title>Menú de <%= restaurante.nombre %></title>
-  <link rel="stylesheet" href="/styles/menu/menu.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
+  <link rel="stylesheet" href="/styles/menu/notificaciones.css">
+  <link rel="stylesheet" href="/styles/menu/header.css">
+  <link rel="stylesheet" href="/styles/menu/botones.css">
+  <link rel="stylesheet" href="/styles/menu/animaciones.css">
+  <link rel="stylesheet" href="/styles/menu/global.css">
+  <link rel="stylesheet" href="/styles/menu/productos.css">
+  <link rel="stylesheet" href="/styles/menu/responsive.css">
+  <link rel="stylesheet" href="/styles/menu/carrito.css">
+
   <!-- Font Awesome para íconos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
   <div class="container">
+    <!-- Encabezado del sitio -->
     <header>
       <h1><i class="fas fa-utensils"></i> Menú de <%= restaurante.nombre %></h1>
     </header>
@@ -24,10 +33,11 @@
       <p><strong>Slug:</strong> <%= restaurante.slug %></p>
     </section>
 
-    <!-- Menú agrupado por categorías -->
+    <!-- Secciones de productos por categoría -->
     <% for (const categoria in productosPorCategoria) { %>
       <section class="categoria">
         <h2><i class="fas fa-tags"></i> <%= categoria %></h2>
+
         <% productosPorCategoria[categoria].forEach(producto => { %>
           <div class="producto">
             <h3><%= producto.nombre_producto %></h3>
@@ -41,29 +51,49 @@
       </section>
     <% } %>
 
-    <!-- Resumen del carrito -->
+    <!-- Sección del carrito -->
     <section id="carrito">
       <h2><i class="fas fa-receipt"></i> Tu Pedido</h2>
-      <label for="mesa">Número de mesa:</label>
-      <input type="number" id="mesa" min="1" value="1"><br><br>
+
+      <label for="mesa"><i class="fas fa-chair"></i> Número de mesa:</label>
+      <input type="text" id="mesa" list="mesas-lista" placeholder="Escribe o selecciona una mesa">
+      <datalist id="mesas-lista">
+        <!-- Las opciones de mesa se llenarán dinámicamente con JS -->
+      </datalist>
 
       <ul id="lista-carrito">
-        <!-- Productos agregados se insertarán aquí -->
+        <!-- Elementos del carrito se insertan por JS -->
       </ul>
 
       <p><strong>Total: $<span id="total-carrito">0.00</span></strong></p>
+
       <button id="btn-enviar-pedido">
         <i class="fas fa-paper-plane"></i> Enviar Pedido
       </button>
     </section>
 
-    <!-- Contenedor para notificaciones -->
+    <!-- Notificaciones emergentes -->
     <div id="notification-container"></div>
   </div>
 
-  <!-- Pasar el ID del restaurante al JS -->
+  <!-- Variable global para JS -->
   <script>
     window.restauranteId = <%= restaurante.id %>;
+
+    // Suponiendo que el número de mesas disponibles es 10
+    const mesas = ['Mesa 1', 'Mesa 2', 'Mesa 3', 'Mesa 4', 'Mesa 5', 'Mesa 6', 'Mesa 7', 'Mesa 8', 'Mesa 9', 'Mesa 10'];
+
+    const datalist = document.getElementById('mesas-lista');
+    
+    // Limpiamos las opciones anteriores
+    datalist.innerHTML = '';
+
+    // Generamos las opciones del datalist
+    mesas.forEach(mesa => {
+      const option = document.createElement('option');
+      option.value = mesa;
+      datalist.appendChild(option);
+    });
   </script>
 
   <!-- JS personalizado -->

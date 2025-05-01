@@ -51,7 +51,7 @@ exports.renderizarVistaProductos = async (req, res) => {
       return res.status(404).send('Restaurante no encontrado');
     }
 
-    res.render('restaurantes/productos', { slug, idRestaurante: restauranteId });
+    res.render('productos', { slug, idRestaurante: restauranteId });
   } catch (error) {
     console.error('[renderizarVistaProductos] ❌ Error:', error);
     res.status(500).send('Error al cargar la vista del restaurante');
