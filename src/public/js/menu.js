@@ -52,9 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderizarCarrito() {
     listaCarrito.innerHTML = '';
     let total = 0;
-
+  
     carrito.forEach((item, index) => {
       const li = document.createElement('li');
+      li.classList.add('carrito-item');  // Añades una clase al <li>
+      li.style.backgroundColor = 'rgba(0, 0, 0, 0)'; // Establecer el fondo transparente
+  
       li.innerHTML = `
         ${item.nombre} x${item.cantidad} - $${(item.precio * item.cantidad).toFixed(2)}
         <button class="quitar" data-index="${index}" aria-label="Quitar del carrito">
@@ -64,12 +67,13 @@ document.addEventListener('DOMContentLoaded', () => {
           <i class="fas fa-minus-circle"></i>
         </button>
       `;
+      
       listaCarrito.appendChild(li);
       total += item.precio * item.cantidad;
     });
-
+  
     totalCarrito.textContent = total.toFixed(2);
-
+  
     // Quitar producto
     document.querySelectorAll('.quitar').forEach(btn => {
       btn.addEventListener('click', e => {
@@ -80,13 +84,13 @@ document.addEventListener('DOMContentLoaded', () => {
         showNotification(`${eliminado[0].nombre} eliminado del carrito`, 'warning');
       });
     });
-
+  
     // Disminuir cantidad
     document.querySelectorAll('.disminuir').forEach(btn => {
       btn.addEventListener('click', e => {
         const i = parseInt(e.currentTarget.dataset.index);
         const item = carrito[i];
-
+  
         if (item.cantidad > 1) {
           item.cantidad -= 1;
           showNotification(`Cantidad de ${item.nombre} reducida`, 'info');
@@ -94,12 +98,13 @@ document.addEventListener('DOMContentLoaded', () => {
           carrito.splice(i, 1);
           showNotification(`${item.nombre} eliminado del carrito`, 'warning');
         }
-
+  
         guardarCarrito();
         renderizarCarrito();
       });
     });
   }
+  
 
   // Enviar pedido
   btnEnviar.addEventListener('click', async () => {

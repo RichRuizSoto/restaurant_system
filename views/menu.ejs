@@ -5,25 +5,20 @@
   <title>Menú de <%= restaurante.nombre %></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="/styles/menu/notificaciones.css">
-  <link rel="stylesheet" href="/styles/menu/header.css">
-  <link rel="stylesheet" href="/styles/menu/botones.css">
-  <link rel="stylesheet" href="/styles/menu/animaciones.css">
+
   <link rel="stylesheet" href="/styles/menu/global.css">
-  <link rel="stylesheet" href="/styles/menu/productos.css">
-  <link rel="stylesheet" href="/styles/menu/responsive.css">
-  <link rel="stylesheet" href="/styles/menu/carrito.css">
+
 
   <!-- Font Awesome para íconos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body>
+<body class="tema-oscuro"> <!-- o "tema-fantasia", o simplemente "" para claro -->
   <div class="container">
     <!-- Encabezado del sitio -->
     <header>
       <h1><i class="fas fa-utensils"></i> Menú de <%= restaurante.nombre %></h1>
     </header>
-
+<div class="notification-container" id="notification-container"></div>
     <!-- Información del restaurante -->
     <section class="info-restaurante">
       <h2><i class="fas fa-info-circle"></i> Detalles del Restaurante</h2>
