@@ -47,7 +47,6 @@ function renderizarLista(establecimientos) {
 
     const btnEditar = document.createElement('button');
     btnEditar.className = 'btn btn-warning';
-    btnEditar.setAttribute('aria-label', 'Editar Establecimiento');
     btnEditar.innerHTML = '<i class="fas fa-edit"></i> Editar';
     btnEditar.addEventListener('click', () => mostrarModalEditar(id, nombre, estado));
 
@@ -109,7 +108,13 @@ function mostrarModalEditar(id, nombre, estado) {
   $editarNombreInput.value = nombreOriginal;
   $editarEstadoInput.value = estadoOriginal;
 
+  // Mostrar el modal
   modalEditar.show();
+
+  // Establecer el foco en el primer campo de entrada después de abrir el modal
+  setTimeout(() => {
+    $editarNombreInput.focus();
+  }, 100); // Tiempo necesario para asegurar que el modal se haya cargado completamente
 }
 
 // 💾 Guardar cambios desde el modal
@@ -126,7 +131,7 @@ $formEditar.addEventListener('submit', async (event) => {
 
   // 🛑 Comparar con valores originales
   if (nombre === nombreOriginal && estado === estadoOriginal) {
-    mostrarToast('ℹNo se realizaron cambios', 'info');
+    mostrarToast('No se realizaron cambios', 'info');
     modalEditar.hide();
     return;
   }
@@ -156,7 +161,7 @@ $formEditar.addEventListener('submit', async (event) => {
   }
 });
 
-
+// Mostrar Toast de notificación
 function mostrarToast(mensaje, tipo = 'success') {
   const toastEl = document.getElementById('toastNotificacion');
   const toastMensaje = document.getElementById('toastMensaje');
@@ -178,7 +183,6 @@ function mostrarToast(mensaje, tipo = 'success') {
 
   toast.show();
 }
-
 
 // 🔌 WebSocket para actualizaciones en tiempo real
 socket.on('actualizarEstablecimientos', () => {

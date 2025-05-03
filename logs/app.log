@@ -301,3 +301,30 @@
 2025-05-03T18:46:07.749Z [32minfo[39m: 🔄 Carpeta renombrada de eeeefffffssrr a eeeefffffssrrttt
 2025-05-03T18:47:30.936Z [32minfo[39m: 🔄 Carpeta renombrada de eeeefffffssrrttt a eeeefff
 2025-05-03T18:53:42.650Z [32minfo[39m: 🔄 Carpeta renombrada de eeeefff a eeeefffssss
+2025-05-03T19:01:24.125Z [32minfo[39m: 🔄 Carpeta renombrada de eeeefffssss a eeeefffssss33
+2025-05-03T19:02:53.724Z [32minfo[39m: 🔄 Carpeta renombrada de eeeefffssss33 a eeeefffssss3
+2025-05-03T19:05:25.987Z [32minfo[39m: 🔄 Carpeta renombrada de eeeefffssss3 a eeeefffssss34
+2025-05-03T19:05:53.378Z [32minfo[39m: 🔄 Carpeta renombrada de eeeefffssss34 a eeeefffssss3
+2025-05-03T19:22:37.009Z [32minfo[39m: 🔄 Carpeta renombrada de eeeefffssss3 a eeeefffssss3k
+2025-05-03T19:22:46.141Z [32minfo[39m: 🔄 Carpeta renombrada de eeeefffssss3k a eeeefffssss3
+2025-05-03T19:22:53.821Z [32minfo[39m: 🔄 Carpeta renombrada de eeeefffssss3 a eeeefffss
+2025-05-03T19:22:59.028Z [32minfo[39m: 🔄 Carpeta renombrada de eeeefffss a eeeefffssnnn
+2025-05-03T19:23:11.300Z [32minfo[39m: 🔄 Carpeta renombrada de eeeefffssnnn a eeeefffssnlll
+2025-05-03T19:27:27.685Z [32minfo[39m: 🔄 Carpeta renombrada de eeeefffssnlll a rrrr
+2025-05-03T19:47:33.193Z [32minfo[39m: 🟢 Creando carpeta pública para el restaurante: pollo_pepe
+2025-05-03T19:47:33.195Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/login a /Users/richardruiz/restaurant_system/src/public/restaurantes/pollo_pepe/login
+2025-05-03T19:47:33.205Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/menu a /Users/richardruiz/restaurant_system/src/public/restaurantes/pollo_pepe/menu
+2025-05-03T19:47:33.208Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/productos a /Users/richardruiz/restaurant_system/src/public/restaurantes/pollo_pepe/productos
+2025-05-03T19:47:33.212Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/pedidos a /Users/richardruiz/restaurant_system/src/public/restaurantes/pollo_pepe/pedidos
+2025-05-03T19:47:33.216Z [33mwarn[39m: ⚠️ productos.html no encontrado en /Users/richardruiz/restaurant_system/src/public/restaurantes/pollo_pepe/productos/productos.html para insertar el slug
+2025-05-03T19:47:33.216Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/restaurantes/pollo_pepe
+2025-05-03T19:54:47.905Z [32minfo[39m: 🔄 Carpeta renombrada de rrrr a rrrrrrrrr
+2025-05-03T19:55:02.836Z [32minfo[39m: 🔄 Carpeta renombrada de rrrrrrrrr a rrrrr
+2025-05-03T19:55:16.454Z [32minfo[39m: 🔄 Carpeta renombrada de rrrrr a rrrrrrrtttt
+2025-05-03T19:57:27.809Z [32minfo[39m: 🔄 Carpeta renombrada de rrrrrrrtttt a rrrrrrrttttggg
+2025-05-03T19:57:47.934Z [32minfo[39m: 🔄 Carpeta renombrada de rrrrrrrttttggg a rrrrrrrttttggghhhh
+2025-05-03T19:57:54.196Z [32minfo[39m: 🔄 Carpeta renombrada de rrrrrrrttttggghhhh a rrrrrrrt
+2025-05-03T20:02:36.101Z [32minfo[39m: 🔄 Carpeta renombrada de rrrrrrrt a fadarrrrrrrt
+2025-05-03T20:02:41.269Z [32minfo[39m: 🔄 Carpeta renombrada de fadarrrrrrrt a fadarrrrrrrtdfafas
+2025-05-03T20:04:18.145Z [32minfo[39m: 🔄 Carpeta renombrada de fadarrrrrrrtdfafas a fadarrrrrrr
+2025-05-03T20:04:42.746Z [32minfo[39m: 🔄 Carpeta renombrada de fadarrrrrrr a fadarrrr

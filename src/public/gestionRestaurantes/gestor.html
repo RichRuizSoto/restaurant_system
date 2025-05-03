@@ -48,7 +48,7 @@
         <div class="invalid-feedback">Selecciona un estado válido.</div>
       </div>
 
-      <button type="submit" class="btn btn-primary" aria-label="Crear Establecimiento">
+      <button type="submit" class="btn btn-primary">
         <i class="fas fa-plus-circle"></i> Crear
       </button>
     </form>
@@ -65,13 +65,13 @@
   </div>
 
   <!-- MODAL de edición -->
-  <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
+  <div class="modal fade" id="modalEditar" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
         <form id="formEditarEstablecimiento">
           <div class="modal-header">
-            <h5 class="modal-title" id="modalEditarLabel">Editar Establecimiento</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            <h5 class="modal-title">Editar Establecimiento</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
           <div class="modal-body">
             <input type="hidden" id="editar-id" />
@@ -98,19 +98,19 @@
   </div>
 
   <!-- Toast de notificación -->
-<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
-  <div id="toastNotificacion" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="d-flex">
-      <div class="toast-body text-white" id="toastMensaje">
-        Establecimiento actualizado con éxito
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+    <div id="toastNotificacion" class="toast align-items-center text-bg-success border-0" role="alert">
+      <div class="d-flex">
+        <div class="toast-body text-white" id="toastMensaje">
+          Establecimiento actualizado con éxito
+        </div>
       </div>
     </div>
   </div>
-</div>
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <script src="/gestionRestaurantes/app/gestor.js"></script>
+  <script src="/gestionRestaurantes/scripts/gestor.js"></script>
 </body>
 </html>

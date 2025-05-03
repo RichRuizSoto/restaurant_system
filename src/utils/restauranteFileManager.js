@@ -4,7 +4,7 @@ const fse = require('fs-extra');
 const logger = require('./logger');
 
 const PLANTILLA_ORIGEN = path.join(__dirname, '..', '..', 'views', 'templates');  // Carpeta de plantillas
-const DESTINO_PUBLIC = path.join(__dirname, '..', 'public');  // Carpeta de destino en public
+const DESTINO_PUBLIC = path.join(__dirname, '..', 'public', 'restaurantes');  // Carpeta de destino en public
 
 // Convierte nombre a slug web-friendly (ej: "La Sazón" -> "la-sazon")
 const generarSlug = (nombre) => {
@@ -94,31 +94,6 @@ const crearEstructuraRestaurante = async (nombreRestaurante) => {
   }
 };
 
-// Función para eliminar la estructura de archivos de un restaurante
-const eliminarEstructuraRestaurante = async (nombreRestaurante) => {
-  const slug = generarSlug(nombreRestaurante);
-  const destino = path.join(DESTINO_PUBLIC, slug);
-
-  logger.info(`🛑 Eliminando estructura de archivos para el restaurante: ${slug}`);
-
-  try {
-    const existeCarpeta = await fse.pathExists(destino);
-    if (!existeCarpeta) {
-      const error = new Error(`La carpeta del restaurante "${slug}" no existe en /public.`);
-      error.status = 404;
-      logger.error(`❌ Error: ${error.message}`);
-      throw error;
-    }
-
-    // Elimina la carpeta y su contenido
-    await fse.remove(destino);
-    logger.info(`✅ Estructura de archivos eliminada para el restaurante: ${slug}`);
-  } catch (err) {
-    logger.error(`❌ Error al eliminar la estructura de archivos: ${err.message}`);
-    throw err;
-  }
-};
-
 const renombrarEstructuraRestaurante = async (nombreAnterior, nombreNuevo) => {
   const slugAnterior = generarSlug(nombreAnterior);
   const slugNuevo = generarSlug(nombreNuevo);
@@ -149,4 +124,4 @@ const renombrarEstructuraRestaurante = async (nombreAnterior, nombreNuevo) => {
 
 
 
-module.exports = { crearEstructuraRestaurante, eliminarEstructuraRestaurante, renombrarEstructuraRestaurante };
+module.exports = { crearEstructuraRestaurante, renombrarEstructuraRestaurante };
