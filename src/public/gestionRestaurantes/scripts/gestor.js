@@ -5,7 +5,6 @@ const $form = document.getElementById('formCrearEstablecimiento');
 const $nombreInput = document.getElementById('nombre');
 const $estadoInput = document.getElementById('estado');
 const $lista = document.getElementById('establecimientos-lista');
-const $buscador = document.getElementById('buscador'); // Campo de búsqueda
 
 // Elementos del modal de edición
 const $formEditar = document.getElementById('formEditarEstablecimiento');
@@ -14,9 +13,6 @@ const $editarEstadoInput = document.getElementById('editar-estado');
 const modalEditar = new bootstrap.Modal(document.getElementById('modalEditar'));
 let idActualEditar = null;
 
-// Variable para almacenar la lista completa de establecimientos
-let establecimientosOriginales = [];
-
 // 🔄 Cargar lista desde la API
 async function cargarEstablecimientos() {
   try {
@@ -24,12 +20,53 @@ async function cargarEstablecimientos() {
     if (!res.ok) throw new Error('Error al obtener establecimientos');
 
     const data = await res.json();
-    establecimientosOriginales = data; // Guardamos todos los establecimientos
-    renderizarLista(data); // Renderizamos la lista completa
+    renderizarLista(data);
   } catch (err) {
     console.error('[Frontend] Error al cargar establecimientos:', err);
   }
 }
+
+async function cargarRestaurantes() {
+  try {
+    const res = await fetch('/api/gestor/restaurantes');
+    if (!res.ok) throw new Error('Error al obtener restaurantes');
+
+    const restaurantes = await res.json();
+    const restauranteSelect = document.getElementById('restaurante');
+
+    restaurantes.forEach(restaurante => {
+      const option = document.createElement('option');
+      option.value = restaurante.id;
+      option.textContent = restaurante.nombre;
+      restauranteSelect.appendChild(option);
+    });
+  } catch (err) {
+    console.error('[Frontend] Error al cargar restaurantes:', err);
+  }
+}
+
+// Cargar restaurantes cuando se cargue la página
+document.addEventListener('DOMContentLoaded', cargarRestaurantes);
+
+async function cargarRestaurantes() {
+  try {
+    const res = await fetch('/api/gestor/establecimientos');  // Asegúrate de que la ruta es la correcta
+    if (!res.ok) throw new Error('Error al obtener restaurantes');
+
+    const establecimientos = await res.json();
+    const restauranteSelect = document.getElementById('restaurante');
+
+    establecimientos.forEach(establecimiento => {
+      const option = document.createElement('option');
+      option.value = establecimiento.id;
+      option.textContent = establecimiento.nombre;
+      restauranteSelect.appendChild(option);
+    });
+  } catch (err) {
+    console.error('[Frontend] Error al cargar restaurantes:', err);
+  }
+}
+
 
 // 🧱 Renderizar lista en el DOM
 function renderizarLista(establecimientos) {
@@ -63,19 +100,6 @@ function renderizarLista(establecimientos) {
 
   $lista.appendChild(fragmento);
 }
-
-// 🎯 Filtrar establecimientos según el texto de búsqueda
-$buscador.addEventListener('input', () => {
-  const textoBusqueda = $buscador.value.toLowerCase();
-
-  // Filtramos los establecimientos basados en el nombre
-  const establecimientosFiltrados = establecimientosOriginales.filter(({ nombre }) =>
-    nombre.toLowerCase().includes(textoBusqueda)
-  );
-
-  // Volver a renderizar la lista con los establecimientos filtrados
-  renderizarLista(establecimientosFiltrados);
-});
 
 // 📥 Crear nuevo establecimiento
 $form.addEventListener('submit', async (event) => {
@@ -210,3 +234,44 @@ socket.on('actualizarEstablecimientos', () => {
 
 // 🚀 Inicializar al cargar la página
 document.addEventListener('DOMContentLoaded', cargarEstablecimientos);
+
+document.getElementById('formCrearAdministrador').addEventListener('submit', async (event) => {
+  event.preventDefault();  // Esto previene que el formulario se envíe y recargue la página
+
+  const nombreAdmin = document.getElementById('nombre-admin').value.trim();
+  const claveAdmin = document.getElementById('clave-admin').value;
+  const restauranteId = document.getElementById('restaurante').value;
+
+  // Validar que todos los campos estén completos
+  if (!nombreAdmin || !claveAdmin || !restauranteId) {
+    alert('Todos los campos son obligatorios.');
+    return;
+  }
+
+  try {
+    // Enviar la solicitud al servidor para crear el administrador
+    const res = await fetch('/api/gestor/crearAdministrador', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ nombreAdmin, claveAdmin, restauranteId })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      console.warn('[Frontend] No se pudo crear el administrador:', data.error);
+      alert(`❌ No se pudo crear el administrador:\n${data.error}`);
+      return;
+    }
+
+    alert('Administrador creado con éxito 🎉');
+    document.getElementById('formCrearAdministrador').reset();
+
+    // Aquí puedes actualizar la lista de administradores o hacer cualquier otra cosa que sea necesaria
+  } catch (err) {
+    console.error('[Frontend] Error al crear el administrador:', err);
+    alert('Error inesperado al crear el administrador');
+  }
+});

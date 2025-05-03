@@ -331,3 +331,10 @@
 2025-05-03T20:26:49.879Z [32minfo[39m: 🔄 Carpeta renombrada de fadarrrr a fadarrrrbbb
 2025-05-03T20:36:50.041Z [32minfo[39m: 🔄 Carpeta renombrada de fadarrrrbbb a fadarrrrbbbg
 2025-05-03T21:01:33.246Z [32minfo[39m: 🔄 Carpeta renombrada de fadarrrrbbbg a fadarrrrbbbgyy
+2025-05-03T21:28:28.615Z [32minfo[39m: 🟢 Creando carpeta pública para el restaurante: nuevo_restaurante
+2025-05-03T21:28:28.619Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/login a /Users/richardruiz/restaurant_system/src/public/restaurantes/nuevo_restaurante/login
+2025-05-03T21:28:28.632Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/menu a /Users/richardruiz/restaurant_system/src/public/restaurantes/nuevo_restaurante/menu
+2025-05-03T21:28:28.636Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/productos a /Users/richardruiz/restaurant_system/src/public/restaurantes/nuevo_restaurante/productos
+2025-05-03T21:28:28.641Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/pedidos a /Users/richardruiz/restaurant_system/src/public/restaurantes/nuevo_restaurante/pedidos
+2025-05-03T21:28:28.647Z [33mwarn[39m: ⚠️ productos.html no encontrado en /Users/richardruiz/restaurant_system/src/public/restaurantes/nuevo_restaurante/productos/productos.html para insertar el slug
+2025-05-03T21:28:28.647Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/restaurantes/nuevo_restaurante
