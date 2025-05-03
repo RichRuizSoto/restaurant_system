@@ -1,0 +1,46 @@
+/* Estilos para los formularios */
+.form-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra más sutil */
+    transition: box-shadow 0.3s ease; /* Transición suave */
+}
+
+.form-container:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Efecto hover */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: 500;
+    color: #333;
+    display: block;
+    margin-bottom: 8px;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease; /* Transición suave en focus */
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 6px rgba(52, 152, 219, 0.6);
+}
+
+/* Estilo para las cajas de mensaje de error */
+.invalid-feedback {
+    display: block;
+    color: rgb(53, 3, 110);
+    font-size: 0.875rem;
+    margin-top: 5px;
+}

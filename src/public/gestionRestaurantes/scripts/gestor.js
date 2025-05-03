@@ -5,6 +5,7 @@ const $form = document.getElementById('formCrearEstablecimiento');
 const $nombreInput = document.getElementById('nombre');
 const $estadoInput = document.getElementById('estado');
 const $lista = document.getElementById('establecimientos-lista');
+const $buscador = document.getElementById('buscador'); // Campo de búsqueda
 
 // Elementos del modal de edición
 const $formEditar = document.getElementById('formEditarEstablecimiento');
@@ -13,6 +14,9 @@ const $editarEstadoInput = document.getElementById('editar-estado');
 const modalEditar = new bootstrap.Modal(document.getElementById('modalEditar'));
 let idActualEditar = null;
 
+// Variable para almacenar la lista completa de establecimientos
+let establecimientosOriginales = [];
+
 // 🔄 Cargar lista desde la API
 async function cargarEstablecimientos() {
   try {
@@ -20,7 +24,8 @@ async function cargarEstablecimientos() {
     if (!res.ok) throw new Error('Error al obtener establecimientos');
 
     const data = await res.json();
-    renderizarLista(data);
+    establecimientosOriginales = data; // Guardamos todos los establecimientos
+    renderizarLista(data); // Renderizamos la lista completa
   } catch (err) {
     console.error('[Frontend] Error al cargar establecimientos:', err);
   }
@@ -58,6 +63,19 @@ function renderizarLista(establecimientos) {
 
   $lista.appendChild(fragmento);
 }
+
+// 🎯 Filtrar establecimientos según el texto de búsqueda
+$buscador.addEventListener('input', () => {
+  const textoBusqueda = $buscador.value.toLowerCase();
+
+  // Filtramos los establecimientos basados en el nombre
+  const establecimientosFiltrados = establecimientosOriginales.filter(({ nombre }) =>
+    nombre.toLowerCase().includes(textoBusqueda)
+  );
+
+  // Volver a renderizar la lista con los establecimientos filtrados
+  renderizarLista(establecimientosFiltrados);
+});
 
 // 📥 Crear nuevo establecimiento
 $form.addEventListener('submit', async (event) => {

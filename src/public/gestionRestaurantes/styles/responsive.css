@@ -1,44 +1,30 @@
-/* ===========================
-   Archivo: responsive.css
-   Estilos responsivos para formularios, botones y listas
-   =========================== */
+/* Mejorar la visibilidad del texto y los márgenes en pantallas pequeñas */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 2rem;
+    }
 
-/* ----------------------------------
-   Pantallas pequeñas (≤ 768px)
-   ---------------------------------- */
-   @media (max-width: 768px) {
+    h3 {
+        font-size: 1.6rem;
+    }
+
+    .container-fluid {
+        padding: 10px;
+    }
+
     .form-container {
-        max-width: 90%;
-        padding: 1.125rem; /* 18px */
+        padding: 20px; /* Menos espacio en pantallas pequeñas */
     }
 
-    .buttons button {
-        padding: 0.5rem 0.9375rem; /* 8px 15px */
+    .form-group {
+        margin-bottom: 15px; /* Espacio más ajustado */
     }
 
-    .list-group-item {
-        padding: 0.75rem; /* 12px */
+    button {
+        width: 100%; /* Botón a ancho completo en móviles */
     }
 
-    .list-container {
-        margin-top: 0.9375rem; /* 15px */
-    }
-}
-
-/* ----------------------------------
-   Pantallas muy pequeñas (≤ 576px)
-   ---------------------------------- */
-@media (max-width: 576px) {
-    .form-container {
-        max-width: 95%;
-        padding: 0.75rem; /* 12px */
-    }
-
-    .buttons button {
-        padding: 0.4375rem 0.75rem; /* 7px 12px */
-    }
-
-    .list-group-item {
-        padding: 0.5rem; /* 8px */
+    #establecimientos-lista li {
+        padding: 10px; /* Menos espacio entre elementos */
     }
 }

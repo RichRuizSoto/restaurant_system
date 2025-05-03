@@ -1,25 +1,67 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gestión de Establecimientos</title>
 
   <!-- Bootstrap 5 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 
   <!-- Font Awesome -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
 
   <!-- Estilos personalizados -->
-  <link rel="stylesheet" href="/gestionRestaurantes/styles/reset.css"/>
-  <link rel="stylesheet" href="/gestionRestaurantes/styles/responsive.css"/>
-  <link rel="stylesheet" href="/gestionRestaurantes/styles/form.css"/>
-  <link rel="stylesheet" href="/gestionRestaurantes/styles/buttons.css"/>
-  <link rel="stylesheet" href="/gestionRestaurantes/styles/list.css"/>
+  <link rel="stylesheet" href="/gestionRestaurantes/styles/reset.css">
+  <link rel="stylesheet" href="/gestionRestaurantes/styles/typography.css">
+  <link rel="stylesheet" href="/gestionRestaurantes/styles/layout.css">
+  <link rel="stylesheet" href="/gestionRestaurantes/styles/buttons.css">
+  <link rel="stylesheet" href="/gestionRestaurantes/styles/forms.css">
+  <link rel="stylesheet" href="/gestionRestaurantes/styles/lists.css">
+  <link rel="stylesheet" href="/gestionRestaurantes/styles/modals.css">
+  <link rel="stylesheet" href="/gestionRestaurantes/styles/notifications.css">
+  <link rel="stylesheet" href="/gestionRestaurantes/styles/responsive.css">
+
 </head>
 
 <body>
+  <!-- Sección para crear un usuario administrador -->
+  <div class="container-fluid px-5 mt-5">
+    <h2 class="text-center mb-4">Crear Nuevo Administrador</h2>
+
+    <form id="formCrearAdministrador" class="form-container needs-validation" novalidate>
+      <div class="form-group">
+        <label for="restaurante">Selecciona Restaurante:</label>
+        <select id="restaurante" name="restaurante" class="form-select" required>
+          <option value="">Selecciona un restaurante</option>
+          <!-- Aquí se llenarán los restaurantes dinámicamente -->
+        </select>
+        <div class="invalid-feedback">Por favor selecciona un restaurante.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="nombre-admin">Nombre del Administrador:</label>
+        <input type="text" id="nombre-admin" name="nombre-admin" class="form-control" required
+          placeholder="Nombre del administrador" />
+        <div class="invalid-feedback">Por favor ingresa el nombre del administrador.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="clave-admin">Contraseña:</label>
+        <input type="password" id="clave-admin" name="clave-admin" class="form-control" required
+          placeholder="Contraseña" />
+        <div class="invalid-feedback">Por favor ingresa la contraseña.</div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">
+        <i class="fas fa-user-plus"></i> Crear Administrador
+      </button>
+    </form>
+  </div>
+
+  <hr class="my-5" />
+
   <!-- Formulario de creación -->
   <div class="container-fluid px-5 mt-5">
     <h2 class="text-center mb-4">Crear Nuevo Establecimiento</h2>
@@ -27,14 +69,8 @@
     <form id="formCrearEstablecimiento" class="form-container needs-validation" novalidate>
       <div class="form-group">
         <label for="nombre">Nombre:</label>
-        <input
-          type="text"
-          id="nombre"
-          name="nombre"
-          class="form-control"
-          required
-          placeholder="Nombre del establecimiento"
-        />
+        <input type="text" id="nombre" name="nombre" class="form-control" required
+          placeholder="Nombre del establecimiento" />
         <div class="invalid-feedback">Por favor ingresa el nombre del establecimiento.</div>
       </div>
 
@@ -55,6 +91,12 @@
   </div>
 
   <hr class="my-5" />
+
+  <!-- Campo de búsqueda -->
+  <div class="container-fluid px-5 mt-3">
+    <h3 class="text-center mb-3">Buscar Restaurante</h3>
+    <input type="text" id="buscador" class="form-control" placeholder="Buscar restaurante..." />
+  </div>
 
   <!-- Lista de establecimientos -->
   <div class="container mb-5">
@@ -112,5 +154,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/gestionRestaurantes/scripts/gestor.js"></script>
+
 </body>
+
 </html>

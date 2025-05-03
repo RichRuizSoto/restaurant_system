@@ -1,0 +1,43 @@
+/* Estilos generales */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f9; /* Fondo suave */
+    color: #333; /* Texto oscuro para buena legibilidad */
+    padding: 0 15px;
+    line-height: 1.6; /* Mejorar legibilidad */
+}
+
+/* Estilo para el título principal */
+h2, h3 {
+    font-weight: 600;
+    color: #2c3e50;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+/* Efecto de línea debajo del título */
+h2::after, h3::after {
+    content: '';
+    display: block;
+    width: 60px; /* Aumentar el grosor de la línea */
+    height: 3px;
+    background-color: #3498db; /* Línea azul */
+    margin: 15px auto;
+}
+
+/* Sombra sutil para dar profundidad */
+h2, h3 {
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Diferenciar tamaño de títulos */
+h2 {
+    font-size: 2.5rem;
+}
+
+h3 {
+    font-size: 1.8rem;
+}

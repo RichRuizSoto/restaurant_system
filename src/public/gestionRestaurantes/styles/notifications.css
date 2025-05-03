@@ -1,0 +1,17 @@
+/* Estilo para los toast de notificación */
+.toast {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.toast-body {
+    padding: 10px;
+    color: #fff;
+}
+
+/* Estilos de la barra de navegación fija para los toast */
+.position-fixed {
+    z-index: 1100;
+    right: 20px;
+    bottom: 20px;
+}

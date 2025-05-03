@@ -1,0 +1,27 @@
+/* Estilo para el modal de edición */
+.modal-content {
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    background-color: #3498db;
+    color: #fff;
+    font-weight: bold;
+}
+
+.modal-header .btn-close {
+    background-color: transparent;
+    border: none;
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer button {
+    padding: 10px 20px;
+    border-radius: 5px;
+}

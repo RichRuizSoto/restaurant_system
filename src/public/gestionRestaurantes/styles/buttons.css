@@ -1,57 +1,17 @@
-/* ===========================
-   Archivo: botones.css
-   Estilos para botones de acción (editar, eliminar)
-   =========================== */
-
-/* Estilo base para todos los botones en .buttons */
-.buttons button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem 1rem;
-    margin-left: 0.5rem;
-    font-size: 0.95rem;
-    font-weight: 500;
+/* Estilo para los botones */
+button {
+    background-color: #3498db; /* Azul */
+    color: #fff;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 600;
     border: none;
-    border-radius: 2rem;
+    border-radius: 5px;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.3s ease;
-    outline: none;
+    transition: all 0.3s ease; /* Transición suave */
 }
 
-/* Íconos dentro de los botones */
-.buttons button i {
-    margin-right: 0.4rem;
-    font-size: 1.1rem;
-    pointer-events: none;
-}
-
-/* ===========================
-   Botón Editar
-   =========================== */
-.buttons .btn-warning {
-    background-color: #ffc107;
-    color: #ffffff;
-}
-
-.buttons .btn-warning:hover,
-.buttons .btn-warning:focus {
-    background-color: #e0a800;
-    transform: scale(1.05);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-}
-
-/* ===========================
-   Botón Eliminar
-   =========================== */
-.buttons .btn-danger {
-    background-color: #dc3545;
-    color: #ffffff;
-}
-
-.buttons .btn-danger:hover,
-.buttons .btn-danger:focus {
-    background-color: #c82333;
-    transform: scale(1.05);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+button:hover {
+    background-color: #2980b9; /* Azul más oscuro */
+    transform: translateY(-2px); /* Efecto de desplazamiento */
 }
