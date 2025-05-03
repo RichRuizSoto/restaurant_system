@@ -73,53 +73,10 @@ const actualizarEstablecimiento = async (req, res) => {
   }
 };
 
-/*
-const eliminarEstablecimiento = async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    // Verificar si el restaurante existe
-    const establecimiento = await gestorService.obtenerEstablecimientoPorId(id);
-    if (!establecimiento) {
-      return res.status(404).json({ error: 'Establecimiento no encontrado' });
-    }
-
-    // Verificar si existen productos asociados al restaurante
-    const productos = await gestorService.obtenerProductosPorRestaurante(id);
-    if (productos.length > 0) {
-      return res.status(400).json({
-        error: 'No se puede eliminar el establecimiento porque hay productos asociados. Elimínalos primero.'
-      });
-    }
-
-    // Eliminar la estructura de archivos del restaurante
-    try {
-      await eliminarEstructuraRestaurante(establecimiento.nombre);
-    } catch (err) {
-      console.error('⚠️ No se pudo eliminar la estructura de archivos del restaurante:', err.message);
-      // No es crítico, pero podrías querer manejar el error si es necesario
-    }
-
-    // Eliminar el establecimiento de la base de datos
-    const resultado = await gestorService.eliminarEstablecimiento(id);
-    if (resultado) {
-      res.status(200).json({ message: 'Establecimiento eliminado correctamente' });
-    } else {
-      res.status(404).json({ error: 'Establecimiento no encontrado en la base de datos' });
-    }
-  } catch (error) {
-    console.error('Error al eliminar el establecimiento:', error);
-    res.status(500).json({ error: 'No se pudo eliminar el establecimiento' });
-
-  }
-};
-*/
-
 
 module.exports = {
   crearRestaurante,
   listarEstablecimientos,
   obtenerEstablecimientoPorId,
   actualizarEstablecimiento
-  //eliminarEstablecimiento
 };

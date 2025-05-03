@@ -284,3 +284,20 @@
 2025-05-03T01:26:40.913Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/pizzeria_roma
 2025-05-03T02:00:47.917Z [32minfo[39m: 🔄 Carpeta renombrada de ooooooo a ioioioo
 2025-05-03T02:05:18.026Z [32minfo[39m: 🔄 Carpeta renombrada de ioioioo a pppppppp
+2025-05-03T16:42:36.861Z [31merror[39m: ❌ Error al renombrar la estructura: La carpeta original "pppppppppp" no existe
+2025-05-03T17:49:30.903Z [32minfo[39m: 🔄 Carpeta renombrada de pppppppppp a ppppppppppp
+2025-05-03T17:50:06.215Z [32minfo[39m: 🔄 Carpeta renombrada de ppppppppppp a oooooo
+2025-05-03T17:50:47.008Z [31merror[39m: ❌ Error al renombrar la estructura: Ya existe una carpeta con el nombre nuevo "oooooo"
+2025-05-03T18:01:22.237Z [32minfo[39m: 🔄 Carpeta renombrada de oooooo a ooooooppp
+2025-05-03T18:10:11.684Z [32minfo[39m: 🔄 Carpeta renombrada de ooooooppp a oooooopppiii
+2025-05-03T18:13:35.688Z [32minfo[39m: 🔄 Carpeta renombrada de oooooopppiii a rrrrrr
+2025-05-03T18:15:38.202Z [32minfo[39m: 🔄 Carpeta renombrada de rrrrrr a ddddrrrrrr
+2025-05-03T18:18:06.388Z [32minfo[39m: 🔄 Carpeta renombrada de ddddrrrrrr a ddddrrrrrreeee
+2025-05-03T18:18:23.918Z [32minfo[39m: 🔄 Carpeta renombrada de ddddrrrrrreeee a eeee
+2025-05-03T18:19:49.236Z [32minfo[39m: 🔄 Carpeta renombrada de eeee a eeeefffff
+2025-05-03T18:21:04.047Z [32minfo[39m: 🔄 Carpeta renombrada de eeeefffff a eeeefffffss
+2025-05-03T18:25:29.365Z [32minfo[39m: 🔄 Carpeta renombrada de eeeefffffss a eeeefffffssr
+2025-05-03T18:25:46.486Z [32minfo[39m: 🔄 Carpeta renombrada de eeeefffffssr a eeeefffffssrr
+2025-05-03T18:46:07.749Z [32minfo[39m: 🔄 Carpeta renombrada de eeeefffffssrr a eeeefffffssrrttt
+2025-05-03T18:47:30.936Z [32minfo[39m: 🔄 Carpeta renombrada de eeeefffffssrrttt a eeeefff
+2025-05-03T18:53:42.650Z [32minfo[39m: 🔄 Carpeta renombrada de eeeefff a eeeefffssss

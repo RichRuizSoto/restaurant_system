@@ -81,20 +81,6 @@ const actualizarEstablecimiento = async (id, datosActualizados) => {
   }
 };
 
-/*
-// Eliminar un establecimiento
-const eliminarEstablecimiento = async (id) => {
-  try {
-    const resultado = await Establecimiento.eliminarEstablecimiento(id); // Usamos el modelo para eliminar
-    return resultado;
-  } catch (error) {
-    console.error('Error al eliminar el establecimiento:', error);
-    throw new Error('No se pudo eliminar el establecimiento');
-  }
-};
-*/
-
-
 //Funciones traidas de productosService.js
 const obtenerProductosPorRestaurante = async (idRestaurante) => {
   return await productosService.obtenerProductosPorRestaurante(idRestaurante);
@@ -109,7 +95,6 @@ module.exports = {
   listarEstablecimientos,
   obtenerEstablecimientoPorId,
   actualizarEstablecimiento,
-//  eliminarEstablecimiento,
   obtenerProductosPorRestaurante,
   eliminarProductosPorRestaurante
 };

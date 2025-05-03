@@ -18,6 +18,70 @@
     align-items: flex-end;
     flex-wrap: wrap;
   }
+
+  /* Toast personalizado */
+.toast {
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  animation: fadeSlideIn 0.6s ease forwards;
+  opacity: 0;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.toast-body {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 500;
+}
+
+.toast i {
+  font-size: 1.2rem;
+}
+
+/* Colores personalizados opcionales (si quieres evitar usar solo Bootstrap's `text-bg-*`) */
+.toast.text-bg-success {
+  background-color: #2ecc71;
+  color: #fff;
+}
+
+.toast.text-bg-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.toast.text-bg-warning {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.toast.text-bg-info {
+  background-color: #7f8c8d;
+  color: #fff;
+}
+
+#toastMensaje {
+  color: white;
+  width: auto !important;
+  max-width: none;
+  white-space: nowrap;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  font-size: 0.875rem; /* un poco más pequeño */
+  line-height: 1.2;
+}
   
   /* Responsive: ajustes para pantallas medianas en adelante */
   @media (min-width: 768px) {

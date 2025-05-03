@@ -68,7 +68,7 @@ const actualizarEstablecimiento = async (id, datosActualizados) => {
         replacement: '_',
       });
 
-      await renombrarEstructuraRestaurante(establecimientoActual.nombre, datosActualizados.nombre);
+      await renombrarEstructuraRestaurante(slugViejo, nuevoSlug);
       datosActualizados.slug = nuevoSlug;
     }
 

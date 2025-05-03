@@ -98,11 +98,17 @@ $form.addEventListener('submit', async (event) => {
   }
 });
 
-// ✏️ Mostrar modal de edición con datos
+let nombreOriginal = '';
+let estadoOriginal = '';
+
 function mostrarModalEditar(id, nombre, estado) {
   idActualEditar = id;
-  $editarNombreInput.value = nombre;
-  $editarEstadoInput.value = estado.toLowerCase();
+  nombreOriginal = nombre.trim();
+  estadoOriginal = estado.toLowerCase();
+
+  $editarNombreInput.value = nombreOriginal;
+  $editarEstadoInput.value = estadoOriginal;
+
   modalEditar.show();
 }
 
@@ -115,6 +121,13 @@ $formEditar.addEventListener('submit', async (event) => {
 
   if (!nombre || !estado) {
     alert('Todos los campos son obligatorios.');
+    return;
+  }
+
+  // 🛑 Comparar con valores originales
+  if (nombre === nombreOriginal && estado === estadoOriginal) {
+    mostrarToast('ℹNo se realizaron cambios', 'info');
+    modalEditar.hide();
     return;
   }
 
@@ -134,7 +147,7 @@ $formEditar.addEventListener('submit', async (event) => {
       return;
     }
 
-    mostrarToast('✅ Establecimiento actualizado con éxito', 'success');
+    mostrarToast('Establecimiento actualizado con éxito', 'success');
     modalEditar.hide();
     cargarEstablecimientos();
   } catch (err) {
@@ -143,15 +156,26 @@ $formEditar.addEventListener('submit', async (event) => {
   }
 });
 
+
 function mostrarToast(mensaje, tipo = 'success') {
   const toastEl = document.getElementById('toastNotificacion');
   const toastMensaje = document.getElementById('toastMensaje');
 
-  // Cambiar color según tipo
-  toastEl.className = `toast align-items-center text-bg-${tipo} border-0`;
+  const iconos = {
+    success: '<i class="fas fa-check-circle"></i>',
+    danger: '<i class="fas fa-times-circle"></i>',
+    warning: '<i class="fas fa-exclamation-circle"></i>',
+    info: '<i class="fas fa-info-circle"></i>'
+  };
 
-  toastMensaje.textContent = mensaje;
-  const toast = new bootstrap.Toast(toastEl);
+  toastEl.className = `toast align-items-center text-bg-${tipo} border-0`;
+  toastMensaje.innerHTML = `${iconos[tipo] || ''} ${mensaje}`;
+
+  const toast = new bootstrap.Toast(toastEl, {
+    delay: 3000,      // ⏱️ 4 segundos
+    autohide: true    // 🔁 Se cierra automáticamente
+  });
+
   toast.show();
 }
 
