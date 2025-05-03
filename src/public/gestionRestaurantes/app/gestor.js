@@ -6,6 +6,13 @@ const $nombreInput = document.getElementById('nombre');
 const $estadoInput = document.getElementById('estado');
 const $lista = document.getElementById('establecimientos-lista');
 
+// Elementos del modal de edición
+const $formEditar = document.getElementById('formEditarEstablecimiento');
+const $editarNombreInput = document.getElementById('editar-nombre');
+const $editarEstadoInput = document.getElementById('editar-estado');
+const modalEditar = new bootstrap.Modal(document.getElementById('modalEditar'));
+let idActualEditar = null;
+
 // 🔄 Cargar lista desde la API
 async function cargarEstablecimientos() {
   try {
@@ -21,10 +28,7 @@ async function cargarEstablecimientos() {
 
 // 🧱 Renderizar lista en el DOM
 function renderizarLista(establecimientos) {
-  // Usamos un fragmento de documento para evitar manipular el DOM directamente muchas veces
   const fragmento = document.createDocumentFragment();
-
-  // Limpiamos la lista antes de agregar los elementos
   $lista.innerHTML = '';
 
   establecimientos.forEach(({ id, nombre, estado, creado_en }) => {
@@ -45,22 +49,18 @@ function renderizarLista(establecimientos) {
     btnEditar.className = 'btn btn-warning';
     btnEditar.setAttribute('aria-label', 'Editar Establecimiento');
     btnEditar.innerHTML = '<i class="fas fa-edit"></i> Editar';
-    btnEditar.addEventListener('click', () => editarEstablecimiento(id));
+    btnEditar.addEventListener('click', () => mostrarModalEditar(id, nombre, estado));
 
     btnGroup.appendChild(btnEditar);
     li.appendChild(infoDiv);
     li.appendChild(btnGroup);
-
-    // Agregamos el <li> al fragmento en lugar de al DOM directamente
     fragmento.appendChild(li);
   });
 
-  // Finalmente agregamos todo el contenido de una vez al DOM
   $lista.appendChild(fragmento);
 }
 
-
-// ✅ Evento al enviar el formulario
+// 📥 Crear nuevo establecimiento
 $form.addEventListener('submit', async (event) => {
   event.preventDefault();
 
@@ -90,31 +90,41 @@ $form.addEventListener('submit', async (event) => {
     }
 
     alert('Establecimiento creado con éxito 🎉');
-    $form.reset(); // Limpia el formulario
-    cargarEstablecimientos(); // Actualiza la lista sin esperar al socket
+    $form.reset();
+    cargarEstablecimientos();
   } catch (err) {
     console.error('[Frontend] Error al crear establecimiento:', err);
     alert('Error inesperado al crear el establecimiento');
   }
 });
 
-// Editar un establecimiento
-async function editarEstablecimiento(id) {
-  const nombreNuevo = prompt('Nuevo nombre del establecimiento:')?.trim();
-  const estadoNuevo = prompt('Nuevo estado del establecimiento (activo/desactivo):')?.trim();
+// ✏️ Mostrar modal de edición con datos
+function mostrarModalEditar(id, nombre, estado) {
+  idActualEditar = id;
+  $editarNombreInput.value = nombre;
+  $editarEstadoInput.value = estado.toLowerCase();
+  modalEditar.show();
+}
 
-  if (!nombreNuevo || !estadoNuevo) {
-    alert('Ambos campos son obligatorios y no pueden estar vacíos.');
+// 💾 Guardar cambios desde el modal
+$formEditar.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const nombre = $editarNombreInput.value.trim();
+  const estado = $editarEstadoInput.value;
+
+  if (!nombre || !estado) {
+    alert('Todos los campos son obligatorios.');
     return;
   }
 
   try {
-    const res = await fetch(`/api/gestor/establecimientos/${id}`, {
+    const res = await fetch(`/api/gestor/establecimientos/${idActualEditar}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ nombre: nombreNuevo, estado: estadoNuevo })
+      body: JSON.stringify({ nombre, estado })
     });
 
     const data = await res.json();
@@ -124,19 +134,33 @@ async function editarEstablecimiento(id) {
       return;
     }
 
-    alert('✅ Establecimiento actualizado con éxito');
+    mostrarToast('✅ Establecimiento actualizado con éxito', 'success');
+    modalEditar.hide();
     cargarEstablecimientos();
   } catch (err) {
     console.error('[Frontend] Error al actualizar establecimiento:', err);
     alert('Error inesperado al actualizar el establecimiento');
   }
+});
+
+function mostrarToast(mensaje, tipo = 'success') {
+  const toastEl = document.getElementById('toastNotificacion');
+  const toastMensaje = document.getElementById('toastMensaje');
+
+  // Cambiar color según tipo
+  toastEl.className = `toast align-items-center text-bg-${tipo} border-0`;
+
+  toastMensaje.textContent = mensaje;
+  const toast = new bootstrap.Toast(toastEl);
+  toast.show();
 }
 
-// 🔌 WebSocket: escuchar evento de actualización
+
+// 🔌 WebSocket para actualizaciones en tiempo real
 socket.on('actualizarEstablecimientos', () => {
   console.log('[Socket.IO] Evento recibido: actualizarEstablecimientos');
   cargarEstablecimientos();
 });
 
-// 🚀 Al cargar la página
+// 🚀 Inicializar al cargar la página
 document.addEventListener('DOMContentLoaded', cargarEstablecimientos);

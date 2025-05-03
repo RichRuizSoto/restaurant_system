@@ -282,3 +282,5 @@
 2025-05-03T01:26:40.910Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/pedidos a /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/pedidos
 2025-05-03T01:26:40.913Z [33mwarn[39m: ⚠️ productos.html no encontrado en /Users/richardruiz/restaurant_system/src/public/pizzeria_roma/productos/productos.html para insertar el slug
 2025-05-03T01:26:40.913Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/pizzeria_roma
+2025-05-03T02:00:47.917Z [32minfo[39m: 🔄 Carpeta renombrada de ooooooo a ioioioo
+2025-05-03T02:05:18.026Z [32minfo[39m: 🔄 Carpeta renombrada de ioioioo a pppppppp
