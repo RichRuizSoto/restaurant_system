@@ -1,0 +1,183 @@
+/* Estilos exclusivos para la sección del carrito */
+#carrito, 
+#carrito h2, 
+#carrito p, 
+#carrito label, 
+#carrito input, 
+#carrito ul li, 
+#carrito .carrito-item-info, 
+#carrito .carrito-item-nombre, 
+#carrito .carrito-item-cantidad, 
+#carrito .carrito-item-precio, 
+#carrito .carrito-item-acciones, 
+#carrito #total-carrito {
+  font-family: 'Helvetica Neue', Arial, sans-serif; /* Establece una fuente elegante */
+  color: #333; /* Color de texto oscuro */
+}
+
+/* Títulos dentro de la sección del carrito */
+#carrito h2 {
+  font-family: 'Georgia', serif; /* Fuente serif para el título */
+  font-weight: bold;
+  font-size: 1.8em;
+  margin-bottom: 15px;
+  color: #2c3e50; /* Color verde exclusivo para el título */
+}
+
+
+/* Estilo de las etiquetas de la sección */
+#carrito label {
+  font-size: 1.1em;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+  display: block;
+}
+
+/* Estilo del campo de entrada para el número de mesa */
+#carrito input {
+  width: 40%;
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #A4C4A5; /* Borde suave verde para el campo de entrada */
+  border-radius: 4px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+/* Lista de elementos del carrito */
+#carrito ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#carrito ul li {
+  background-color: #F4F9F6; /* Fondo blanco con un toque de verde suave */
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  border: 1px solid #D0E4D2; /* Borde sutil verde */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Alineación de los elementos del carrito */
+.carrito-item-info {
+  display: flex;
+  justify-content: space-between;
+  width: 60%; /* Establecer un ancho fijo para que todo se alinee correctamente */
+}
+
+.carrito-item-nombre {
+  font-size: 1.1em;
+  font-weight: 600;
+  color: #333;
+  flex-grow: 1; /* Permitir que el nombre del producto ocupe más espacio */
+}
+
+.carrito-item-cantidad,
+.carrito-item-precio {
+  font-size: 1.1em;
+  color: #555;
+  text-align: right; /* Alineamos la cantidad y el precio a la derecha */
+  width: 80px; /* Definimos un ancho fijo para cantidades y precios */
+}
+
+.carrito-item-acciones {
+  display: flex;
+  gap: 10px;
+}
+
+.carrito-item-acciones button {
+  background-color: #FF7F50; /* Color de fondo exclusivo para los botones de acción */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.carrito-item-acciones button:hover {
+  background-color: #E25D46; /* Color de hover más oscuro */
+}
+
+.carrito-item-acciones i {
+  margin-right: 5px;
+}
+
+/* Total del carrito */
+#carrito .total-carrito {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #3B8E4F; /* Color verde exclusivo para el total */
+    text-align: right; /* Alineamos el total a la derecha */
+    margin-top: 20px;
+  }
+
+/* Contenedor del botón para centrarlo */
+#carrito {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Alinea todo el contenido del carrito al centro */
+    justify-content: flex-start;
+    width: 100%;
+  }
+  
+  /* Estilo para el botón */
+  #btn-enviar-pedido {
+    font-family: 'Roboto', sans-serif; /* Fuente moderna para botones */
+    background-color: #163452; /* Fondo verde exclusivo para el botón */
+    color: white;
+    padding: 12px 30px; /* Espaciado interno (padding) */
+    border-radius: 8px; /* Bordes redondeados */
+    font-size: 1.2em; /* Tamaño de la fuente */
+    border: none; /* Sin borde */
+    cursor: pointer; /* Puntero al pasar el ratón */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Animación suave */
+    width: 100%; /* Hacer el botón ocupar todo el ancho de su contenedor */
+    max-width: 350px; /* Hacer el botón un poco más ancho (máximo 350px) */
+    margin-top: 20px; /* Separación superior */
+    box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+  }
+  
+  #btn-enviar-pedido:hover {
+    background-color: #2c3e50; /* Color de fondo al hacer hover */
+    transform: translateY(-2px); /* Leve elevación del botón */
+  }
+  
+  #btn-enviar-pedido i {
+    margin-right: 10px; /* Espaciado entre el ícono y el texto */
+    font-size: 20px; /* Tamaño del ícono */
+  }
+  
+  /* Efecto de focus (cuando el botón tiene foco, al tabular por ejemplo) */
+  #btn-enviar-pedido:focus {
+    outline: none; /* Quitar borde por defecto */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra cuando está enfocado */
+  }
+  
+
+/* Botones para agregar al carrito en otras secciones */
+.btn-agregar {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-agregar:hover {
+  background-color: #0056b3;
+}
+
+.btn-agregar i {
+  margin-right: 5px;
+}
+

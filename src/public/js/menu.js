@@ -22,6 +22,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 4000);
   }
 
+    // Escuchar botones "Agregar" (después de que se hayan agregado dinámicamente los productos)
+    function escucharBotonesAgregar() {
+      document.querySelectorAll('.btn-agregar').forEach(button => {
+        button.addEventListener('click', () => {
+          const producto = JSON.parse(button.dataset.producto);
+          agregarAlCarrito(producto);
+        });
+      });
+    }
+
   // Escuchar botones "Agregar"
   document.querySelectorAll('.btn-agregar').forEach(button => {
     button.addEventListener('click', () => {
@@ -50,29 +60,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Renderizar productos del carrito
   function renderizarCarrito() {
-    listaCarrito.innerHTML = '';
+    listaCarrito.innerHTML = ''; // Limpiar la lista antes de renderizar de nuevo
     let total = 0;
   
     carrito.forEach((item, index) => {
       const li = document.createElement('li');
       li.classList.add('carrito-item');  // Añades una clase al <li>
-      li.style.backgroundColor = 'rgba(0, 0, 0, 0)'; // Establecer el fondo transparente
   
       li.innerHTML = `
-        ${item.nombre} x${item.cantidad} - $${(item.precio * item.cantidad).toFixed(2)}
-        <button class="quitar" data-index="${index}" aria-label="Quitar del carrito">
-          <i class="fas fa-trash-alt"></i>
-        </button>
-        <button class="disminuir" data-index="${index}" aria-label="Disminuir cantidad">
-          <i class="fas fa-minus-circle"></i>
-        </button>
+        <div class="carrito-item-info">
+          <span class="carrito-item-nombre">${item.nombre}</span>
+          <span class="carrito-item-cantidad">x${item.cantidad}</span>
+          <span class="carrito-item-precio">$${(item.precio * item.cantidad).toFixed(2)}</span>
+        </div>
+        <div class="carrito-item-acciones">
+          <!-- Botón para quitar el artículo -->
+          <button class="quitar" data-index="${index}" aria-label="Quitar del carrito">
+            <i class="fas fa-trash-alt"></i> Quitar
+          </button>
+          
+          <!-- Botón para disminuir la cantidad -->
+          <button class="disminuir" data-index="${index}" aria-label="Disminuir cantidad">
+            <i class="fas fa-minus-circle"></i> Disminuir
+          </button>
+        </div>
       `;
       
+      // Agregar el item al carrito
       listaCarrito.appendChild(li);
+  
+      // Calcular el total
       total += item.precio * item.cantidad;
     });
   
-    totalCarrito.textContent = total.toFixed(2);
+    // Mostrar el total calculado en el carrito
+    totalCarrito.textContent = `$${total.toFixed(2)}`;
   
     // Quitar producto
     document.querySelectorAll('.quitar').forEach(btn => {
@@ -178,6 +200,8 @@ document.addEventListener('DOMContentLoaded', () => {
       return [];
     }
   }
+
+  escucharBotonesAgregar();
 
   renderizarCarrito();
 });

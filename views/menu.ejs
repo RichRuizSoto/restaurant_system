@@ -5,20 +5,29 @@
   <title>Menú de <%= restaurante.nombre %></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
+  <!-- Vinculación de archivos CSS -->
+  <link rel="stylesheet" href="/styles/menu/reset.css">
   <link rel="stylesheet" href="/styles/menu/global.css">
-
+  <link rel="stylesheet" href="/styles/menu/header.css">
+  <link rel="stylesheet" href="/styles/menu/restaurante.css">
+  <link rel="stylesheet" href="/styles/menu/categorias.css">
+  <link rel="stylesheet" href="/styles/menu/carrito.css">
+  <link rel="stylesheet" href="/styles/menu/notificaciones.css">
+  <link rel="stylesheet" href="/styles/menu/responsive.css">
 
   <!-- Font Awesome para íconos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
+
 <body class="tema-oscuro"> <!-- o "tema-fantasia", o simplemente "" para claro -->
   <div class="container">
     <!-- Encabezado del sitio -->
     <header>
       <h1><i class="fas fa-utensils"></i> Menú de <%= restaurante.nombre %></h1>
     </header>
-<div class="notification-container" id="notification-container"></div>
+
+    <div class="notification-container" id="notification-container"></div>
+
     <!-- Información del restaurante -->
     <section class="info-restaurante">
       <h2><i class="fas fa-info-circle"></i> Detalles del Restaurante</h2>
@@ -35,9 +44,9 @@
 
         <% productosPorCategoria[categoria].forEach(producto => { %>
           <div class="producto">
-            <h3><%= producto.nombre_producto %></h3>
-            <p><%= producto.descripcion %></p>
-            <p><strong>$<%= producto.precio %></strong></p>
+            <h3 class="producto-nombre"><%= producto.nombre_producto %></h3>
+            <p class="producto-descripcion"><%= producto.descripcion %></p>
+            <p class="producto-precio">$<%= producto.precio %></p>
             <button class="btn-agregar" data-producto='<%- JSON.stringify(producto) %>'>
               <i class="fas fa-cart-plus"></i> Agregar
             </button>
@@ -60,7 +69,7 @@
         <!-- Elementos del carrito se insertan por JS -->
       </ul>
 
-      <p><strong>Total: $<span id="total-carrito">0.00</span></strong></p>
+      <p class="total-carrito"><strong>Total: <span id="total-carrito">0.00</span></strong></p>
 
       <button id="btn-enviar-pedido">
         <i class="fas fa-paper-plane"></i> Enviar Pedido
@@ -76,7 +85,7 @@
     window.restauranteId = <%= restaurante.id %>;
 
     // Suponiendo que el número de mesas disponibles es 10
-    const mesas = ['Mesa 1', 'Mesa 2', 'Mesa 3', 'Mesa 4', 'Mesa 5', 'Mesa 6', 'Mesa 7', 'Mesa 8', 'Mesa 9', 'Mesa 10'];
+    const mesas = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
 
     const datalist = document.getElementById('mesas-lista');
     

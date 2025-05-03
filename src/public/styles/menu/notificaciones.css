@@ -1,0 +1,63 @@
+/* Contenedor de notificaciones */
+#notification-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Estilo base para las notificaciones */
+.notification {
+    color: #fff;
+    padding: 12px 20px;
+    margin: 0;
+    border-radius: 12px;
+    font-family: 'Arial', sans-serif;
+    font-size: 15px;
+    min-width: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* Iconos y texto dentro de la notificación */
+.notification i {
+    margin-right: 15px;
+    font-size: 18px;
+}
+
+/* Colores específicos para tipos de notificación */
+.notification.info {
+    background-color: #7f8c8d; /* Gris suave */
+}
+
+.notification.success {
+    background-color: #2ecc71; /* Verde más suave */
+}
+
+.notification.warning {
+    background-color: #f39c12; /* Naranja cálido */
+}
+
+.notification.error {
+    background-color: #e74c3c; /* Rojo elegante */
+}
+
+/* Efecto cuando la notificación aparece */
+.notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Animaciones para que las notificaciones desaparezcan */
+.notification.hide {
+    opacity: 0;
+    transform: translateY(20px);
+}
