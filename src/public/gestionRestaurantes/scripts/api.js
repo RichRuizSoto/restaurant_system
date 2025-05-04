@@ -1,24 +1,25 @@
-export async function obtenerEstablecimientos() {
+import { renderizarLista, llenarSelectRestaurantes } from './dom.js';
+
+export async function cargarEstablecimientos() {
+  try {
     const res = await fetch('/api/gestor/establecimientos');
     if (!res.ok) throw new Error('Error al obtener establecimientos');
-    return res.json();
+
+    const data = await res.json();
+    renderizarLista(data);
+  } catch (err) {
+    console.error('[Frontend] Error al cargar establecimientos:', err);
   }
-  
-  export async function crearEstablecimiento({ nombre, estado }) {
-    const res = await fetch('/api/gestor/crear', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nombre, estado })
-    });
-    return res.json();
+}
+
+export async function cargarRestaurantes() {
+  try {
+    const res = await fetch('/api/gestor/establecimientos');
+    if (!res.ok) throw new Error('Error al obtener restaurantes');
+
+    const restaurantes = await res.json();
+    llenarSelectRestaurantes(restaurantes);
+  } catch (err) {
+    console.error('[Frontend] Error al cargar restaurantes:', err);
   }
-  
-  export async function actualizarEstablecimiento(id, data) {
-    const res = await fetch(`/api/gestor/establecimientos/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    return res.json();
-  }
-  
+}

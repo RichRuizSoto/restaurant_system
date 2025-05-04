@@ -12,6 +12,11 @@ export function mostrarToast(mensaje, tipo = 'success') {
     toastEl.className = `toast align-items-center text-bg-${tipo} border-0`;
     toastMensaje.innerHTML = `${iconos[tipo] || ''} ${mensaje}`;
   
-    new bootstrap.Toast(toastEl, { delay: 3000, autohide: true }).show();
+    const toast = new bootstrap.Toast(toastEl, {
+      delay: 3000,
+      autohide: true
+    });
+  
+    toast.show();
   }
   
