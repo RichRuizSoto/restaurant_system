@@ -5,10 +5,18 @@ export const $nombreInput = document.getElementById('nombre');
 export const $estadoInput = document.getElementById('estado');
 export const $lista = document.getElementById('establecimientos-lista');
 
+// Función para renderizar la lista de establecimientos
 export function renderizarLista(establecimientos) {
   const fragmento = document.createDocumentFragment();
-  $lista.innerHTML = '';
+  $lista.innerHTML = '';  // Limpiar la lista antes de renderizarla
 
+  // Verificamos si no hay establecimientos y mostramos un mensaje
+  if (establecimientos.length === 0) {
+    $lista.innerHTML = '<li class="list-group-item">No hay establecimientos que coincidan con la búsqueda.</li>';
+    return;
+  }
+
+  // Si hay establecimientos, los recorremos para renderizarlos
   establecimientos.forEach(({ id, nombre, estado, creado_en }) => {
     const li = document.createElement('li');
     li.className = 'list-group-item d-flex justify-content-between align-items-center';
@@ -31,13 +39,24 @@ export function renderizarLista(establecimientos) {
     fragmento.appendChild(li);
   });
 
-  $lista.appendChild(fragmento);
+  $lista.appendChild(fragmento);  // Agregamos todos los elementos al contenedor de la lista
 }
 
+// Función para llenar el select de restaurantes
 export function llenarSelectRestaurantes(restaurantes) {
   const restauranteSelect = document.getElementById('restaurante');
-  restauranteSelect.innerHTML = '';
+  restauranteSelect.innerHTML = '';  // Limpiamos las opciones del select
 
+  // Verificamos si no hay restaurantes disponibles
+  if (restaurantes.length === 0) {
+    const option = document.createElement('option');
+    option.textContent = 'No hay restaurantes disponibles';
+    option.disabled = true;
+    restauranteSelect.appendChild(option);
+    return;
+  }
+
+  // Si hay restaurantes, los agregamos como opciones en el select
   restaurantes.forEach(rest => {
     const option = document.createElement('option');
     option.value = rest.id;

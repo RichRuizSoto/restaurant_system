@@ -2,6 +2,7 @@ import { $form, $nombreInput, $estadoInput } from './dom.js';
 import { cargarEstablecimientos, cargarRestaurantes } from './api.js';
 
 export function inicializarEventos() {
+  // Evento para crear un nuevo establecimiento
   $form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -14,7 +15,7 @@ export function inicializarEventos() {
     }
 
     try {
-      const res = await fetch('/api/gestor/crear', {
+      const res = await fetch('/api/usuarios/crear', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nombre, estado })
@@ -51,7 +52,7 @@ export function inicializarEventos() {
     }
 
     try {
-      const res = await fetch('/api/gestor/crearAdministrador', {
+      const res = await fetch('/api/usuarios/crearAdministrador', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nombreAdmin, claveAdmin, restauranteId })
@@ -70,5 +71,12 @@ export function inicializarEventos() {
       console.error('[Frontend] Error al crear administrador:', err);
       alert('Error inesperado al crear el administrador');
     }
+  });
+
+  // Evento para el campo de búsqueda de establecimientos
+  const inputBusqueda = document.getElementById('buscador'); // Capturamos el input de búsqueda
+  inputBusqueda.addEventListener('input', (event) => {
+    const query = event.target.value.trim().toLowerCase();
+    cargarEstablecimientos(query);  // Pasamos el valor del buscador a la función de carga
   });
 }
