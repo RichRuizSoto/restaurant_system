@@ -97,15 +97,23 @@
     <input type="text" id="buscador" class="form-control" placeholder="Buscar restaurante..." />
   </div>
 
-  <!-- Lista de establecimientos -->
-  <div class="container mb-5">
+   <!-- Lista de establecimientos -->
+   <div class="container mb-5">
     <h2 class="text-center mb-4">Establecimientos Registrados</h2>
     <ul id="establecimientos-lista" class="list-group">
       <!-- Aquí se insertan dinámicamente los establecimientos -->
     </ul>
   </div>
 
-  <!-- MODAL de edición -->
+  <div class="container">
+    <h2 class="text-center mb-4">Administradores Registrados</h2>
+    <ul id="lista-administradores" class="list-group">
+      <!-- Los administradores se insertarán dinámicamente aquí -->
+    </ul>
+  </div>
+  
+
+  <!-- MODAL de edición de establecimiento -->
   <div class="modal fade" id="modalEditar" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -129,6 +137,51 @@
               </select>
             </div>
           </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL para editar administrador -->
+  <div class="modal fade" id="modalEditarAdmin" tabindex="-1" aria-labelledby="modalEditarAdminLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="formEditarAdministrador">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalEditarAdminLabel">Editar Administrador</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            <!-- NUEVO: Mostrar el restaurante actual -->
+            <div class="mb-3">
+              <strong id="restaurante-info" class="d-block mb-2 text-primary"></strong>
+            </div>
+          
+            <input type="hidden" id="admin-id" />
+          
+            <div class="mb-3">
+              <label for="admin-nombre" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="admin-nombre" required />
+            </div>
+          
+            <div class="mb-3">
+              <label for="admin-clave" class="form-label">Nueva Contraseña (opcional)</label>
+              <input type="password" class="form-control" id="admin-clave" placeholder="Dejar en blanco si no se cambia" />
+            </div>
+          
+            <div class="mb-3">
+              <label for="admin-restaurante" class="form-label">Restaurante</label>
+              <select id="admin-restaurante" class="form-select" required>
+                <!-- Se llenará dinámicamente -->
+              </select>
+            </div>
+          </div>
+          
+
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             <button type="submit" class="btn btn-primary">Guardar Cambios</button>

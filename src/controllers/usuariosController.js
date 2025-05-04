@@ -46,8 +46,8 @@ exports.editarInformacionAdministrador = async (req, res) => {
   const { id } = req.params;
   const { nombreAdmin, claveAdmin, restauranteId } = req.body;
 
-  if (!nombreAdmin || !claveAdmin || !restauranteId) {
-    return res.status(400).json({ error: 'Todos los campos son obligatorios.' });
+  if (!nombreAdmin || !restauranteId) {
+    return res.status(400).json({ error: 'Nombre y restaurante son obligatorios.' });
   }
 
   try {

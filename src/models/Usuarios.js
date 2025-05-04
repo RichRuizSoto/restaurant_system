@@ -50,27 +50,43 @@ exports.mostrarAdministrador = async (id) => {
   }
 };
 
-// Función para actualizar la información de un administrador
+// Función para actualizar la información de un administrador (con clave opcional)
 exports.editarInformacionAdministrador = async (id, nombreAdmin, claveAdmin, restauranteId) => {
-  try {
-    const query = `
-      UPDATE usuarios 
-      SET nombre = ?, clave = ?, id_restaurante = ? 
-      WHERE id = ?
-    `;
-    
-    const [result] = await db.execute(query, [nombreAdmin, claveAdmin, restauranteId, id]);
-
-    if (result.affectedRows === 0) {
-      throw new Error('Administrador no encontrado');
+    try {
+      let query;
+      let params;
+  
+      if (claveAdmin && claveAdmin.trim() !== '') {
+        // Si se proporciona una nueva clave, la incluimos en la actualización
+        query = `
+          UPDATE usuarios 
+          SET nombre = ?, clave = ?, id_restaurante = ? 
+          WHERE id = ?
+        `;
+        params = [nombreAdmin, claveAdmin, restauranteId, id];
+      } else {
+        // Si no se proporciona clave, no la actualizamos
+        query = `
+          UPDATE usuarios 
+          SET nombre = ?, id_restaurante = ? 
+          WHERE id = ?
+        `;
+        params = [nombreAdmin, restauranteId, id];
+      }
+  
+      const [result] = await db.execute(query, params);
+  
+      if (result.affectedRows === 0) {
+        throw new Error('Administrador no encontrado');
+      }
+  
+      return result;
+    } catch (err) {
+      console.error('[Backend] Error al actualizar administrador:', err);
+      throw new Error('Error inesperado al actualizar administrador');
     }
-
-    return result; // Retorna el resultado de la actualización
-  } catch (err) {
-    console.error('[Backend] Error al actualizar administrador:', err);
-    throw new Error('Error inesperado al actualizar administrador');
-  }
-};
+  };
+  
 
 // Función para eliminar un administrador
 exports.eliminarAdministrador = async (id) => {

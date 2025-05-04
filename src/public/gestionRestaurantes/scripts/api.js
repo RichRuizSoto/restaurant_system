@@ -1,13 +1,14 @@
-import { renderizarLista, llenarSelectRestaurantes } from './dom.js';
+// api.js
+import { renderizarLista, llenarSelectRestaurantes, renderizarAdministradores } from './dom.js';  // Asegúrate de importar también renderizarAdministradores
 
-// Suponiendo que esta función está en api.js o un archivo similar.
+// Función para cargar establecimientos, con búsqueda opcional
 export async function cargarEstablecimientos(query = '') {
   try {
     const res = await fetch(`/api/gestor/establecimientos?search=${query}`);
     const establecimientos = await res.json();
 
     if (res.ok) {
-      // Filtra los establecimientos según el texto de búsqueda
+      // Filt           ra los establecimientos según el texto de búsqueda
       const establecimientosFiltrados = establecimientos.filter(establecimiento => {
         const nombreLower = establecimiento.nombre.toLowerCase();
         const estadoLower = establecimiento.estado.toLowerCase();
@@ -24,15 +25,29 @@ export async function cargarEstablecimientos(query = '') {
   }
 }
 
-
+// Función para cargar los restaurantes y llenar el select
 export async function cargarRestaurantes() {
   try {
     const res = await fetch('/api/gestor/establecimientos');
     if (!res.ok) throw new Error('Error al obtener restaurantes');
 
     const restaurantes = await res.json();
-    llenarSelectRestaurantes(restaurantes);
+    llenarSelectRestaurantes(restaurantes);  // Llenamos el select con los restaurantes
   } catch (err) {
     console.error('[Frontend] Error al cargar restaurantes:', err);
+  }
+}
+
+// Función para cargar administradores
+export async function cargarAdministradores() {
+  try {
+    const res = await fetch('/api/usuarios/administradores');
+    if (!res.ok) throw new Error('Error al obtener administradores');
+
+    const administradores = await res.json();
+    // Llama a la función que renderiza los administradores en el DOM
+    renderizarAdministradores(administradores);
+  } catch (err) {
+    console.error('[Frontend] Error al cargar administradores:', err);
   }
 }
