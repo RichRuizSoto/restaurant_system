@@ -2,6 +2,7 @@ const productosRoutes = require('./api/productos');
 const restauranteRoutes = require('./api/restaurantes');
 const gestorRoutes = require('./api/gestores');
 const pedidosRoutes = require('./api/pedidos');  // Verifica que esta importación sea correcta
+const usuariosRoutes = require('./api/usuarios');  // Verifica que esta importación sea correcta
 
 const restauranteViewRoutes = require('./views/restaurantes');
 const gestorViewRoutes = require('./views/gestores');
@@ -15,6 +16,7 @@ module.exports = (app) => {
   app.use('/api/productos', productosRoutes);     // Rutas de la API para productos
   app.use('/api/restaurantes', restauranteRoutes); // Rutas de la API para restaurantes
   app.use('/api/pedidos', pedidosRoutes);         // Ruta para pedidos
+  app.use('/api/usuarios', usuariosRoutes);         // Ruta para pedidos
   
   // Rutas de vistas (compartiendo router)
   app.use('/restaurantes', restauranteViewRoutes);  // Rutas para ver restaurantes (páginas)
