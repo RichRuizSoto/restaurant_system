@@ -1,6 +1,7 @@
 import { $form, $nombreInput, $estadoInput } from './dom.js';
 import { cargarEstablecimientos, cargarRestaurantes } from './api.js';
 import { mostrarToast } from './notificaciones.js';
+import { cargarAdministradores } from './api.js';
 
 export function inicializarEventos() {
   // Evento para crear un nuevo establecimiento
@@ -82,3 +83,41 @@ formAdmin.addEventListener('submit', async (event) => {
     cargarEstablecimientos(query);  // Pasamos el valor del buscador a la función de carga
   });
 }
+
+// Función para eliminar un administrador
+let idAdministradorAEliminar = null;
+
+const $modal = new bootstrap.Modal(document.getElementById('modalConfirmarEliminar'));
+const $btnConfirmar = document.getElementById('btnConfirmarEliminar');
+
+// Esta función se llama cuando se hace clic en el botón eliminar
+export function eliminarAdministrador(id) {
+  idAdministradorAEliminar = id;
+  $modal.show();
+}
+
+// Evento para confirmar eliminación
+$btnConfirmar.addEventListener('click', async () => {
+  if (!idAdministradorAEliminar) return;
+
+  try {
+    const res = await fetch(`/api/usuarios/administradores/${idAdministradorAEliminar}`, {
+      method: 'DELETE'
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      mostrarToast(data.message || 'Administrador eliminado exitosamente', 'success');
+      cargarAdministradores(); // Recargar lista
+    } else {
+      mostrarToast(data.error || 'Error al eliminar el administrador', 'danger');
+    }
+  } catch (err) {
+    console.error('Error al eliminar administrador:', err);
+    mostrarToast('Error de conexión al eliminar administrador', 'danger');
+  }
+
+  idAdministradorAEliminar = null;
+  $modal.hide(); // Cierra el modal después de eliminar
+});

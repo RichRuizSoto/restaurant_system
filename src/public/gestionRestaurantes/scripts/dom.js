@@ -1,6 +1,7 @@
 import { cargarAdministradores } from './api.js';
 import { mostrarModalEditar } from './modalEditar.js';
 import { mostrarToast } from './notificaciones.js'; // Asegúrate de importar esto correctamente
+import { eliminarAdministrador } from './eventos.js';
 
 export const $form = document.getElementById('formCrearEstablecimiento');
 export const $nombreInput = document.getElementById('nombre');

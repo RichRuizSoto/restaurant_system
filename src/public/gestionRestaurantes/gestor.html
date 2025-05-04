@@ -191,6 +191,25 @@
     </div>
   </div>
 
+  <!-- Modal de confirmación para eliminar administrador -->
+<div class="modal fade" id="modalConfirmarEliminar" tabindex="-1" aria-labelledby="modalConfirmarEliminarLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="modalConfirmarEliminarLabel">Confirmar eliminación</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro de que deseas eliminar este administrador? Esta acción no se puede deshacer.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" id="btnConfirmarEliminar">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
   <!-- Toast de notificación -->
   <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
     <div id="toastNotificacion" class="toast align-items-center text-bg-success border-0" role="alert">
