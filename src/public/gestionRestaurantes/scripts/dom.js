@@ -47,6 +47,14 @@ export function llenarSelectRestaurantes(restaurantes) {
   const restauranteSelect = document.getElementById('restaurante');
   restauranteSelect.innerHTML = '';  // Limpiamos las opciones del select
 
+  // Agregamos la opción por defecto que indica que el usuario debe elegir un restaurante
+  const opcionSeleccionar = document.createElement('option');
+  opcionSeleccionar.value = '';
+  opcionSeleccionar.disabled = true;
+  opcionSeleccionar.selected = true;
+  opcionSeleccionar.textContent = 'Selecciona un restaurante';
+  restauranteSelect.appendChild(opcionSeleccionar);
+
   // Verificamos si no hay restaurantes disponibles
   if (restaurantes.length === 0) {
     const option = document.createElement('option');

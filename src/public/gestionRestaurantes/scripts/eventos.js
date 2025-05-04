@@ -1,5 +1,6 @@
 import { $form, $nombreInput, $estadoInput } from './dom.js';
 import { cargarEstablecimientos, cargarRestaurantes } from './api.js';
+import { mostrarToast } from './notificaciones.js';
 
 export function inicializarEventos() {
   // Evento para crear un nuevo establecimiento
@@ -38,40 +39,41 @@ export function inicializarEventos() {
   });
 
   // Evento para formulario de crear administrador
-  const formAdmin = document.getElementById('formCrearAdministrador');
-  formAdmin.addEventListener('submit', async (event) => {
-    event.preventDefault();
+const formAdmin = document.getElementById('formCrearAdministrador');
+formAdmin.addEventListener('submit', async (event) => {
+  event.preventDefault();
 
-    const nombreAdmin = document.getElementById('nombre-admin').value.trim();
-    const claveAdmin = document.getElementById('clave-admin').value;
-    const restauranteId = document.getElementById('restaurante').value;
+  const nombreAdmin = document.getElementById('nombre-admin').value.trim();
+  const claveAdmin = document.getElementById('clave-admin').value;
+  const restauranteId = document.getElementById('restaurante').value;
 
-    if (!nombreAdmin || !claveAdmin || !restauranteId) {
-      alert('Todos los campos son obligatorios.');
+  if (!nombreAdmin || !claveAdmin || !restauranteId) {
+    mostrarToast('Todos los campos son obligatorios.', 'danger'); // Notificación de error
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/usuarios/crearAdministrador', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nombreAdmin, claveAdmin, restauranteId })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      mostrarToast(`No se pudo crear el administrador:\n${data.error}`, 'danger'); // Notificación de error
       return;
     }
 
-    try {
-      const res = await fetch('/api/usuarios/crearAdministrador', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nombreAdmin, claveAdmin, restauranteId })
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        alert(`❌ No se pudo crear el administrador:\n${data.error}`);
-        return;
-      }
-
-      alert('Administrador creado con éxito 🎉');
-      formAdmin.reset();
-    } catch (err) {
-      console.error('[Frontend] Error al crear administrador:', err);
-      alert('Error inesperado al crear el administrador');
-    }
-  });
+    // Aquí es donde se muestra el mensaje de éxito con la notificación
+    mostrarToast('Administrador creado con éxito', 'success'); // Notificación de éxito
+    formAdmin.reset();  // Limpiar el formulario después de la creación
+  } catch (err) {
+    console.error('[Frontend] Error al crear administrador:', err);
+    mostrarToast('Error inesperado al crear el administrador', 'danger'); // Notificación de error
+  }
+});
 
   // Evento para el campo de búsqueda de establecimientos
   const inputBusqueda = document.getElementById('buscador'); // Capturamos el input de búsqueda
