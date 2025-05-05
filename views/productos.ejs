@@ -50,18 +50,15 @@
           <label for="categoria">Categoría:</label>
           <select name="categoria" id="categoria" required aria-required="true">
             <option value="">Seleccione una categoría</option>
-            <option value="Entradas">Entradas</option>
-            <option value="Menu">Menú</option>
-            <option value="Combos">Combos</option>
-            <option value="Postres">Postres</option>
-            <option value="Bebidas">Bebidas</option>
           </select>
         </div>
 
+        
         <div class="form-actions">
           <button type="submit" id="btnGuardar" aria-label="Agregar Producto">
             <i class="fas fa-plus"></i> Agregar Producto
           </button>
+
           <button type="button" id="btnActualizar" style="display: none;" aria-label="Actualizar Producto">
             <i class="fas fa-sync-alt"></i> Actualizar Producto
           </button>
@@ -69,8 +66,35 @@
             <i class="fas fa-times"></i> Cancelar
           </button>
         </div>
+
+
+
+
+
+
+
+            <!-- Botón para abrir formulario de agregar categoría -->
+<button type="button" id="btnAgregarCategoria" aria-label="Agregar Categoría">Agregar Categoría</button>
+
+<!-- Modal o Formulario para agregar categoría -->
+<div id="formCategoria" style="display: none;">
+  <h3>Agregar Nueva Categoría</h3>
+  <label for="nombre_categoria">Nombre de la categoría:</label>
+  <input type="text" id="nombre_categoria" required>
+  <button type="button" id="btnGuardarCategoria">Guardar Categoría</button>
+  <button type="button" id="btnCancelarCategoria">Cancelar</button>
+</div>
+
+
+
+
+
+
+
       </fieldset>
     </form>
+
+    
 
     <section id="buscador-container">
       <label for="buscador">Buscar producto:</label>

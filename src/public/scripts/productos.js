@@ -8,9 +8,22 @@ async function cargarCategorias() {
   try {
     const res = await fetch('/api/categorias');
     const data = await res.json();
+    
+    // Obtener el elemento select
+    const select = document.getElementById('categoria');
+    
+    // Limpiar las opciones previas (si es que ya hay alguna)
+    select.innerHTML = '<option value="">Seleccione una categoría</option>';
+    
+    // Llenar el objeto categorias
     data.forEach(cat => {
-      categorias[cat.id] = cat.nombre;
+      categorias[cat.id] = cat.nombre;  // Aquí agregamos el ID y nombre de la categoría
+      const option = document.createElement('option');
+      option.value = cat.id; // El valor del option debe ser el ID de la categoría
+      option.textContent = cat.nombre; // El texto visible es el nombre de la categoría
+      select.appendChild(option);
     });
+
   } catch (error) {
     console.error('Error al cargar categorías:', error);
     mostrarMensaje('Error al cargar categorías', 'error');
@@ -31,7 +44,7 @@ function obtenerClaseCategoria(categoria) {
     case 'Combos': return 'badge badge-combo';
     case 'Postres': return 'badge badge-postre';
     case 'Bebidas': return 'badge badge-bebida';
-    default: return 'badge';
+    default: return 'badge badge-default';
   }
 }
 
@@ -60,7 +73,8 @@ async function obtenerProductos() {
     if (productos.length > 0) {
       productos.forEach(p => {
         const precio = parseFloat(p.precio);
-        const categoriaNombre = categorias[p.categoria] || 'Desconocida'; // Obtener nombre de la categoría
+        // Aquí es donde se hace la corrección
+        const categoriaNombre = categorias[p.categoria] || 'Desconocida'; // Usar el ID de la categoría para obtener el nombre
 
         tbody.innerHTML += `
           <tr>
@@ -87,6 +101,7 @@ async function obtenerProductos() {
     mostrarMensaje('Error al cargar productos', 'error');
   }
 }
+
 
 
 async function cargarProducto(id) {
@@ -162,6 +177,56 @@ document.getElementById('formProducto').addEventListener('submit', async (e) => 
   form.reset();
   obtenerProductos();
 });
+
+document.getElementById('btnAgregarCategoria').addEventListener('click', () => {
+  // Mostrar el formulario de agregar categoría
+  document.getElementById('formCategoria').style.display = 'block';
+});
+
+document.getElementById('btnCancelarCategoria').addEventListener('click', () => {
+  // Ocultar el formulario de agregar categoría sin hacer nada
+  document.getElementById('formCategoria').style.display = 'none';
+  document.getElementById('nombre_categoria').value = '';  // Limpiar el campo
+});
+
+document.getElementById('btnGuardarCategoria').addEventListener('click', async () => {
+  const nombreCategoria = document.getElementById('nombre_categoria').value.trim();
+
+  if (!nombreCategoria) {
+    alert('Por favor, ingresa un nombre para la categoría.');
+    return;
+  }
+
+  // Enviar la nueva categoría al backend
+  try {
+    const res = await fetch(`/api/categorias/agregar`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ nombre_categoria: nombreCategoria })
+    });
+
+    const result = await res.json();
+
+    if (!res.ok) {
+      alert(result?.error || 'Error al agregar la categoría');
+      return;
+    }
+
+    // Mostrar mensaje de éxito
+    mostrarMensaje(result.mensaje || 'Categoría agregada exitosamente');
+
+    // Actualizar las categorías
+    await cargarCategorias();  // Esto recargará la lista de categorías
+    document.getElementById('formCategoria').style.display = 'none';  // Ocultar el formulario
+    document.getElementById('nombre_categoria').value = '';  // Limpiar el campo
+  } catch (error) {
+    console.error('Error al agregar categoría:', error);
+    mostrarMensaje('Error al agregar la categoría', 'error');
+  }
+});
+
 
 document.getElementById('btnActualizar').addEventListener('click', async () => {
   const form = document.getElementById('formProducto');

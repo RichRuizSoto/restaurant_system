@@ -45,6 +45,13 @@ td .badge {
     background-color: var(--color-bebida); /* Púrpura para bebida */
 }
 
+/* Estilo para el badge con la clase 'badge-default' */
+.badge-default {
+    background-color: #000000; /* Un color gris claro como fondo */
+    color: #333; /* Texto de color oscuro */
+    border: 1px solid #999; /* Un borde gris suave */
+  }
+
 /* --- Efectos Adicionales (opcional, para mejorar la interacción) --- */
 td .badge:hover {
     opacity: 0.85; /* Opacidad reducida al pasar el ratón */
