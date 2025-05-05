@@ -17,7 +17,7 @@ export function inicializarEventos() {
     }
 
     try {
-      const res = await fetch('/api/usuarios/crear', {
+      const res = await fetch('/api/gestor/crear', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nombre, estado })
@@ -26,11 +26,11 @@ export function inicializarEventos() {
       const data = await res.json();
 
       if (!res.ok) {
-        alert(`❌ No se pudo crear:\n${data.error}`);
+        mostrarToast(`❌ No se pudo crear: ${data.error}`, 'danger');
         return;
       }
 
-      alert('Establecimiento creado 🎉');
+      mostrarToast('Establecimiento creado 🎉', 'success');
       $form.reset();
       cargarEstablecimientos();
     } catch (err) {

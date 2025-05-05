@@ -8,110 +8,139 @@
 
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-
+  
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
 
   <!-- Estilos personalizados -->
   <link rel="stylesheet" href="/gestionRestaurantes/styles/reset.css">
-  <link rel="stylesheet" href="/gestionRestaurantes/styles/typography.css">
   <link rel="stylesheet" href="/gestionRestaurantes/styles/layout.css">
-  <link rel="stylesheet" href="/gestionRestaurantes/styles/buttons.css">
-  <link rel="stylesheet" href="/gestionRestaurantes/styles/forms.css">
-  <link rel="stylesheet" href="/gestionRestaurantes/styles/lists.css">
-  <link rel="stylesheet" href="/gestionRestaurantes/styles/modals.css">
-  <link rel="stylesheet" href="/gestionRestaurantes/styles/notifications.css">
   <link rel="stylesheet" href="/gestionRestaurantes/styles/responsive.css">
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .card {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .section-title {
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .form-section {
+      margin-bottom: 3rem;
+    }
+
+    .divider {
+      margin: 3rem 0;
+      border-top: 2px dashed #dee2e6;
+    }
+
+    .list-group-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
 </head>
 
 <body>
-  <!-- Sección para crear un usuario administrador -->
-  <div class="container-fluid px-5 mt-5">
-    <h2 class="text-center mb-4">Crear Nuevo Administrador</h2>
+  <div class="container py-5">
 
-    <form id="formCrearAdministrador" class="form-container needs-validation" novalidate>
-      <div class="form-group">
-        <label for="restaurante">Selecciona Restaurante:</label>
-        <select id="restaurante" name="restaurante" class="form-select" required>
-          <option value="" disabled selected>Selecciona un restaurante</option>
-          <!-- Aquí se llenarán los restaurantes dinámicamente -->
-        </select>
-        <div class="invalid-feedback">Por favor selecciona un restaurante.</div>
+    <!-- Crear Administrador -->
+    <div class="card form-section">
+      <div class="card-header bg-primary text-white">
+        <h4 class="mb-0"><i class="fas fa-user-plus me-2"></i>Crear Nuevo Administrador</h4>
+      </div>
+      <div class="card-body">
+        <form id="formCrearAdministrador" class="needs-validation" novalidate>
+          <div class="mb-3">
+            <label for="restaurante" class="form-label">Selecciona Restaurante</label>
+            <select id="restaurante" name="restaurante" class="form-select" required>
+              <option value="" disabled selected>Selecciona un restaurante</option>
+            </select>
+            <div class="invalid-feedback">Por favor selecciona un restaurante.</div>
+          </div>
+          <div class="mb-3">
+            <label for="nombre-admin" class="form-label">Nombre del Administrador</label>
+            <input type="text" id="nombre-admin" name="nombre-admin" class="form-control" required />
+            <div class="invalid-feedback">Por favor ingresa el nombre del administrador.</div>
+          </div>
+          <div class="mb-3">
+            <label for="clave-admin" class="form-label">Contraseña</label>
+            <input type="password" id="clave-admin" name="clave-admin" class="form-control" required />
+            <div class="invalid-feedback">Por favor ingresa la contraseña.</div>
+          </div>
+          <button type="submit" class="btn btn-success">
+            <i class="fas fa-user-plus"></i> Crear Administrador
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Crear Establecimiento -->
+    <div class="card form-section">
+      <div class="card-header bg-secondary text-white">
+        <h4 class="mb-0"><i class="fas fa-store me-2"></i>Crear Nuevo Establecimiento</h4>
+      </div>
+      <div class="card-body">
+        <form id="formCrearEstablecimiento" class="needs-validation" novalidate>
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" id="nombre" name="nombre" class="form-control" required />
+            <div class="invalid-feedback">Por favor ingresa el nombre del establecimiento.</div>
+          </div>
+          <div class="mb-3">
+            <label for="estado" class="form-label">Estado</label>
+            <select id="estado" name="estado" class="form-select" required>
+              <option value="">Selecciona una opción</option>
+              <option value="activo">Activo</option>
+              <option value="desactivo">Desactivado</option>
+            </select>
+            <div class="invalid-feedback">Selecciona un estado válido.</div>
+          </div>
+          <button type="submit" class="btn btn-success">
+            <i class="fas fa-plus-circle"></i> Crear
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Búsqueda -->
+    <div class="my-5">
+      <h5 class="text-center mb-3"><i class="fas fa-search me-2"></i>Buscar Restaurante</h5>
+      <input type="text" id="buscador" class="form-control" placeholder="Buscar restaurante..." />
+    </div>
+
+    <!-- Listas -->
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <div class="card h-100">
+          <div class="card-header bg-info text-white">
+            <h5 class="mb-0"><i class="fas fa-list me-2"></i>Establecimientos Registrados</h5>
+          </div>
+          <ul id="establecimientos-lista" class="list-group list-group-flush">
+            <!-- Dinámicamente generado -->
+          </ul>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="nombre-admin">Nombre del Administrador:</label>
-        <input type="text" id="nombre-admin" name="nombre-admin" class="form-control" required
-          placeholder="Nombre del administrador" />
-        <div class="invalid-feedback">Por favor ingresa el nombre del administrador.</div>
+      <div class="col-md-6 mb-4">
+        <div class="card h-100">
+          <div class="card-header bg-dark text-white">
+            <h5 class="mb-0"><i class="fas fa-users me-2"></i>Administradores Registrados</h5>
+          </div>
+          <ul id="lista-administradores" class="list-group list-group-flush">
+            <!-- Dinámicamente generado -->
+          </ul>
+        </div>
       </div>
-
-      <div class="form-group">
-        <label for="clave-admin">Contraseña:</label>
-        <input type="password" id="clave-admin" name="clave-admin" class="form-control" required
-          placeholder="Contraseña" />
-        <div class="invalid-feedback">Por favor ingresa la contraseña.</div>
-      </div>
-
-      <button type="submit" class="btn btn-primary">
-        <i class="fas fa-user-plus"></i> Crear Administrador
-      </button>
-    </form>
+    </div>
   </div>
-
-  <hr class="my-5" />
-
-  <!-- Formulario de creación de establecimiento -->
-  <div class="container-fluid px-5 mt-5">
-    <h2 class="text-center mb-4">Crear Nuevo Establecimiento</h2>
-
-    <form id="formCrearEstablecimiento" class="form-container needs-validation" novalidate>
-      <div class="form-group">
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" class="form-control" required
-          placeholder="Nombre del establecimiento" />
-        <div class="invalid-feedback">Por favor ingresa el nombre del establecimiento.</div>
-      </div>
-
-      <div class="form-group">
-        <label for="estado">Estado:</label>
-        <select id="estado" name="estado" class="form-select" required>
-          <option value="">Selecciona una opción</option>
-          <option value="activo">Activo</option>
-          <option value="desactivo">Desactivado</option>
-        </select>
-        <div class="invalid-feedback">Selecciona un estado válido.</div>
-      </div>
-
-      <button type="submit" class="btn btn-primary">
-        <i class="fas fa-plus-circle"></i> Crear
-      </button>
-    </form>
-  </div>
-
-  <hr class="my-5" />
-
-  <!-- Campo de búsqueda -->
-  <div class="container-fluid px-5 mt-3">
-    <h3 class="text-center mb-3">Buscar Restaurante</h3>
-    <input type="text" id="buscador" class="form-control" placeholder="Buscar restaurante..." />
-  </div>
-
-   <!-- Lista de establecimientos -->
-   <div class="container mb-5">
-    <h2 class="text-center mb-4">Establecimientos Registrados</h2>
-    <ul id="establecimientos-lista" class="list-group">
-      <!-- Aquí se insertan dinámicamente los establecimientos -->
-    </ul>
-  </div>
-
-  <div class="container">
-    <h2 class="text-center mb-4">Administradores Registrados</h2>
-    <ul id="lista-administradores" class="list-group">
-      <!-- Los administradores se insertarán dinámicamente aquí -->
-    </ul>
-  </div>
-  
 
   <!-- MODAL de edición de establecimiento -->
   <div class="modal fade" id="modalEditar" tabindex="-1">
