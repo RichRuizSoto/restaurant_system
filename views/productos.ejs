@@ -26,79 +26,72 @@
 
     <form id="formProducto" aria-labelledby="formProducto">
       <input type="hidden" name="id_restaurante" id="id_restaurante">
-
-      <fieldset>
-        <legend>Información del Producto</legend>
-
+    
+      <fieldset class="card-style">
+        <legend><i class="fas fa-info-circle"></i> Información del Producto</legend>
+    
         <div class="form-group">
           <label for="nombre_producto">Nombre del producto:</label>
-          <input type="text" name="nombre_producto" id="nombre_producto" required aria-required="true">
+          <input type="text" name="nombre_producto" id="nombre_producto" class="input-control" required>
         </div>
-
+    
         <div class="form-group">
           <label for="descripcion">Descripción:</label>
-          <textarea name="descripcion" id="descripcion" aria-describedby="descripcionHelp"></textarea>
-          <small id="descripcionHelp" class="form-text text-muted">Proporcione una breve descripción del producto.</small>
+          <textarea name="descripcion" id="descripcion" class="input-control" aria-describedby="descripcionHelp"></textarea>
+          <small id="descripcionHelp" class="form-text">Proporcione una breve descripción del producto.</small>
         </div>
-
+    
         <div class="form-group">
           <label for="precio">Precio:</label>
-          <input type="number" name="precio" id="precio" step="0.01" required aria-required="true">
+          <input type="number" name="precio" id="precio" class="input-control" step="0.01" required>
         </div>
-
-        <div class="form-group">
+    
+        <div class="form-group spacing-below">
           <label for="categoria">Categoría:</label>
-          <select name="categoria" id="categoria" required aria-required="true">
+          <select name="categoria" id="categoria" class="input-control" required>
             <option value="">Seleccione una categoría</option>
           </select>
         </div>
-
         
+        <div class="form-group spacing-below">
+          <button type="button" id="btnAgregarCategoria" class="btn-primary" aria-label="Agregar Categoría">
+            <i class="fas fa-plus-circle"></i> Agregar Categoría
+        </button>
+        </div>
+        
+        <div id="formCategoria" class="modal-card spacing-below" style="display: none;">
+          <h3>Agregar Nueva Categoría</h3>
+          <div class="form-group">
+            <label for="nombre_categoria">Nombre de la categoría:</label>
+            <input type="text" id="nombre_categoria" class="input-control" required>
+          </div>
+          <div class="form-actions">
+            <button type="button" id="btnGuardarCategoria" class="btn-primary">Guardar</button>
+            <button type="button" id="btnCancelarCategoria" class="btn-danger">Cancelar</button>
+          </div>
+        </div>
+    
         <div class="form-actions">
-          <button type="submit" id="btnGuardar" aria-label="Agregar Producto">
-            <i class="fas fa-plus"></i> Agregar Producto
+          <button type="submit" id="btnGuardar" class="btn-primary">
+            <i class="fas fa-plus-circle"></i> Agregar Producto
           </button>
-
-          <button type="button" id="btnActualizar" style="display: none;" aria-label="Actualizar Producto">
+          <button type="button" id="btnActualizar" class="btn-warning" style="display: none;">
             <i class="fas fa-sync-alt"></i> Actualizar Producto
           </button>
-          <button type="button" id="btnCancelar" style="display: none;" aria-label="Cancelar">
+          <button type="button" id="btnCancelar" class="btn-danger" style="display: none;">
             <i class="fas fa-times"></i> Cancelar
           </button>
         </div>
-
-
-
-
-
-
-
-            <!-- Botón para abrir formulario de agregar categoría -->
-<button type="button" id="btnAgregarCategoria" aria-label="Agregar Categoría">Agregar Categoría</button>
-
-<!-- Modal o Formulario para agregar categoría -->
-<div id="formCategoria" style="display: none;">
-  <h3>Agregar Nueva Categoría</h3>
-  <label for="nombre_categoria">Nombre de la categoría:</label>
-  <input type="text" id="nombre_categoria" required>
-  <button type="button" id="btnGuardarCategoria">Guardar Categoría</button>
-  <button type="button" id="btnCancelarCategoria">Cancelar</button>
-</div>
-
-
-
-
-
-
-
       </fieldset>
     </form>
-
     
+
+
 
     <section id="buscador-container">
       <label for="buscador">Buscar producto:</label>
-      <input type="text" id="buscador" placeholder="Buscar producto..." oninput="filtrarProductos()" aria-label="Buscar producto">
+      <input type="text" id="buscador" placeholder="Buscar producto..." oninput="filtrarProductos()"
+        aria-label="Buscar producto">
     </section>
 
     <section id="productos-container">

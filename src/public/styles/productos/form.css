@@ -217,3 +217,29 @@
     }
   }
   
+  /* Espaciado entre elementos del formulario */
+.spacing-below {
+  margin-bottom: 1.5rem;
+}
+
+/* Mejora del modal */
+.modal-card {
+  padding: 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  margin-top: 1rem;
+}
+
+/* Alineación del botón "Agregar Categoría" */
+#btnAgregarCategoria {
+  margin-top: 0.5rem;
+  width: 180px; /* Asegura que tenga el mismo ancho mínimo que el botón Agregar Producto */
+}
+
+/* Opcional: mejor apariencia del modal dentro del formulario */
+#formCategoria h3 {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: #333;
+}
