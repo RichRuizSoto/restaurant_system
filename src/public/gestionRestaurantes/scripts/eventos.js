@@ -2,6 +2,8 @@ import { $form, $nombreInput, $estadoInput } from './dom.js';
 import { cargarEstablecimientos, cargarRestaurantes } from './api.js';
 import { mostrarToast } from './notificaciones.js';
 import { cargarAdministradores } from './api.js';
+import { renderizarAdministradores } from './dom.js';
+
 
 export function inicializarEventos() {
   // Evento para crear un nuevo establecimiento
@@ -76,12 +78,37 @@ formAdmin.addEventListener('submit', async (event) => {
   }
 });
 
-  // Evento para el campo de búsqueda de establecimientos
-  const inputBusqueda = document.getElementById('buscador'); // Capturamos el input de búsqueda
-  inputBusqueda.addEventListener('input', (event) => {
-    const query = event.target.value.trim().toLowerCase();
-    cargarEstablecimientos(query);  // Pasamos el valor del buscador a la función de carga
-  });
+// Evento para el campo de búsqueda de establecimientos y administradores
+const inputBusqueda = document.getElementById('buscador'); // Capturamos el input de búsqueda
+
+inputBusqueda.addEventListener('input', async (event) => {
+  const query = event.target.value.trim().toLowerCase();
+
+  // Filtrar establecimientos por nombre (pasa el query a tu función existente)
+  cargarEstablecimientos(query);
+
+  // Filtrar administradores por nombre del restaurante o nombre del administrador
+  try {
+    const res = await fetch('/api/usuarios/administradores');
+    if (!res.ok) throw new Error('No se pudieron obtener los administradores');
+
+    const administradores = await res.json();
+
+    // Aplica filtro doble: por nombre del restaurante o del administrador
+    const adminsFiltrados = administradores.filter(admin =>
+      admin.nombre_restaurante?.toLowerCase().includes(query) ||
+      admin.nombre?.toLowerCase().includes(query)
+    );
+
+    // Usa tu función reutilizable para renderizar
+    renderizarAdministradores(adminsFiltrados);
+  } catch (err) {
+    console.error('Error al filtrar administradores:', err);
+    mostrarToast('Error al cargar administradores filtrados', 'danger');
+  }
+});
+
+  
 }
 
 // Función para eliminar un administrador
