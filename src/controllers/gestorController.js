@@ -1,5 +1,5 @@
 const gestorService = require('../services/gestorService');
-const { crearEstructuraRestaurante, eliminarEstructuraRestaurante } = require('../utils/restauranteFileManager');
+const { crearEstructuraRestaurante} = require('../utils/restauranteFileManager');
 
 // Crear un establecimiento
 const crearRestaurante = async (req, res) => {
