@@ -196,7 +196,8 @@ document.getElementById('formEditarAdministrador').addEventListener('submit', as
     if (res.ok) {
       // Mostrar un toast de éxito si la actualización fue exitosa
       mostrarToast(data.message, 'success');
-      cargarAdministradores(); // Recargar la lista de administradores
+      cargarAdministradores(); // Recargar la lista de administradoresç
+      socket.emit('administradorActualizado');
       const modalEditar = bootstrap.Modal.getInstance(document.getElementById('modalEditarAdmin'));
       modalEditar.hide(); // Cerrar el modal
     } else {

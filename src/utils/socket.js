@@ -33,6 +33,11 @@ function setupSocket(server, app) {
       io.emit('actualizarEstablecimientos');
     });
 
+    socket.on('administradorActualizado', () => {
+      io.emit('actualizarAdministradores');
+    });
+    
+
     // Evento para actualizar el estado de un pedido
     socket.on('actualizarEstadoPedido', async (idPedido, nuevoEstado) => {
       try {
@@ -105,6 +110,8 @@ function setupSocket(server, app) {
         socket.emit('error', { mensaje: 'Hubo un error al actualizar el estado del pedido. Intenta nuevamente.' });
       }
     });
+
+    
 
     socket.on('disconnect', () => {
       console.log('🔴 Cliente desconectado de WebSocket');

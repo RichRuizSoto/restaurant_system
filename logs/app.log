@@ -390,3 +390,10 @@
 2025-05-05T02:46:51.283Z [33mwarn[39m: ⚠️ productos.html no encontrado en /Users/richardruiz/restaurant_system/src/public/restaurantes/fadsfasdf/productos/productos.html para insertar el slug
 2025-05-05T02:46:51.284Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/restaurantes/fadsfasdf
 2025-05-05T02:47:07.645Z [32minfo[39m: 🔄 Carpeta renombrada de fadsfasdf a fa_nnn
+2025-05-05T05:15:02.664Z [32minfo[39m: 🟢 Creando carpeta pública para el restaurante: pizzeria_roma_90
+2025-05-05T05:15:02.667Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/login a /Users/richardruiz/restaurant_system/src/public/restaurantes/pizzeria_roma_90/login
+2025-05-05T05:15:02.682Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/menu a /Users/richardruiz/restaurant_system/src/public/restaurantes/pizzeria_roma_90/menu
+2025-05-05T05:15:02.687Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/productos a /Users/richardruiz/restaurant_system/src/public/restaurantes/pizzeria_roma_90/productos
+2025-05-05T05:15:02.693Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/pedidos a /Users/richardruiz/restaurant_system/src/public/restaurantes/pizzeria_roma_90/pedidos
+2025-05-05T05:15:02.698Z [33mwarn[39m: ⚠️ productos.html no encontrado en /Users/richardruiz/restaurant_system/src/public/restaurantes/pizzeria_roma_90/productos/productos.html para insertar el slug
+2025-05-05T05:15:02.699Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/restaurantes/pizzeria_roma_90

@@ -3,6 +3,8 @@ import { cargarEstablecimientos, cargarRestaurantes } from './api.js';
 import { mostrarToast } from './notificaciones.js';
 import { cargarAdministradores } from './api.js';
 import { renderizarAdministradores } from './dom.js';
+import { socket } from './sockets.js'; // Asegúrate de importar socket
+
 
 
 export function inicializarEventos() {
@@ -31,6 +33,8 @@ export function inicializarEventos() {
         mostrarToast(`❌ No se pudo crear: ${data.error}`, 'danger');
         return;
       }
+
+      
 
       mostrarToast('Establecimiento creado 🎉', 'success');
       $form.reset();
@@ -71,6 +75,8 @@ formAdmin.addEventListener('submit', async (event) => {
 
     // Aquí es donde se muestra el mensaje de éxito con la notificación
     mostrarToast('Administrador creado con éxito', 'success'); // Notificación de éxito
+
+socket.emit('administradorActualizado');
     formAdmin.reset();  // Limpiar el formulario después de la creación
   } catch (err) {
     console.error('[Frontend] Error al crear administrador:', err);
@@ -137,6 +143,7 @@ $btnConfirmar.addEventListener('click', async () => {
     if (res.ok) {
       mostrarToast(data.message || 'Administrador eliminado exitosamente', 'success');
       cargarAdministradores(); // Recargar lista
+      socket.emit('administradorActualizado');
     } else {
       mostrarToast(data.error || 'Error al eliminar el administrador', 'danger');
     }
