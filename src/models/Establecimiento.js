@@ -67,7 +67,8 @@ const actualizarEstablecimiento = async (id, datosActualizados) => {
         strict: true,
         replacement: '_',
       });
-
+      
+      console.log('Nuevo slug generado:', nuevoSlug); // Verifica el slug generado
       await renombrarEstructuraRestaurante(slugViejo, nuevoSlug);
       datosActualizados.slug = nuevoSlug;
     }

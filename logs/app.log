@@ -360,3 +360,33 @@
 2025-05-05T01:05:03.357Z [32minfo[39m: 🔄 Carpeta renombrada de ggggglllll a gglllll
 2025-05-05T01:05:21.399Z [32minfo[39m: 🔄 Carpeta renombrada de gggfad a gggfadkkkk
 2025-05-05T01:06:08.672Z [32minfo[39m: 🔄 Carpeta renombrada de gglllll a gglllllnnnn
+2025-05-05T01:30:56.349Z [32minfo[39m: 🔄 Carpeta renombrada de gglllllnnnn a gglllllnnnnppppp
+2025-05-05T01:45:10.648Z [32minfo[39m: 🔄 Carpeta renombrada de gglllllnnnnppppp a gglllllnnnnpppppll
+2025-05-05T02:01:55.356Z [32minfo[39m: 🔄 Carpeta renombrada de gglllllnnnnpppppll a gglllllnnnnpppppllttt
+2025-05-05T02:05:44.750Z [32minfo[39m: 🔄 Carpeta renombrada de gglllllnnnnpppppllttt a gglllllnnnnppppplltttyyy
+2025-05-05T02:08:15.331Z [32minfo[39m: 🟢 Creando carpeta pública para el restaurante: pizzeria_roma_4
+2025-05-05T02:08:15.332Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/login a /Users/richardruiz/restaurant_system/src/public/restaurantes/pizzeria_roma_4/login
+2025-05-05T02:08:15.338Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/menu a /Users/richardruiz/restaurant_system/src/public/restaurantes/pizzeria_roma_4/menu
+2025-05-05T02:08:15.343Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/productos a /Users/richardruiz/restaurant_system/src/public/restaurantes/pizzeria_roma_4/productos
+2025-05-05T02:08:15.349Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/pedidos a /Users/richardruiz/restaurant_system/src/public/restaurantes/pizzeria_roma_4/pedidos
+2025-05-05T02:08:15.354Z [33mwarn[39m: ⚠️ productos.html no encontrado en /Users/richardruiz/restaurant_system/src/public/restaurantes/pizzeria_roma_4/productos/productos.html para insertar el slug
+2025-05-05T02:08:15.355Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/restaurantes/pizzeria_roma_4
+2025-05-05T02:18:57.942Z [32minfo[39m: 🔄 Carpeta renombrada de gglllllnnnnppppplltttyyy a gglllllnnnnpppppllttt
+2025-05-05T02:19:55.125Z [32minfo[39m: 🔄 Carpeta renombrada de gglllllnnnnpppppllttt a gglllllnnnnpppppll
+2025-05-05T02:20:52.481Z [32minfo[39m: 🔄 Carpeta renombrada de gglllllnnnnpppppll a gglllllnnnnppppp
+2025-05-05T02:30:52.366Z [31merror[39m: ❌ Error al renombrar la estructura: La carpeta original "gglllllnnnnppppp" no existe
+2025-05-05T02:31:14.718Z [31merror[39m: ❌ Error al renombrar la estructura: La carpeta original "pizzeriaroma2" no existe
+2025-05-05T02:32:14.307Z [31merror[39m: ❌ Error al renombrar la estructura: La carpeta original "pizzeriaroma2" no existe
+2025-05-05T02:39:37.485Z [31merror[39m: ❌ Error al renombrar la estructura: La carpeta original "pizzeriaroma2" no existe
+2025-05-05T02:41:14.402Z [31merror[39m: ❌ Error al renombrar la estructura: La carpeta original "pizzeriaroma2" no existe
+2025-05-05T02:42:58.543Z [32minfo[39m: 🔄 Carpeta renombrada de pizzeriaroma2 a pizzeria_roma_2
+2025-05-05T02:44:21.503Z [31merror[39m: ❌ Error al renombrar la estructura: origen is not defined
+2025-05-05T02:44:59.095Z [32minfo[39m: 🔄 Carpeta renombrada de pizzeria_roma_2 a pizzeria_roma_2_0
+2025-05-05T02:46:51.256Z [32minfo[39m: 🟢 Creando carpeta pública para el restaurante: fadsfasdf
+2025-05-05T02:46:51.257Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/login a /Users/richardruiz/restaurant_system/src/public/restaurantes/fadsfasdf/login
+2025-05-05T02:46:51.264Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/menu a /Users/richardruiz/restaurant_system/src/public/restaurantes/fadsfasdf/menu
+2025-05-05T02:46:51.269Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/productos a /Users/richardruiz/restaurant_system/src/public/restaurantes/fadsfasdf/productos
+2025-05-05T02:46:51.279Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/pedidos a /Users/richardruiz/restaurant_system/src/public/restaurantes/fadsfasdf/pedidos
+2025-05-05T02:46:51.283Z [33mwarn[39m: ⚠️ productos.html no encontrado en /Users/richardruiz/restaurant_system/src/public/restaurantes/fadsfasdf/productos/productos.html para insertar el slug
+2025-05-05T02:46:51.284Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/restaurantes/fadsfasdf
+2025-05-05T02:47:07.645Z [32minfo[39m: 🔄 Carpeta renombrada de fadsfasdf a fa_nnn

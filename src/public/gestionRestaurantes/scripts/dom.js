@@ -28,10 +28,10 @@ export function renderizarLista(establecimientos) {
     infoDiv.innerHTML = `
       <h4>${nombre}</h4>
       <p>Estado: ${estado} - Creado el: ${new Date(creado_en).toLocaleDateString('es-ES', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit'
-      })} ${new Date(creado_en).toLocaleTimeString('es-ES')}</p>
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    })} ${new Date(creado_en).toLocaleTimeString('es-ES')}</p>
     `;
 
     const btnGroup = document.createElement('div');
@@ -178,34 +178,33 @@ document.getElementById('formEditarAdministrador').addEventListener('submit', as
   const id_restaurante = document.getElementById('admin-restaurante').value;
 
   // Creamos un objeto con los datos a actualizar
- // Creamos un objeto con los datos a actualizar
-const datos = {
-  nombreAdmin: nombre,
-  restauranteId: id_restaurante,
-  ...(clave && { claveAdmin: clave })
-};
+  const datos = {
+    nombreAdmin: nombre,
+    restauranteId: id_restaurante,
+    ...(clave && { claveAdmin: clave })
+  };
 
-try {
-  const res = await fetch(`/api/usuarios/administradores/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(datos)
-  });
+  try {
+    const res = await fetch(`/api/usuarios/administradores/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(datos)
+    });
 
-  const data = await res.json(); // Obtener la respuesta como JSON
+    const data = await res.json(); // Obtener la respuesta como JSON
 
-  if (res.ok) {
-    // Mostrar un toast de éxito si la actualización fue exitosa
-    mostrarToast(data.message, 'success');
-    cargarAdministradores(); // Recargar la lista de administradores
-    const modalEditar = bootstrap.Modal.getInstance(document.getElementById('modalEditarAdmin'));
-    modalEditar.hide(); // Cerrar el modal
-  } else {
-    // Mostrar un toast de error si la respuesta contiene un error
-    mostrarToast(data.error || 'Error al actualizar el administrador', 'danger');
+    if (res.ok) {
+      // Mostrar un toast de éxito si la actualización fue exitosa
+      mostrarToast(data.message, 'success');
+      cargarAdministradores(); // Recargar la lista de administradores
+      const modalEditar = bootstrap.Modal.getInstance(document.getElementById('modalEditarAdmin'));
+      modalEditar.hide(); // Cerrar el modal
+    } else {
+      // Mostrar un toast de error si la respuesta contiene un error
+      mostrarToast(data.error || 'Error al actualizar el administrador', 'danger');
+    }
+  } catch (err) {
+    console.error('Error al actualizar administrador', err);
+    mostrarToast('Error de conexión al actualizar el administrador', 'danger');
   }
-} catch (err) {
-  console.error('Error al actualizar administrador', err);
-  mostrarToast('Error de conexión al actualizar el administrador', 'danger');
-}
 });

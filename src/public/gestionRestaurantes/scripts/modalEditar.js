@@ -39,7 +39,7 @@ $formEditar.addEventListener('submit', async (event) => {
     modalEditar.hide();
     return;
   }
-
+nombre
   try {
     const res = await fetch(`/api/gestor/establecimientos/${idActualEditar}`, {
       method: 'PUT',
