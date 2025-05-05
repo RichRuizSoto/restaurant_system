@@ -1,6 +1,22 @@
 let idRestaurante = null;
 let productoEnEdicion = null;
 
+// Mapeo de ID de categoría a nombre de categoría
+let categorias = {}; // Reemplaza la constante por una variable vacía
+
+async function cargarCategorias() {
+  try {
+    const res = await fetch('/api/categorias');
+    const data = await res.json();
+    data.forEach(cat => {
+      categorias[cat.id] = cat.nombre;
+    });
+  } catch (error) {
+    console.error('Error al cargar categorías:', error);
+    mostrarMensaje('Error al cargar categorías', 'error');
+  }
+}
+
 function mostrarMensaje(msg, tipo = 'success') {
   const div = document.getElementById('mensaje');
   div.textContent = msg;
@@ -11,21 +27,12 @@ function mostrarMensaje(msg, tipo = 'success') {
 function obtenerClaseCategoria(categoria) {
   switch (categoria) {
     case 'Entradas': return 'badge badge-entrada';
-    case 'Menu': return 'badge badge-menu';
+    case 'Menú': return 'badge badge-menu';
     case 'Combos': return 'badge badge-combo';
     case 'Postres': return 'badge badge-postre';
     case 'Bebidas': return 'badge badge-bebida';
     default: return 'badge';
   }
-}
-
-function filtrarProductos() {
-  const filtro = document.getElementById('buscador').value.toLowerCase();
-  const filas = document.querySelectorAll('#tablaProductos tbody tr');
-  filas.forEach(fila => {
-    const texto = fila.innerText.toLowerCase();
-    fila.style.display = texto.includes(filtro) ? '' : 'none';
-  });
 }
 
 async function obtenerProductos() {
@@ -53,23 +60,24 @@ async function obtenerProductos() {
     if (productos.length > 0) {
       productos.forEach(p => {
         const precio = parseFloat(p.precio);
-        tbody.innerHTML += `
-  <tr>
-    <td>${p.id}</td>
-    <td>${p.nombre_producto}</td>
-    <td>${p.descripcion || ''}</td>
-    <td>$${precio.toFixed(2)}</td>
-    <td><span class="${obtenerClaseCategoria(p.categoria)}">${p.categoria}</span></td>
-    <td>${p.disponible ? 'Sí' : 'No'}</td>
-    <td>
-      <button onclick="cargarProducto(${p.id})">Editar</button>
-      <button onclick="toggleDisponibilidad(${p.id}, ${p.disponible})" data-estado="${p.disponible ? 'desactivar' : 'activar'}">
-        ${p.disponible ? 'Desactivar' : 'Activar'}
-      </button>
-    </td>
-  </tr>
-`;
+        const categoriaNombre = categorias[p.categoria] || 'Desconocida'; // Obtener nombre de la categoría
 
+        tbody.innerHTML += `
+          <tr>
+            <td>${p.id}</td>
+            <td>${p.nombre_producto}</td>
+            <td>${p.descripcion || ''}</td>
+            <td>$${precio.toFixed(2)}</td>
+            <td><span class="${obtenerClaseCategoria(categoriaNombre)}">${categoriaNombre}</span></td>
+            <td>${p.disponible ? 'Sí' : 'No'}</td>
+            <td>
+              <button onclick="cargarProducto(${p.id})">Editar</button>
+              <button onclick="toggleDisponibilidad(${p.id}, ${p.disponible})" data-estado="${p.disponible ? 'desactivar' : 'activar'}">
+                ${p.disponible ? 'Desactivar' : 'Activar'}
+              </button>
+            </td>
+          </tr>
+        `;
       });
     } else {
       mostrarMensaje("No hay productos disponibles aún.");
@@ -79,8 +87,6 @@ async function obtenerProductos() {
     mostrarMensaje('Error al cargar productos', 'error');
   }
 }
-
-//<button onclick="eliminarProducto(${p.id})">Eliminar</button>
 
 
 async function cargarProducto(id) {
@@ -202,10 +208,11 @@ document.getElementById('btnActualizar').addEventListener('click', async () => {
     // Setear hidden input para futuros POST
     document.getElementById('id_restaurante').value = idRestaurante;
 
-    obtenerProductos();  // Aquí se deben cargar los productos para el restaurante
+    await cargarCategorias(); // ✅ Cargar categorías desde la base de datos
+    obtenerProductos();       // Luego cargar productos
+
   } catch (error) {
     console.error('Error al obtener el restaurante:', error);
     mostrarMensaje('Error al cargar el restaurante', 'error');
   }
 })();
-
