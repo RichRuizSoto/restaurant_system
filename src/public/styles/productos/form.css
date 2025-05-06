@@ -234,7 +234,8 @@
 /* Alineación del botón "Agregar Categoría" */
 #btnAgregarCategoria {
   margin-top: 0.5rem;
-  width: 180px; /* Asegura que tenga el mismo ancho mínimo que el botón Agregar Producto */
+  width: 14%; /* Asegura que tenga el mismo ancho mínimo que el botón Agregar Producto */
+  background-color: #959595;
 }
 
 /* Opcional: mejor apariencia del modal dentro del formulario */
@@ -242,4 +243,9 @@
   margin-bottom: 1rem;
   font-size: 1.1rem;
   color: #333;
+}
+
+/* --- Botón Agregar Producto --- */
+#btnGuardar {
+  width: 14%; /* Asegura que tenga el mismo ancho mínimo que el botón Agregar Producto */
 }

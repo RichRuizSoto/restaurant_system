@@ -262,6 +262,30 @@ document.getElementById('btnActualizar').addEventListener('click', async () => {
   obtenerProductos();
 });
 
+function filtrarProductos() {
+  const input = document.getElementById('buscador').value.toLowerCase().trim();
+  const filtros = input.split(/\s+/); // Separa por espacios
+  const filas = document.querySelectorAll('#tablaProductos tbody tr');
+
+  filas.forEach(fila => {
+    const nombre = fila.children[1].textContent.toLowerCase();
+    const descripcion = fila.children[2].textContent.toLowerCase();
+    const categoria = fila.children[4].textContent.toLowerCase();
+    const disponible = fila.children[5].textContent.toLowerCase(); // "sí" o "no"
+
+    // Requiere que TODAS las palabras del input coincidan en alguna de las columnas
+    const coincide = filtros.every(palabra =>
+      nombre.includes(palabra) ||
+      descripcion.includes(palabra) ||
+      categoria.includes(palabra) ||
+      disponible.includes(palabra)
+    );
+
+    fila.style.display = coincide ? '' : 'none';
+  });
+}
+
+
 // Detectar el slug desde la URL y obtener el ID del restaurante
 (async function init() {
   const slug = window.location.pathname.split('/')[2]; // /restaurantes/:slug/productos
