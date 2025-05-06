@@ -31,11 +31,37 @@ async function cargarCategorias() {
 }
 
 function mostrarMensaje(msg, tipo = 'success') {
-  const div = document.getElementById('mensaje');
-  div.textContent = msg;
-  div.style.color = tipo === 'error' ? 'red' : 'green';
-  setTimeout(() => div.textContent = '', 3000);
+  const container = document.getElementById('toast-container');
+  
+  // Crear el toast
+  const toast = document.createElement('div');
+  toast.className = `toast ${tipo}`;  // Asignar la clase de acuerdo al tipo
+
+  // Icono según tipo de mensaje
+  const iconClass = tipo === 'error' ? 'fas fa-times-circle' : 'fas fa-check-circle';
+  
+  // HTML del toast
+  toast.innerHTML = `
+    <i class="${iconClass}" style="margin-right: 8px;"></i>
+    <span>${msg}</span>
+    <button class="close-toast" aria-label="Cerrar notificación">
+      <i class="fas fa-times"></i>
+    </button>
+  `;
+
+  // Función para cerrar manualmente el toast
+  toast.querySelector('.close-toast').addEventListener('click', () => toast.remove());
+
+  // Añadir el toast al contenedor
+  container.appendChild(toast);
+
+  // Eliminar automáticamente después de 3 segundos si no se cierra antes
+  setTimeout(() => {
+    if (toast.parentElement) toast.remove();
+  }, 3000);
 }
+
+
 
 function obtenerClaseCategoria(categoria) {
   switch (categoria) {
@@ -59,7 +85,7 @@ async function obtenerProductos() {
 
     if (!res.ok) {
       console.warn("[Frontend] No se encontraron productos:", data?.mensaje);
-      mostrarMensaje(data?.mensaje || 'No hay productos disponibles.', 'error');
+      mostrarMensaje('Producto guardado exitosamente', 'success');
       return;
     }
 
@@ -94,7 +120,7 @@ async function obtenerProductos() {
         `;
       });
     } else {
-      mostrarMensaje("No hay productos disponibles aún.");
+      mostrarMensaje("No hay productos disponibles aún.", 'error');
     }
   } catch (err) {
     console.error('[obtenerProductos] ❌ Error:', err);
@@ -125,7 +151,7 @@ async function eliminarProducto(id) {
   if (!confirm('¿Estás seguro de eliminar este producto?')) return;
   const res = await fetch(`/api/productos/${idRestaurante}/${id}`, { method: 'DELETE' });
   const data = await res.json();
-  mostrarMensaje(data.mensaje || 'Producto eliminado');
+  mostrarMensaje(data.mensaje || 'Producto eliminado', 'info'); // o 'warning' si decides agregarlo
   obtenerProductos();
 }
 
@@ -139,10 +165,10 @@ async function toggleDisponibilidad(id, estadoActual) {
 
   const data = await res.json();
   if (res.ok) {
-    alert(data.mensaje || 'Estado actualizado');
+    mostrarNotificacion(data.mensaje || 'Estado actualizado', 'success');
     obtenerProductos();
   } else {
-    alert('Error al actualizar el producto');
+    mostrarNotificacion('Error al actualizar el producto', 'error');
     console.error(data);
   }
 }
@@ -173,7 +199,7 @@ document.getElementById('formProducto').addEventListener('submit', async (e) => 
     return;
   }
 
-  mostrarMensaje(result.mensaje || 'Producto agregado');
+  mostrarMensaje(result.mensaje || 'Producto agregado', 'success');
   form.reset();
   obtenerProductos();
 });
@@ -193,7 +219,7 @@ document.getElementById('btnGuardarCategoria').addEventListener('click', async (
   const nombreCategoria = document.getElementById('nombre_categoria').value.trim();
 
   if (!nombreCategoria) {
-    alert('Por favor, ingresa un nombre para la categoría.');
+    mostrarNotificacion('Por favor, ingresa un nombre para la categoría.', 'error');
     return;
   }
 
@@ -210,12 +236,12 @@ document.getElementById('btnGuardarCategoria').addEventListener('click', async (
     const result = await res.json();
 
     if (!res.ok) {
-      alert(result?.error || 'Error al agregar la categoría');
+      mostrarNotificacion(result?.error || 'Error al agregar la categoría', 'error');
       return;
     }
 
     // Mostrar mensaje de éxito
-    mostrarMensaje(result.mensaje || 'Categoría agregada exitosamente');
+    mostrarMensaje(result.mensaje || 'Categoría agregada exitosamente', 'success');
 
     // Actualizar las categorías
     await cargarCategorias();  // Esto recargará la lista de categorías
@@ -248,12 +274,11 @@ document.getElementById('btnActualizar').addEventListener('click', async () => {
 
   if (!res.ok) {
     const mensaje = result?.error || 'Error al actualizar producto';
-    mostrarMensaje(mensaje, 'error');
+    mostrarMensaje("Hubo un error al procesar la solicitud", 'error');
     console.warn('🚫 Fallo al actualizar producto:', result);
     return;
   }
 
-  mostrarMensaje(result.mensaje || 'Producto actualizado');
   form.reset();
   productoEnEdicion = null;
   document.getElementById('btnGuardar').style.display = 'inline-block';
@@ -285,6 +310,38 @@ function filtrarProductos() {
   });
 }
 
+// Función para mostrar una notificación tipo "toast"
+function mostrarNotificacion(mensaje, tipo) {
+  // Crear el contenedor de la notificación
+  const toast = document.createElement('div');
+  toast.classList.add('toast', tipo);  // Tipo puede ser 'success' o 'error'
+
+  // Crear el contenido de la notificación
+  const contenido = document.createElement('span');
+  contenido.textContent = mensaje;
+
+  // Crear el botón de cerrar
+  const closeButton = document.createElement('button');
+  closeButton.classList.add('close-toast');
+  closeButton.innerHTML = '&times;';  // Símbolo de "x"
+
+  // Añadir el botón de cerrar al toast
+  closeButton.onclick = function() {
+      toast.remove();  // Eliminar la notificación cuando se haga clic
+  };
+
+  // Añadir contenido y el botón de cerrar al toast
+  toast.appendChild(contenido);
+
+  // Añadir la notificación al contenedor de toasts
+  const toastContainer = document.getElementById('toast-container');
+  toastContainer.appendChild(toast);
+
+  // Eliminar la notificación después de un tiempo (5 segundos en este caso)
+  setTimeout(() => {
+      toast.remove();
+  }, 5000);
+}
 
 // Detectar el slug desde la URL y obtener el ID del restaurante
 (async function init() {
