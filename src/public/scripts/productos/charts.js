@@ -1,7 +1,7 @@
 let graficoGanancias = null;
 
 export async function cargarGananciasPorDia(idRestaurante) {
-  const response = await fetch(`/api/ganancias-por-dia?id_restaurante=${idRestaurante}`);
+  const response = await fetch(`/api/ganancias/por-dia?id_restaurante=${idRestaurante}`);
   const datos = await response.json();
 
   // Crear un mapa de fecha -> total_diario

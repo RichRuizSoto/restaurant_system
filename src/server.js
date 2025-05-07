@@ -1,11 +1,10 @@
 const app = require('./app');
 const http = require('http');
-const { setupSocket } = require('./utils/socket'); // WebSocket
+const { setupSocket } = require('./utils/socket');
 
 const PORT = process.env.PORT;
 const server = http.createServer(app);
 
-// Configurar WebSocket con el servidor
 setupSocket(server, app);
 
 server.listen(PORT, () => {

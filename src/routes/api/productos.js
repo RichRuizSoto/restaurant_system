@@ -9,7 +9,6 @@ const {
   validarExistenciaProducto
 } = require('../../middlewares/validaciones/productosValidaciones');
 
-// 🟢 API para eliminar todos los productos de un restaurante
 router.post('/agregar', validarProductoCreacion, validarExistenciaRestaurante, productosController.agregarProducto);
 router.get('/:idRestaurante', productosController.obtenerProductosPorRestaurante);
 router.get('/:restId/:id', validarExistenciaProducto, productosController.obtenerProductoPorId);

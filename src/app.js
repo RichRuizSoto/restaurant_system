@@ -10,19 +10,15 @@ dotenv.config();
 
 const app = express();
 
-// Motor de vistas
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '..', 'views'));
 
-// Middleware básico
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Middleware personalizados y rutas
 configureMiddlewares(app);
 routeConfig(app);
 
-// Manejo de errores
 app.use(errorHandler);
 
 module.exports = app;

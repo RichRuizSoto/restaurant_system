@@ -1,45 +1,27 @@
-const db = require('../core/config/database'); // Ya tienes la conexión a la base de datos configurada
-
-
 const productosRoutes = require('./api/productos');
 const restauranteRoutes = require('./api/restaurantes');
 const gestorRoutes = require('./api/gestores');
-const pedidosRoutes = require('./api/pedidos');  // Verifica que esta importación sea correcta
-const usuariosRoutes = require('./api/usuarios');  // Verifica que esta importación sea correcta
-const categoriasRoutes = require('./api/categoriasRoutes'); // Añadido
+const pedidosRoutes = require('./api/pedidos');
+const usuariosRoutes = require('./api/usuarios');
+const categoriasRoutes = require('./api/categorias');
+const gananciasRoutes = require('./api/ganancias');
 
 const restauranteViewRoutes = require('./views/restaurantes');
 const gestorViewRoutes = require('./views/gestores');
 const menuRoutes = require('./views/menu');
-const pedidosViewRoutes = require('./views/pedidos'); // Corregido
-
+const pedidosViewRoutes = require('./views/pedidos');
 
 module.exports = (app) => {
-  // Rutas API
-  app.use('/api/gestor', gestorRoutes);           // Rutas de la API para gestionar establecimientos
-  app.use('/api/productos', productosRoutes);     // Rutas de la API para productos
-  app.use('/api/restaurantes', restauranteRoutes); // Rutas de la API para restaurantes
-  app.use('/api/pedidos', pedidosRoutes);         // Ruta para pedidos
-  app.use('/api/usuarios', usuariosRoutes);         // Ruta para pedidos
-  app.use('/api/categorias', categoriasRoutes); // Rutas para gestionar categorías
+  app.use('/api/gestor', gestorRoutes);
+  app.use('/api/productos', productosRoutes);
+  app.use('/api/restaurantes', restauranteRoutes);
+  app.use('/api/pedidos', pedidosRoutes);
+  app.use('/api/usuarios', usuariosRoutes);
+  app.use('/api/categorias', categoriasRoutes);
+  app.use('/api/ganancias', gananciasRoutes);
 
-  // Rutas de vistas (compartiendo router)
-  app.use('/restaurantes', restauranteViewRoutes);  // Rutas para ver restaurantes (páginas)
-  app.use('/gestores', gestorViewRoutes);           // Rutas para la vista de gestores (páginas)
+  app.use('/restaurantes', restauranteViewRoutes);
+  app.use('/gestores', gestorViewRoutes);
   app.use('/menu', menuRoutes);
   app.use('/pedidos', pedidosViewRoutes);
-
-  app.get('/api/ganancias-por-dia', async (req, res) => {
-  const id = req.query.id_restaurante;
-
-  const [rows] = await db.execute(`
-    SELECT fecha_creado, SUM(total) AS total_diario
-    FROM pedidos
-    WHERE estado = 'pagado' AND id_restaurante = ?
-    GROUP BY fecha_creado
-    ORDER BY fecha_creado ASC
-  `, [id]);
-
-  res.json(rows);
-});
 };
