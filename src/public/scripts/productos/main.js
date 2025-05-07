@@ -5,6 +5,8 @@ import { mostrarMensaje } from './ui.js';
 import { filtrarProductos } from './utils.js';
 import { setIdRestaurante as setIdRestauranteProductos } from './productos.js';
 import { setIdRestaurante as setIdRestauranteEmpleados, registrarEventosEmpleado } from './formEmpleados.js';
+import { cargarGananciasPorDia } from './charts.js';
+
 
 (async function init() {
   const slug = window.location.pathname.split('/')[2];
@@ -19,8 +21,11 @@ import { setIdRestaurante as setIdRestauranteEmpleados, registrarEventosEmpleado
 
     await cargarCategorias();
     await obtenerProductos();
+    await cargarGananciasPorDia(data.id);
+
     registrarEventos();
     registrarEventosEmpleado(); // empleados
+    
   } catch (error) {
     console.error('Error al obtener el restaurante:', error);
     mostrarMensaje('Error al cargar el restaurante', 'error');

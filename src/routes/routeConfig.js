@@ -1,3 +1,6 @@
+const db = require('../core/config/database'); // Ya tienes la conexión a la base de datos configurada
+
+
 const productosRoutes = require('./api/productos');
 const restauranteRoutes = require('./api/restaurantes');
 const gestorRoutes = require('./api/gestores');
@@ -25,4 +28,18 @@ module.exports = (app) => {
   app.use('/gestores', gestorViewRoutes);           // Rutas para la vista de gestores (páginas)
   app.use('/menu', menuRoutes);
   app.use('/pedidos', pedidosViewRoutes);
+
+  app.get('/api/ganancias-por-dia', async (req, res) => {
+  const id = req.query.id_restaurante;
+
+  const [rows] = await db.execute(`
+    SELECT fecha_creado, SUM(total) AS total_diario
+    FROM pedidos
+    WHERE estado = 'pagado' AND id_restaurante = ?
+    GROUP BY fecha_creado
+    ORDER BY fecha_creado ASC
+  `, [id]);
+
+  res.json(rows);
+});
 };
