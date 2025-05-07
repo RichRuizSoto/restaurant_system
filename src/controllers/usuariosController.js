@@ -77,3 +77,80 @@ exports.eliminarAdministrador = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+// Función para crear un empleado
+exports.crearEmpleado = async (req, res) => {
+  const { nombreEmpleado, claveEmpleado, restauranteId } = req.body;
+
+  try {
+    const result = await usuariosService.crearEmpleado(nombreEmpleado, claveEmpleado, restauranteId);
+    res.status(201).json(result); // Devolver mensaje de éxito
+  } catch (err) {
+    console.error('[Backend] Error al crear el empleado:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Función para mostrar todos los empleados
+exports.mostrarEmpleados = async (req, res) => {
+  try {
+    const empleados = await usuariosService.mostrarEmpleados();
+    res.status(200).json(empleados); // Devolver lista de empleados
+  } catch (err) {
+    console.error('[Backend] Error al obtener empleados:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Función para mostrar un empleado específico
+exports.mostrarEmpleado = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const empleado = await usuariosService.mostrarEmpleado(id);
+    res.status(200).json(empleado); // Devolver el empleado encontrado
+  } catch (err) {
+    console.error('[Backend] Error al obtener empleado:', err.message);
+    if (err.message === 'Empleado no encontrado') {
+      return res.status(404).json({ error: err.message });
+    }
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Función para editar la información de un empleado
+exports.editarInformacionEmpleado = async (req, res) => {
+  const { id } = req.params;
+  const { nombreEmpleado, claveEmpleado, restauranteId } = req.body;
+
+  if (!nombreEmpleado || !restauranteId) {
+    return res.status(400).json({ error: 'Nombre y restaurante son obligatorios.' });
+  }
+
+  try {
+    const result = await usuariosService.editarInformacionEmpleado(id, nombreEmpleado, claveEmpleado, restauranteId);
+    res.status(200).json(result); // Mensaje de éxito
+  } catch (err) {
+    console.error('[Backend] Error al actualizar empleado:', err.message);
+    if (err.message === 'Empleado no encontrado') {
+      return res.status(404).json({ error: err.message });
+    }
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Función para eliminar un empleado
+exports.eliminarEmpleado = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await usuariosService.eliminarEmpleado(id);
+    res.status(200).json(result); // Mensaje de éxito
+  } catch (err) {
+    console.error('[Backend] Error al eliminar empleado:', err.message);
+    if (err.message === 'Empleado no encontrado') {
+      return res.status(404).json({ error: err.message });
+    }
+    res.status(500).json({ error: err.message });
+  }
+};

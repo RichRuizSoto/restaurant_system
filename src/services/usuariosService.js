@@ -59,3 +59,60 @@ exports.eliminarAdministrador = async (id) => {
         throw new Error(err.message);
     }
 };
+
+// Función para crear un empleado
+exports.crearEmpleado = async (nombreEmpleado, claveEmpleado, restauranteId) => {
+    try {
+        const result = await Usuarios.crearEmpleado(nombreEmpleado, claveEmpleado, restauranteId);
+        return { message: 'Empleado creado con éxito' };
+    } catch (err) {
+        throw new Error(err.message);
+    }
+};
+
+// Función para obtener todos los empleados
+exports.mostrarEmpleados = async () => {
+    try {
+      const query = `
+        SELECT usuarios.id, usuarios.nombre, usuarios.rol, usuarios.creado_en, usuarios.id_restaurante, establecimientos.nombre AS nombre_restaurante
+        FROM usuarios
+        JOIN establecimientos ON usuarios.id_restaurante = establecimientos.id
+        WHERE usuarios.rol = 'empleado'`;
+      
+      const [empleados] = await db.execute(query);
+      return empleados; // Devolver los empleados con el nombre del restaurante
+    } catch (err) {
+      console.error('[Backend] Error al obtener empleados:', err); // Ver detalles del error aquí
+      throw new Error('Error inesperado al obtener empleados');
+    }
+  };
+
+// Función para obtener un solo empleado por su ID
+exports.mostrarEmpleado = async (id) => {
+    try {
+        const empleado = await Usuarios.mostrarEmpleado(id);
+        return empleado; // Retorna el empleado encontrado
+    } catch (err) {
+        throw new Error(err.message);
+    }
+};
+
+// Función para actualizar la información de un empleado
+exports.editarInformacionEmpleado = async (id, nombreEmpleado, claveEmpleado, restauranteId) => {
+    try {
+        await Usuarios.editarInformacionEmpleado(id, nombreEmpleado, claveEmpleado, restauranteId);
+        return { message: 'Empleado actualizado con éxito' };
+    } catch (err) {
+        throw new Error(err.message);
+    }
+};
+
+// Función para eliminar un empleado
+exports.eliminarEmpleado = async (id) => {
+    try {
+        const result = await Usuarios.eliminarEmpleado(id);
+        return { message: 'Empleado eliminado con éxito' };
+    } catch (err) {
+        throw new Error(err.message);
+    }
+};
