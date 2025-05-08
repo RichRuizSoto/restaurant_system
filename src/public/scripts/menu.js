@@ -32,14 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-  // Escuchar botones "Agregar"
-  document.querySelectorAll('.btn-agregar').forEach(button => {
-    button.addEventListener('click', () => {
-      const producto = JSON.parse(button.dataset.producto);
-      agregarAlCarrito(producto);
-    });
-  });
-
   // Agregar producto al carrito
   function agregarAlCarrito(producto) {
     const existente = carrito.find(p => p.id_producto === producto.id);
