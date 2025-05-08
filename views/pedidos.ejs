@@ -15,8 +15,8 @@
   <link rel="stylesheet" href="/styles/pedidos/pedido.css">
   <link rel="stylesheet" href="/styles/pedidos/buttons.css">
   <link rel="stylesheet" href="/styles/pedidos/notifications.css">
-    <link rel="stylesheet" href="/styles/pedidos/navigation.css">
-    <link rel="stylesheet" href="/styles/pedidos/typography.css">
+  <link rel="stylesheet" href="/styles/pedidos/navigation.css">
+  <link rel="stylesheet" href="/styles/pedidos/typography.css">
   <link rel="stylesheet" href="/styles/pedidos/responsive.css">
 </head>
 <body>
@@ -34,17 +34,16 @@
         <i class="fas fa-credit-card"></i> Pagado
       </button>
       <button class="nav-button" role="tab" aria-selected="false" data-seccion="cancelado" id="btn-cancelado">
-  <i class="fas fa-ban"></i> Cancelado
-</button>
-
+        <i class="fas fa-ban"></i> Cancelado
+      </button>
     </nav>
 
     <!-- Secciones de pedidos -->
-<% const estados = ['solicitado', 'listo', 'pagado', 'cancelado']; %>
+    <% const estados = ['solicitado', 'listo', 'pagado', 'cancelado']; %>
     <% estados.forEach(estado => { %>
       <section id="<%= estado %>-section" class="pedido-section <%= estado === 'solicitado' ? 'active' : '' %>" aria-labelledby="btn-<%= estado %>">
         <h2>Pedidos <%= estado %></h2>
-        <ul class="pedido-lista">
+        <ul class="pedido-lista" id="pedidos-<%= estado %>">
           <% if (Array.isArray(pedidos[estado]) && pedidos[estado].length > 0) { %>
             <% pedidos[estado].forEach(pedido => { %>
               <li id="pedido-<%= pedido.id %>" class="pedido-item">
@@ -69,8 +68,6 @@
                 </ul>
 
                 <div class="pedido-acciones">
-
-
                   <% if (estado === 'solicitado') { %>
                     <button class="button" onclick="actualizarEstadoPedido(<%= pedido.id %>, 'listo')">
                       <i class="fas fa-check"></i> Marcar como listo
@@ -85,11 +82,11 @@
                     </span>
                   <% } %>
 
-                                  <% if (estado === 'solicitado' || estado === 'listo') { %>
-  <button class="button cancel-button" onclick="actualizarEstadoPedido(<%= pedido.id %>, 'cancelado')">
-    <i class="fas fa-ban"></i> Cancelar pedido
-  </button>
-<% } %>
+                  <% if (estado === 'solicitado' || estado === 'listo') { %>
+                    <button class="button cancel-button" onclick="actualizarEstadoPedido(<%= pedido.id %>, 'cancelado')">
+                      <i class="fas fa-ban"></i> Cancelar pedido
+                    </button>
+                  <% } %>
                 </div>
               </li>
             <% }) %>
@@ -99,6 +96,10 @@
         </ul>
       </section>
     <% }) %>
+
+    <!-- Input oculto para restauranteId -->
+    <input type="hidden" id="restaurante-id" value="<%= restId %>">
+
   </main>
 
   <!-- Scripts -->

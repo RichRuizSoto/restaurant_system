@@ -1,9 +1,10 @@
 const { Server } = require('socket.io');
-const db = require('../core/config/database');  // Asegúrate de importar tu archivo de conexión a la base de datos
+const db = require('../core/config/database');  // Conexión a la base de datos
+const pedidosService = require('../services/pedidosService'); // asegúrate de importar
 
 let io;
 
-// Función para obtener los productos de un pedido
+// Obtener productos del pedido
 async function obtenerProductosDePedido(idPedido) {
   const [productos] = await db.query(`
     SELECT dp.id_producto, dp.cantidad, dp.precio_unitario, p.nombre 
@@ -13,7 +14,6 @@ async function obtenerProductosDePedido(idPedido) {
   `, [idPedido]);
   return productos;
 }
-
 
 function setupSocket(server, app) {
   io = new Server(server, {
@@ -29,6 +29,13 @@ function setupSocket(server, app) {
 
     socket.emit('actualizarEstablecimientos');
 
+    // 🧩 Cliente se une a su restaurante
+    socket.on('unirseARestaurante', (restauranteId) => {
+      if (!restauranteId) return;
+      socket.join(`restaurante_${restauranteId}`);
+      console.log(`📡 Cliente unido a sala restaurante_${restauranteId}`);
+    });
+
     socket.on('restauranteCreado', () => {
       io.emit('actualizarEstablecimientos');
     });
@@ -36,58 +43,52 @@ function setupSocket(server, app) {
     socket.on('administradorActualizado', () => {
       io.emit('actualizarAdministradores');
     });
-    
 
-    // Evento para actualizar el estado de un pedido
+    // 🧾 Estado de pedido actualizado
     socket.on('actualizarEstadoPedido', async (idPedido, nuevoEstado) => {
       try {
-        // Validación de la entrada
         if (isNaN(idPedido) || idPedido <= 0) {
           console.warn(`⚠️ idPedido inválido: ${idPedido}`);
           socket.emit('error', { mensaje: 'ID de pedido inválido' });
           return;
         }
 
-        // Validar que el nuevo estado sea uno de los valores permitidos
-        const estadosValidos = ['pendiente', 'en_proceso', 'finalizado']; // Asegúrate de que estos estados coincidan con tu lógica
+        const estadosValidos = ['pendiente', 'en_proceso', 'finalizado'];
         if (!estadosValidos.includes(nuevoEstado)) {
-          console.warn(`⚠️ nuevoEstado inválido: ${nuevoEstado}`);
+          console.warn(`⚠️ Estado inválido: ${nuevoEstado}`);
           socket.emit('error', { mensaje: 'Estado inválido' });
           return;
         }
 
-        // Usar una transacción para garantizar la consistencia de los datos
-        const connection = await db.getConnection(); // Obtener una conexión de la base de datos
-        await connection.beginTransaction(); // Iniciar la transacción
+        const connection = await db.getConnection();
+        await connection.beginTransaction();
 
-        // Comprobar si el pedido existe
         const [pedidoResult] = await connection.query('SELECT * FROM pedidos WHERE id = ?', [idPedido]);
         if (pedidoResult.length === 0) {
-          console.warn(`⚠️ Pedido con ID ${idPedido} no encontrado`);
-          await connection.rollback(); // Revertir la transacción si el pedido no existe
+          await connection.rollback();
           socket.emit('error', { mensaje: 'Pedido no encontrado' });
           return;
         }
 
-        // Actualizar el estado del pedido
-        const [updateResult] = await connection.query('UPDATE pedidos SET estado = ? WHERE id = ?', [nuevoEstado, idPedido]);
+        const [updateResult] = await connection.query(
+          'UPDATE pedidos SET estado = ? WHERE id = ?',
+          [nuevoEstado, idPedido]
+        );
 
-        // Si no se actualizó nada, no emitir el evento
         if (updateResult.affectedRows === 0) {
-          console.warn(`⚠️ No se actualizó el estado del pedido con ID ${idPedido}`);
-          await connection.rollback(); // Revertir la transacción si no se actualizó el estado
+          await connection.rollback();
           socket.emit('error', { mensaje: 'No se pudo actualizar el estado del pedido' });
           return;
         }
 
-        // Obtener los productos del pedido
         const productos = await obtenerProductosDePedido(idPedido);
 
-        // Obtener los datos básicos del pedido (número de orden, mesa, total, etc.)
-        const [[pedido]] = await connection.query('SELECT numero_orden, mesa, total, creado_en FROM pedidos WHERE id = ?', [idPedido]);
+        const [[pedido]] = await connection.query(
+          'SELECT numero_orden, mesa, total, creado_en, id_restaurante FROM pedidos WHERE id = ?',
+          [idPedido]
+        );
 
-        // Emitir el evento con la información actualizada
-        io.emit('estadoPedidoActualizado', {
+        io.to(`restaurante_${pedido.id_restaurante}`).emit('estadoPedidoActualizado', {
           idPedido,
           nuevoEstado,
           numero_orden: pedido.numero_orden,
@@ -98,20 +99,16 @@ function setupSocket(server, app) {
             id_producto: prod.id_producto,
             cantidad: prod.cantidad,
             precio_unitario: prod.precio_unitario,
-            nombre: prod.nombre // asegúrate de incluir esto
+            nombre: prod.nombre
           }))
         });
 
-        // Confirmar la transacción
         await connection.commit();
-
       } catch (err) {
         console.error('❌ [Error en socket.actualizarEstadoPedido]', err);
         socket.emit('error', { mensaje: 'Hubo un error al actualizar el estado del pedido. Intenta nuevamente.' });
       }
     });
-
-    
 
     socket.on('disconnect', () => {
       console.log('🔴 Cliente desconectado de WebSocket');

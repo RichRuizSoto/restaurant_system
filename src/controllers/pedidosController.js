@@ -40,7 +40,24 @@ const nuevoPedido = await pedidosService.crearPedido(pedido);
 const io = getSocket();
 console.log('📡 Emitiendo nuevoPedido con datos completos:', nuevoPedido);
 
-io.emit('nuevoPedido', nuevoPedido);
+// Obtener productos con nombre para el evento WebSocket
+const productos = await pedidosService.obtenerProductosPorPedido(nuevoPedido.id);
+
+// Enviar a la sala específica del restaurante
+io.to(`restaurante_${nuevoPedido.id_restaurante}`).emit('nuevoPedido', {
+  id: nuevoPedido.id,
+  numero_orden: nuevoPedido.numero_orden,
+  mesa: nuevoPedido.mesa,
+  productos: productos.map(prod => ({
+    id_producto: prod.id_producto,
+    cantidad: prod.cantidad,
+    precio_unitario: prod.precio_unitario,
+    nombre: prod.nombre
+  })),
+  total: nuevoPedido.total,
+  creado_en: nuevoPedido.creado_en,
+  estado: nuevoPedido.estado // Asegúrate de que sea 'solicitado'
+});
     
     res.status(201).json({ 
       pedido: nuevoPedido,
@@ -134,16 +151,26 @@ exports.actualizarEstadoPedido = async (req, res, next) => {
     if (!pedidoActualizado) return res.status(404).json({ mensaje: 'Pedido no encontrado' });
 
     const io = getSocket();
-    io.emit('estadoPedidoActualizado', {
-      idPedido: id,
-      nuevoEstado,
-      numero_orden: pedidoActualizado.numero_orden,
-      mesa: pedidoActualizado.mesa,
-      productos: pedidoActualizado.productos,
-      total: pedidoActualizado.total,
-      creado_en: pedidoActualizado.creado_en,
-      estado: nuevoEstado,
+
+    // Obtener productos con nombre para el evento WebSocket
+    const productos = await pedidosService.obtenerProductosPorPedido(nuevoPedido.id);
+    
+    // Emitir el evento 'nuevoPedido' a la sala del restaurante con los datos completos
+    io.to(`restaurante_${nuevoPedido.id_restaurante}`).emit('nuevoPedido', {
+      id: nuevoPedido.id,
+      numero_orden: nuevoPedido.numero_orden,
+      mesa: nuevoPedido.mesa,
+      productos: productos.map(prod => ({
+        id_producto: prod.id_producto,
+        cantidad: prod.cantidad,
+        precio_unitario: prod.precio_unitario,
+        nombre: prod.nombre
+      })),
+      total: nuevoPedido.total,
+      creado_en: nuevoPedido.creado_en,
+      estado: nuevoPedido.estado  // Asegúrate de que el estado es 'solicitado'
     });
+    
 
     res.json({
       mensaje: `Pedido actualizado a "${nuevoEstado}"`,
