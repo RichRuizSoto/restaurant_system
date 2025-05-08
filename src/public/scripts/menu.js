@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return showNotification('El carrito está vacío', 'warning');
     }
 
-    const total = parseFloat(totalCarrito.textContent);
+    const total = parseFloat(totalCarrito.textContent.replace('$', ''));
     const pedido = {
       id_restaurante: restauranteId,
       mesa,
