@@ -158,6 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
         carrito = [];
         guardarCarrito();
         renderizarCarrito();
+        mesaInput.value = ''; 
       } else {
         showNotification(data?.mensaje || 'Error al enviar el pedido', 'error');
       }
