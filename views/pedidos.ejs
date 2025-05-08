@@ -33,10 +33,14 @@
       <button class="nav-button" role="tab" aria-selected="false" data-seccion="pagado" id="btn-pagado">
         <i class="fas fa-credit-card"></i> Pagado
       </button>
+      <button class="nav-button" role="tab" aria-selected="false" data-seccion="cancelado" id="btn-cancelado">
+  <i class="fas fa-ban"></i> Cancelado
+</button>
+
     </nav>
 
     <!-- Secciones de pedidos -->
-    <% const estados = ['solicitado', 'listo', 'pagado']; %>
+<% const estados = ['solicitado', 'listo', 'pagado', 'cancelado']; %>
     <% estados.forEach(estado => { %>
       <section id="<%= estado %>-section" class="pedido-section <%= estado === 'solicitado' ? 'active' : '' %>" aria-labelledby="btn-<%= estado %>">
         <h2>Pedidos <%= estado %></h2>
@@ -65,6 +69,12 @@
                 </ul>
 
                 <div class="pedido-acciones">
+                <% if (estado === 'solicitado' || estado === 'listo') { %>
+  <button class="button cancel-button" onclick="actualizarEstadoPedido(<%= pedido.id %>, 'cancelado')">
+    <i class="fas fa-ban"></i> Cancelar pedido
+  </button>
+<% } %>
+
                   <% if (estado === 'solicitado') { %>
                     <button class="button" onclick="actualizarEstadoPedido(<%= pedido.id %>, 'listo')">
                       <i class="fas fa-check"></i> Marcar como listo

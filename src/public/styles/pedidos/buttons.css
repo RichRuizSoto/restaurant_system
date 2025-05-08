@@ -63,3 +63,11 @@
     background-color: #e0e0e0; /* Fondo gris más claro cuando está deshabilitado */
   }
   
+  .cancel-button {
+    background-color: #d9534f; /* rojo */
+    color: white;
+  }
+  
+  .cancel-button:hover {
+    background-color: #c9302c;
+  }
