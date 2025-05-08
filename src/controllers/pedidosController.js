@@ -2,7 +2,7 @@ const pedidosService = require('../services/pedidosService');
 const restaurantesService = require('../services/restaurantesService');
 const { getSocket } = require('../utils/socket');
 
-const ESTADOS_VALIDOS = ['solicitado', 'listo', 'pagado'];
+const ESTADOS_VALIDOS = ['solicitado', 'listo', 'pagado', 'cancelado'];
 
 // 🟢 Crear nuevo pedido
 exports.recibirPedido = async (req, res) => {
@@ -98,8 +98,10 @@ exports.obtenerPedidosPorEstado = async (req, res, next) => {
     const agrupados = {
       solicitado: [],
       listo: [],
-      pagado: []
+      pagado: [],
+      cancelado: []
     };
+    
 
     for (const pedido of pedidos) {
       if (agrupados[pedido.estado]) {
@@ -166,8 +168,10 @@ exports.renderizarVistaPedidos = async (req, res, next) => {
     const agrupados = {
       solicitado: [],
       listo: [],
-      pagado: []
+      pagado: [],
+      cancelado: []
     };
+    
 
     // 🟢 Agregar productos a cada pedido
     for (const pedido of pedidos) {

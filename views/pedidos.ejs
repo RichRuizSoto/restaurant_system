@@ -69,11 +69,7 @@
                 </ul>
 
                 <div class="pedido-acciones">
-                <% if (estado === 'solicitado' || estado === 'listo') { %>
-  <button class="button cancel-button" onclick="actualizarEstadoPedido(<%= pedido.id %>, 'cancelado')">
-    <i class="fas fa-ban"></i> Cancelar pedido
-  </button>
-<% } %>
+
 
                   <% if (estado === 'solicitado') { %>
                     <button class="button" onclick="actualizarEstadoPedido(<%= pedido.id %>, 'listo')">
@@ -88,6 +84,12 @@
                       <i class="fas fa-thumbs-up"></i> Pedido ya pagado
                     </span>
                   <% } %>
+
+                                  <% if (estado === 'solicitado' || estado === 'listo') { %>
+  <button class="button cancel-button" onclick="actualizarEstadoPedido(<%= pedido.id %>, 'cancelado')">
+    <i class="fas fa-ban"></i> Cancelar pedido
+  </button>
+<% } %>
                 </div>
               </li>
             <% }) %>

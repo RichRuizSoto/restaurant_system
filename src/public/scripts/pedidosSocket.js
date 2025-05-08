@@ -80,11 +80,23 @@ function generarHTMLPedido(id, numero_orden, mesa, productos, total, creado_en, 
       `).join('')
     : '<li class="producto-item">No hay productos disponibles</li>';
 
-  const boton = estado === 'solicitado'
-    ? `<button class="button" onclick="actualizarEstadoPedido(${id}, 'listo')">Marcar como listo</button>`
-    : estado === 'listo'
-    ? `<button class="button" onclick="actualizarEstadoPedido(${id}, 'pagado')">Marcar como pagado</button>`
-    : `<span class="estado-finalizado">Pedido ya pagado</span>`;
+    let boton = '';
+    if (estado === 'solicitado') {
+      boton = `
+        <button class="button" onclick="actualizarEstadoPedido(${id}, 'listo')">Marcar como listo</button>
+        <button class="button cancel-button" onclick="actualizarEstadoPedido(${id}, 'cancelado')">Cancelar pedido</button>
+      `;
+    } else if (estado === 'listo') {
+      boton = `
+        <button class="button" onclick="actualizarEstadoPedido(${id}, 'pagado')">Marcar como pagado</button>
+        <button class="button cancel-button" onclick="actualizarEstadoPedido(${id}, 'cancelado')">Cancelar pedido</button>
+      `;
+    } else if (estado === 'pagado') {
+      boton = `<span class="estado-finalizado">Pedido ya pagado</span>`;
+    } else if (estado === 'cancelado') {
+      boton = `<span class="estado-finalizado">Pedido cancelado</span>`;
+    }
+    
 
   return `
     <li id="pedido-${id}" class="pedido-item">

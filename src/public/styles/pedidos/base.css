@@ -16,7 +16,7 @@ body {
   padding: 24px;
   font-size: 1rem; /* Usar rem para mayor flexibilidad y escalabilidad */
   word-wrap: break-word; /* Mejor manejo de textos largos */
-  background: #f4f6f8 url('path-to-your-image.jpg') no-repeat center center fixed; /* Fondo opcional */
+  background: #f4f6f8; /* solo el color */
 }
 
 /* Estilo para listas */
