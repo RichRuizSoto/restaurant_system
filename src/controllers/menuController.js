@@ -18,11 +18,13 @@
         // Agrupar productos por categoría
         const productosPorCategoria = {};
         productosDisponibles.forEach(prod => {
-        if (!productosPorCategoria[prod.categoria]) {
-            productosPorCategoria[prod.categoria] = [];
-        }
-        productosPorCategoria[prod.categoria].push(prod);
+          const nombreCategoria = prod.nombre_categoria;
+          if (!productosPorCategoria[nombreCategoria]) {
+            productosPorCategoria[nombreCategoria] = [];
+          }
+          productosPorCategoria[nombreCategoria].push(prod);
         });
+        
 
         // Renderizar vista dinámica según restaurante
         res.render('menu', {

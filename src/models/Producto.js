@@ -26,7 +26,15 @@ const crearProducto = async ({ id_restaurante, nombre_producto, descripcion, pre
 
 // 📦 Obtener todos los productos de un restaurante
 const obtenerProductosPorRestaurante = async (id_restaurante) => {
-  const sql = `SELECT * FROM productos WHERE id_restaurante = ? ORDER BY creado_en DESC`;
+  const sql = `
+  SELECT 
+    p.*, 
+    c.nombre AS nombre_categoria 
+  FROM productos p
+  JOIN categorias c ON p.categoria = c.id
+  WHERE p.id_restaurante = ?
+  ORDER BY p.creado_en DESC
+`;
   const [results] = await db.query(sql, [id_restaurante]);
   return results;
 };

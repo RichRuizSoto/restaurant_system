@@ -1,5 +1,3 @@
-// controllers/categoriasController.js
-
 const categoriasService = require('../services/categoriasService');
 
 // 🟢 Crear nueva categoría

@@ -1,4 +1,3 @@
-// src/controllers/restauranteController.js
 const restauranteService = require('../services/restaurantesService');
 
 // 🔹 Obtener restaurante por slug (detalles del restaurante)

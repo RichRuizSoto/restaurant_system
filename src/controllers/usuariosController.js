@@ -1,4 +1,3 @@
-// usuariosController.js
 const usuariosService = require('../services/usuariosService'); // Importar el servicio
 
 // Función para crear un administrador
