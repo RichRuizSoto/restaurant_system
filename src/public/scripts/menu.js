@@ -167,6 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const { data, numero_orden } = await res.json();
 
       if (res.ok) {
+        showNotification(`🛎️ Pedido nuevo recibido - Mesa ${pedido.mesa} - Orden #${pedido.numero_orden}`, 'info');
         carrito = [];
         guardarCarrito();
         renderizarCarrito();
@@ -194,10 +195,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  socket.on('nuevoPedido', (pedido) => {
-    console.log('🆕 Pedido recibido vía WebSocket:', pedido);
-    showNotification(`🛎️ Pedido nuevo recibido - Mesa ${pedido.mesa} - Orden #${pedido.numero_orden}`, 'info');
-  });
 
   // Cargar carrito desde localStorage
   function cargarCarrito() {
