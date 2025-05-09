@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const { data, numero_orden } = await res.json();
 
       if (res.ok) {
-        showNotification(`🛎️ Pedido nuevo recibido - Mesa ${pedido.mesa} - Orden #${pedido.numero_orden}`, 'info');
+        showNotification(`🛎️ Pedido nuevo recibido - Mesa ${pedido.mesa} - Orden #${numero_orden}`, 'info');
         carrito = [];
         guardarCarrito();
         renderizarCarrito();
