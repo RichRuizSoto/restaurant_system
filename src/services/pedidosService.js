@@ -1,4 +1,5 @@
 const db = require('../core/config/database');
+const socket = require('../utils/socket'); // Asegúrate de importar el socket
 
 // Crear un nuevo pedido
 exports.crearPedido = async (pedido) => {
@@ -52,7 +53,7 @@ exports.crearPedido = async (pedido) => {
         insertado = true;
       } catch (err) {
         if (err.code !== 'ER_DUP_ENTRY') throw err;
-        // Si es duplicado, intentamos otra vez
+        // Si es duplicado, intentar de nuevo
       }
     }
 
@@ -85,8 +86,13 @@ exports.crearPedido = async (pedido) => {
 
     await conn.commit();
 
-    // ✅ Devuelve el pedido completo para que lo use el frontend
+    // Obtener el pedido completo
     const pedidoCompleto = await exports.obtenerPedidoPorId(pedidoId);
+
+    // Emitir el evento WebSocket a los clientes del restaurante
+    const io = socket.getSocket();
+    io.to(`restaurante_${pedido.id_restaurante}`).emit('nuevoPedido', pedidoCompleto);
+
     return pedidoCompleto;
 
   } catch (err) {
@@ -106,14 +112,14 @@ exports.obtenerPedidoPorNumero = async (numeroOrden) => {
   const conn = await db.getConnection();
   try {
     const [result] = await conn.query(
-      `SELECT p.*, dp.id_producto, dp.cantidad, dp.precio_unitario
+      `SELECT p.*, dp.id_producto, dp.cantidad, dp.precio_unitario, pr.nombre_producto
        FROM pedidos p
        JOIN detalle_pedido dp ON p.id = dp.id_pedido
+       JOIN productos pr ON dp.id_producto = pr.id
        WHERE p.numero_orden = ?`,
       [numeroOrden]
     );
 
-    // Si no se encuentra el pedido
     if (result.length === 0) return null;
 
     const pedido = {
@@ -126,7 +132,8 @@ exports.obtenerPedidoPorNumero = async (numeroOrden) => {
       productos: result.map(row => ({
         id_producto: row.id_producto,
         cantidad: row.cantidad,
-        precio: row.precio_unitario
+        precio_unitario: parseFloat(row.precio_unitario),
+        nombre: row.nombre_producto
       }))
     };
 
@@ -136,14 +143,17 @@ exports.obtenerPedidoPorNumero = async (numeroOrden) => {
   }
 };
 
+
 // Obtener un pedido por ID
 exports.obtenerPedidoPorId = async (idPedido) => {
   const conn = await db.getConnection();
   try {
     const [result] = await conn.query(
-      `SELECT p.*, dp.id_producto, dp.cantidad, dp.precio_unitario
+      `SELECT p.id, p.numero_orden, p.mesa, p.total, p.estado, p.creado_en, 
+       dp.id_producto, dp.cantidad, dp.precio_unitario, pr.nombre_producto
        FROM pedidos p
        JOIN detalle_pedido dp ON p.id = dp.id_pedido
+       JOIN productos pr ON dp.id_producto = pr.id
        WHERE p.id = ?`,
       [idPedido]
     );
@@ -160,7 +170,8 @@ exports.obtenerPedidoPorId = async (idPedido) => {
       productos: result.map(row => ({
         id_producto: row.id_producto,
         cantidad: row.cantidad,
-        precio: row.precio_unitario
+        precio_unitario: parseFloat(row.precio_unitario),
+        nombre: row.nombre_producto
       }))
     };
 
@@ -169,6 +180,7 @@ exports.obtenerPedidoPorId = async (idPedido) => {
     conn.release();
   }
 };
+
 
 // Obtener todos los pedidos con detalles para un restaurante
 exports.obtenerPedidosPorRestaurante = async (restId) => {
@@ -230,7 +242,7 @@ exports.cambiarEstadoPedido = async (idPedido, nuevoEstado) => {
     id_producto: p.id_producto,
     cantidad: p.cantidad,
     precio_unitario: p.precio_unitario,
-    nombre: p.nombre_producto
+    nombre: p.nombre_producto || `Producto ${p.id_producto}`
   }));
 
   return pedido;
@@ -248,7 +260,7 @@ exports.obtenerProductosPorPedido = async (idPedido) => {
   return productos.map(p => ({
     id_producto: p.id_producto,
     cantidad: p.cantidad,
-    precio_unitario: p.precio_unitario,
+    precio_unitario: parseFloat(p.precio_unitario),
     nombre: p.nombre_producto
   }));
-}; 
+};

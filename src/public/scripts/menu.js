@@ -6,6 +6,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const restauranteId = window.restauranteId;
   let carrito = cargarCarrito();
 
+  // Conectar a WebSocket y unirse a la sala
+  const socket = io();
+  if (window.restauranteId) {
+    socket.emit('unirseARestaurante', window.restauranteId);
+    console.log(`➡️ Uniendo a sala: restaurante_${restauranteId}`);
+
+  }
+
+  socket.on('pedidoConfirmado', (data) => {
+    showNotification(`🎉 Tu pedido #${data.numero_orden} ha sido confirmado`, 'success');
+  });
+
+
   // Mostrar notificación
   function showNotification(message, type = 'success') {
     const container = document.getElementById('notification-container');
@@ -22,15 +35,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 4000);
   }
 
-    // Escuchar botones "Agregar" (después de que se hayan agregado dinámicamente los productos)
-    function escucharBotonesAgregar() {
-      document.querySelectorAll('.btn-agregar').forEach(button => {
-        button.addEventListener('click', () => {
-          const producto = JSON.parse(button.dataset.producto);
-          agregarAlCarrito(producto);
-        });
+  // Escuchar botones "Agregar" (después de que se hayan agregado dinámicamente los productos)
+  function escucharBotonesAgregar() {
+    document.querySelectorAll('.btn-agregar').forEach(button => {
+      button.addEventListener('click', () => {
+        const producto = JSON.parse(button.dataset.producto);
+        agregarAlCarrito(producto);
       });
-    }
+    });
+  }
 
   // Agregar producto al carrito
   function agregarAlCarrito(producto) {
@@ -54,11 +67,11 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderizarCarrito() {
     listaCarrito.innerHTML = ''; // Limpiar la lista antes de renderizar de nuevo
     let total = 0;
-  
+
     carrito.forEach((item, index) => {
       const li = document.createElement('li');
       li.classList.add('carrito-item');  // Añades una clase al <li>
-  
+
       li.innerHTML = `
         <div class="carrito-item-info">
           <span class="carrito-item-nombre">${item.nombre}</span>
@@ -77,17 +90,17 @@ document.addEventListener('DOMContentLoaded', () => {
           </button>
         </div>
       `;
-      
+
       // Agregar el item al carrito
       listaCarrito.appendChild(li);
-  
+
       // Calcular el total
       total += item.precio * item.cantidad;
     });
-  
+
     // Mostrar el total calculado en el carrito
     totalCarrito.textContent = `$${total.toFixed(2)}`;
-  
+
     // Quitar producto
     document.querySelectorAll('.quitar').forEach(btn => {
       btn.addEventListener('click', e => {
@@ -98,13 +111,13 @@ document.addEventListener('DOMContentLoaded', () => {
         showNotification(`${eliminado[0].nombre} eliminado del carrito`, 'warning');
       });
     });
-  
+
     // Disminuir cantidad
     document.querySelectorAll('.disminuir').forEach(btn => {
       btn.addEventListener('click', e => {
         const i = parseInt(e.currentTarget.dataset.index);
         const item = carrito[i];
-  
+
         if (item.cantidad > 1) {
           item.cantidad -= 1;
           showNotification(`Cantidad de ${item.nombre} reducida`, 'info');
@@ -112,13 +125,13 @@ document.addEventListener('DOMContentLoaded', () => {
           carrito.splice(i, 1);
           showNotification(`${item.nombre} eliminado del carrito`, 'warning');
         }
-  
+
         guardarCarrito();
         renderizarCarrito();
       });
     });
   }
-  
+
 
   // Enviar pedido
   btnEnviar.addEventListener('click', async () => {
@@ -141,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
         precio: p.precio
       })),
       total,
-      estado: 'pendiente'
+      estado: 'solicitado' // 👈 BIEN
     };
 
     try {
@@ -154,11 +167,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const { data, numero_orden } = await res.json();
 
       if (res.ok) {
-        showNotification(`✅ Pedido enviado con éxito. N° orden: ${numero_orden}`, 'success');
         carrito = [];
         guardarCarrito();
         renderizarCarrito();
-        mesaInput.value = ''; 
+        mesaInput.value = '';
       } else {
         showNotification(data?.mensaje || 'Error al enviar el pedido', 'error');
       }
@@ -181,6 +193,11 @@ document.addEventListener('DOMContentLoaded', () => {
       showNotification('No se pudo guardar el carrito', 'error');
     }
   }
+
+  socket.on('nuevoPedido', (pedido) => {
+    console.log('🆕 Pedido recibido vía WebSocket:', pedido);
+    showNotification(`🛎️ Pedido nuevo recibido - Mesa ${pedido.mesa} - Orden #${pedido.numero_orden}`, 'info');
+  });
 
   // Cargar carrito desde localStorage
   function cargarCarrito() {

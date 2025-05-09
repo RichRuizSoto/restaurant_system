@@ -9,7 +9,6 @@ exports.recibirPedido = async (req, res) => {
   try {
     const pedido = req.body;
 
-    // Validación de estructura básica del pedido
     if (
       !pedido.id_restaurante ||
       typeof pedido.total !== 'number' ||
@@ -19,7 +18,6 @@ exports.recibirPedido = async (req, res) => {
       return res.status(400).json({ mensaje: 'Pedido inválido: faltan datos requeridos' });
     }
 
-    // Validar los productos
     for (const prod of pedido.productos) {
       if (
         !prod.id_producto ||
@@ -30,40 +28,27 @@ exports.recibirPedido = async (req, res) => {
       }
     }
 
-// 1. Crear el pedido
-const nuevoPedido = await pedidosService.crearPedido(pedido);
+    const nuevoPedido = await pedidosService.crearPedido(pedido);
+    const productosDB = await pedidosService.obtenerProductosPorPedido(nuevoPedido.id);
 
-// 2. Obtener los productos del pedido si aún no están incluidos
-//const productos = await pedidosService.obtenerProductosPorPedido(nuevoPedido.id);
+    const productos = productosDB.map(p => ({
+      id_producto: p.id_producto,
+      cantidad: p.cantidad,
+      precio_unitario: parseFloat(p.precio_unitario),
+      nombre: p.nombre || p.nombre_producto || `Producto ${p.id_producto}`
+    }));
 
-// 3. Emitir evento con estructura completa esperada por el frontend
-const io = getSocket();
-console.log('📡 Emitiendo nuevoPedido con datos completos:', nuevoPedido);
+    nuevoPedido.productos = productos;
 
-// Obtener productos con nombre para el evento WebSocket
-const productos = await pedidosService.obtenerProductosPorPedido(nuevoPedido.id);
+    const io = req.app.get('io'); // ✅ Cambio clave aquí
+    console.log('📡 Emitiendo nuevoPedido con datos completos:', nuevoPedido);
 
-// Enviar a la sala específica del restaurante
-io.to(`restaurante_${nuevoPedido.id_restaurante}`).emit('nuevoPedido', {
-  id: nuevoPedido.id,
-  numero_orden: nuevoPedido.numero_orden,
-  mesa: nuevoPedido.mesa,
-  productos: productos.map(prod => ({
-    id_producto: prod.id_producto,
-    cantidad: prod.cantidad,
-    precio_unitario: prod.precio_unitario,
-    nombre: prod.nombre
-  })),
-  total: nuevoPedido.total,
-  creado_en: nuevoPedido.creado_en,
-  estado: nuevoPedido.estado // Asegúrate de que sea 'solicitado'
-});
-    
-    res.status(201).json({ 
+    io.to(`restaurante_${nuevoPedido.id_restaurante}`).emit('nuevoPedido', nuevoPedido);
+
+    res.status(201).json({
       pedido: nuevoPedido,
-      numero_orden: nuevoPedido.numero_orden // ✅ Añadido explícitamente
+      numero_orden: nuevoPedido.numero_orden
     });
-    
 
   } catch (err) {
     console.error('❌ [Error en recibirPedido]', err);
@@ -73,6 +58,7 @@ io.to(`restaurante_${nuevoPedido.id_restaurante}`).emit('nuevoPedido', {
     });
   }
 };
+
 
 
 // 🔍 Obtener pedido por número de orden
@@ -118,7 +104,7 @@ exports.obtenerPedidosPorEstado = async (req, res, next) => {
       pagado: [],
       cancelado: []
     };
-    
+
 
     for (const pedido of pedidos) {
       if (agrupados[pedido.estado]) {
@@ -150,27 +136,28 @@ exports.actualizarEstadoPedido = async (req, res, next) => {
     const pedidoActualizado = await pedidosService.cambiarEstadoPedido(id, nuevoEstado);
     if (!pedidoActualizado) return res.status(404).json({ mensaje: 'Pedido no encontrado' });
 
-    const io = getSocket();
+    const io = req.app.get('io');
 
     // Obtener productos con nombre para el evento WebSocket
-    const productos = await pedidosService.obtenerProductosPorPedido(nuevoPedido.id);
-    
-    // Emitir el evento 'nuevoPedido' a la sala del restaurante con los datos completos
-    io.to(`restaurante_${nuevoPedido.id_restaurante}`).emit('nuevoPedido', {
-      id: nuevoPedido.id,
-      numero_orden: nuevoPedido.numero_orden,
-      mesa: nuevoPedido.mesa,
+    const productos = await pedidosService.obtenerProductosPorPedido(pedidoActualizado.id);
+
+    // Emitir el evento de estado actualizado (correcto)
+    io.to(`restaurante_${pedidoActualizado.id_restaurante}`).emit('estadoPedidoActualizado', {
+      idPedido: pedidoActualizado.id,
+      nuevoEstado: pedidoActualizado.estado,
+      numero_orden: pedidoActualizado.numero_orden,
+      mesa: pedidoActualizado.mesa,
+      total: pedidoActualizado.total,
+      creado_en: pedidoActualizado.creado_en,
       productos: productos.map(prod => ({
         id_producto: prod.id_producto,
         cantidad: prod.cantidad,
         precio_unitario: prod.precio_unitario,
         nombre: prod.nombre
-      })),
-      total: nuevoPedido.total,
-      creado_en: nuevoPedido.creado_en,
-      estado: nuevoPedido.estado  // Asegúrate de que el estado es 'solicitado'
+      }))
     });
-    
+
+
 
     res.json({
       mensaje: `Pedido actualizado a "${nuevoEstado}"`,
@@ -198,7 +185,7 @@ exports.renderizarVistaPedidos = async (req, res, next) => {
       pagado: [],
       cancelado: []
     };
-    
+
 
     // 🟢 Agregar productos a cada pedido
     for (const pedido of pedidos) {
