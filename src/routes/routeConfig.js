@@ -10,6 +10,7 @@ const restauranteViewRoutes = require('./views/restaurantes');
 const gestorViewRoutes = require('./views/gestores');
 const menuRoutes = require('./views/menu');
 const pedidosViewRoutes = require('./views/pedidos');
+const authViewRoutes = require('./views/auth');
 
 module.exports = (app) => {
   app.use('/api/gestor', gestorRoutes);
@@ -24,4 +25,5 @@ module.exports = (app) => {
   app.use('/gestores', gestorViewRoutes);
   app.use('/menu', menuRoutes);
   app.use('/pedidos', pedidosViewRoutes);
+  app.use('/', authViewRoutes); // Esto habilita la ruta /login
 };
