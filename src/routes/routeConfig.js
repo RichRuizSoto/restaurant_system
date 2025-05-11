@@ -5,6 +5,7 @@ const pedidosRoutes = require('./api/pedidos');
 const usuariosRoutes = require('./api/usuarios');
 const categoriasRoutes = require('./api/categorias');
 const gananciasRoutes = require('./api/ganancias');
+const authRoutes = require('./api/auth'); // Asegúrate de tener esta ruta
 
 const restauranteViewRoutes = require('./views/restaurantes');
 const gestorViewRoutes = require('./views/gestores');
@@ -13,6 +14,7 @@ const pedidosViewRoutes = require('./views/pedidos');
 const authViewRoutes = require('./views/auth');
 
 module.exports = (app) => {
+  app.use('/api/auth', authRoutes); // Endpoint para la autenticación
   app.use('/api/gestor', gestorRoutes);
   app.use('/api/productos', productosRoutes);
   app.use('/api/restaurantes', restauranteRoutes);

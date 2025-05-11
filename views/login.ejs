@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login de Usuarios</title>
+  <title>Inicio de sesión</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
@@ -187,7 +187,8 @@
       <div class="error-message"><%= error %></div>
     <% } %>
 
-    <form method="POST" action="/auth/login">
+    <!-- Aquí removemos el action y el método POST -->
+    <form id="loginForm" autocomplete="off">
       <div class="form-group">
         <label for="nombre">Nombre de usuario</label>
         <i class="bi bi-person"></i>
@@ -220,5 +221,8 @@
       </div>
     </form>
   </div>
+
+  <!-- Asegúrate de que tu archivo de JS está incluido -->
+  <script src="/scripts/login.js"></script>
 </body>
 </html>
