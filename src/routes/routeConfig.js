@@ -27,5 +27,5 @@ module.exports = (app) => {
   app.use('/gestores', gestorViewRoutes);
   app.use('/menu', menuRoutes);
   app.use('/pedidos', pedidosViewRoutes);
-  app.use('/', authViewRoutes); // Esto habilita la ruta /login
+  app.use('/auth', authViewRoutes); // Esto habilita la ruta /login
 };

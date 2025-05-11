@@ -2,70 +2,89 @@ const db = require('../core/config/database');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-// Función para el login con JWT
-// authController.js
-// authController.js
+// Iniciar sesión con JWT (y enviar token por cookie segura)
 exports.login = async (req, res) => {
-    const { nombre, clave, rol } = req.body;
- 
-    try {
-        const usuario = await db.query('SELECT u.*, e.slug AS restauranteSlug FROM usuarios u JOIN establecimientos e ON u.id_restaurante = e.id WHERE u.nombre = ? AND u.rol = ?', [nombre, rol]);
- 
-        if (!usuario || usuario.length === 0) {
-            return res.status(401).json({ error: 'Credenciales inválidas' });
-        }
- 
-        const match = await bcrypt.compare(clave, usuario[0].clave);
-        if (!match) {
-            return res.status(401).json({ error: 'Credenciales inválidas' });
-        }
- 
-        const token = jwt.sign({
-            id: usuario[0].id,
-            nombre: usuario[0].nombre,
-            rol: usuario[0].rol,
-            id_restaurante: usuario[0].id_restaurante,
-            restauranteSlug: usuario[0].restauranteSlug
-        }, process.env.JWT_SECRET, { expiresIn: '1h' });
- 
-        // Redirigir a la URL de retorno si existe
-        const redirectUrl = req.session.returnTo || '/'; // Si no hay URL de retorno, redirigir al home
-        delete req.session.returnTo; // Limpiar la URL de retorno
-        
-        res.json({ token, redirectUrl });
- 
-    } catch (error) {
-        console.error('Error al autenticar al usuario:', error);
-        return res.status(500).json({ error: 'Error en el servidor' });
+  const { nombre, clave, rol } = req.body;
+
+  try {
+    const [usuarios] = await db.query(
+      `SELECT u.*, e.slug AS restauranteSlug 
+       FROM usuarios u 
+       JOIN establecimientos e ON u.id_restaurante = e.id 
+       WHERE u.nombre = ? AND u.rol = ?`,
+      [nombre, rol]
+    );
+
+    const usuario = usuarios[0];
+    if (!usuario) {
+      return res.status(401).json({ error: 'Credenciales inválidas' });
     }
- };
- 
 
-
-// Función para verificar el acceso al restaurante
-exports.verifyRestaurantAccess = async (req, res, next) => {
-    const { id_restaurante } = req.params; // Suponemos que el id del restaurante se pasa en los parámetros
-    const userId = req.session.usuario?.id || req.user.id; // Usamos el ID del usuario de la sesión o del token JWT
-
-    try {
-        // Consultamos si el usuario tiene acceso al restaurante
-        const [usuario] = await db.query('SELECT * FROM usuarios WHERE id = ?', [userId]);
-
-        if (!usuario || usuario.length === 0) {
-            return res.status(404).json({ error: 'Usuario no encontrado' });
-        }
-
-        // Verificar que el restaurante coincide con el acceso del usuario
-        if (usuario[0].rol === 'gestor' || usuario[0].id_restaurante === parseInt(id_restaurante)) {
-            return next(); // El usuario tiene acceso
-        }
-
-        return res.status(403).json({ error: 'Acceso denegado a este restaurante' });
-
-    } catch (error) {
-        console.error('Error al verificar el acceso al restaurante:', error);
-        return res.status(500).json({ error: 'Error al verificar el acceso al restaurante' });
+    const match = await bcrypt.compare(clave, usuario.clave);
+    if (!match) {
+      return res.status(401).json({ error: 'Credenciales inválidas' });
     }
+
+    const tokenPayload = {
+      id: usuario.id,
+      nombre: usuario.nombre,
+      rol: usuario.rol,
+      id_restaurante: usuario.id_restaurante,
+      restauranteSlug: usuario.restauranteSlug,
+    };
+
+    const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, {
+      expiresIn: '1h',
+    });
+
+    // Establecer cookie segura (solo http, con opción de producción segura)
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 1000, // 1 hora
+    });
+
+    const returnTo = req.body.returnTo;
+    if (!returnTo) {
+      console.warn("Falta returnTo en el cuerpo de la solicitud");
+      return res.status(400).json({ error: "Falta parámetro de redirección (returnTo)." });
+    }
+    
+    console.log("Login recibido con returnTo:", returnTo);
+    const redirectUrl = returnTo;
+    
+    return res.json({ redirectUrl });
+  } catch (error) {
+    console.error('Error al autenticar al usuario:', error);
+    return res.status(500).json({ error: 'Error en el servidor' });
+  }
 };
 
+// Middleware para verificar acceso a un restaurante
+exports.verifyRestaurantAccess = async (req, res, next) => {
+  const { id_restaurante } = req.params;
+  const userId = req.user?.id;
 
+  if (!userId) {
+    return res.status(401).json({ error: 'No autenticado' });
+  }
+
+  try {
+    const [usuarios] = await db.query('SELECT * FROM usuarios WHERE id = ?', [userId]);
+    const usuario = usuarios[0];
+
+    if (!usuario) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+
+    if (usuario.rol === 'gestor' || usuario.id_restaurante === parseInt(id_restaurante)) {
+      return next(); // Acceso permitido
+    }
+
+    return res.status(403).json({ error: 'Acceso denegado a este restaurante' });
+  } catch (error) {
+    console.error('Error al verificar el acceso al restaurante:', error);
+    return res.status(500).json({ error: 'Error en el servidor' });
+  }
+};
