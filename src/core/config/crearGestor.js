@@ -1,7 +1,7 @@
 // scripts/crearGestor.js
 require('dotenv').config(); // Carga variables de entorno si las usas
 const bcrypt = require('bcrypt');
-const pool = require('../../core/config/database');
+const pool = require('./database');
 
 const crearGestor = async () => {
   const nombre = 'Gestor';

@@ -42,7 +42,7 @@ const hasAccessToRestaurant = async (req, res, next) => {
       return next(); // El usuario tiene acceso a su restaurante
     }
 
-    return res.status(403).send('Acceso denegado a este restaurante');
+    return res.redirect('/acceso-denegado');
   } catch (error) {
     console.error(error);
     return res.status(500).send('Error al verificar acceso');
@@ -58,7 +58,7 @@ const checkRoleAccess = (allowedRoles) => {
       return next(); // El rol es permitido
     }
 
-    return res.status(403).json({ error: 'Acceso denegado para este rol' });
+    return res.redirect('/acceso-denegado');
   };
 };
 

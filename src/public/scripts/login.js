@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const storedReturnTo = sessionStorage.getItem("returnTo");
       if (!storedReturnTo) {
-        alert("No hay una ruta de retorno válida. Intenta ingresar desde una página protegida.");
+        mostrarError("No hay una ruta de retorno válida. Intenta ingresar desde una página protegida.");
         return;
       }
 
@@ -63,8 +63,15 @@ document.addEventListener("DOMContentLoaded", () => {
         sessionStorage.removeItem("returnTo");
         window.location.href = data.redirectUrl;
       } else {
-        mostrarError(data.error || "Error al iniciar sesión.");
+        let mensaje = data.error || "Error al iniciar sesión.";
+
+        if (mensaje === "Acceso denegado para este rol") {
+          mensaje = "No tienes permisos suficientes con el rol seleccionado.";
+        }
+
+        mostrarError(mensaje);
       }
+
     } catch (error) {
       mostrarError("Hubo un error al procesar la solicitud.");
       console.error(error);
