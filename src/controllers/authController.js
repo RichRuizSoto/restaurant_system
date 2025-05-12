@@ -34,14 +34,14 @@ exports.login = async (req, res) => {
     };
 
     const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, {
-        expiresIn: '1m', // 3 minutos
+        expiresIn: '10m', // 3 minutos
       });
       
       res.cookie('token', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
-        maxAge: 1 * 60 * 1000, // 3 minutos en milisegundos
+        maxAge: 10 * 60 * 1000, // 3 minutos en milisegundos
       });
 
     const returnTo = req.body.returnTo;

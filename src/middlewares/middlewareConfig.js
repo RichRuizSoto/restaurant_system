@@ -18,7 +18,7 @@ module.exports = (app) => {
       cookie: { 
           secure: false, // En desarrollo, asegúrate de que esté en false
           httpOnly: true, // Mejor seguridad
-          maxAge: 1 * 60 * 1000 // 3 minutos
+          maxAge: 10 * 60 * 1000 // 3 minutos
         }
    }));
 };

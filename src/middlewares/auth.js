@@ -10,14 +10,18 @@ const isAuthenticated = (req, res, next) => {
     return res.redirect(`/auth/login?returnTo=${returnTo}`);
   }
 
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
-    next();
-  } catch (err) {
-    const returnTo = encodeURIComponent(req.originalUrl);
-    return res.redirect(`/auth/login?returnTo=${returnTo}`);
+try {
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  if (!decoded || typeof decoded !== 'object' || !decoded.id || !decoded.rol) {
+    throw new Error('Token inválido');
   }
+  req.user = decoded;
+  next();
+} catch (err) {
+  console.error('JWT Error:', err.message);
+  const returnTo = encodeURIComponent(req.originalUrl);
+  return res.redirect(`/auth/login?returnTo=${returnTo}`);
+}
 };
 
 // Middleware para verificar el acceso a un restaurante según slug y rol
