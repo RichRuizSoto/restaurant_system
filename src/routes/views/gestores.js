@@ -1,10 +1,9 @@
-// src/routes/views/gestores.js
 const express = require('express');
 const router = express.Router();
 const path = require('path');
+const { isAuthenticated, checkRoleAccess } = require('../../middlewares/auth');
 
-// Ruta para acceder a la vista del gestor
-router.get('/', (req, res) => {
+router.get('/', isAuthenticated, checkRoleAccess(['gestor']), (req, res) => {
   res.sendFile(path.join(__dirname, '../../public/gestionRestaurantes/gestor.html'));
 });
 

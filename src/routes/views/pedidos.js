@@ -1,8 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const pedidosController = require('../../controllers/pedidosController');
-const { isAuthenticated, hasAccessToRestaurant } = require('../../middlewares/auth');
+const { isAuthenticated, hasAccessToRestaurant, checkRoleAccess } = require('../../middlewares/auth');
 
-router.get('/vista/:slug', isAuthenticated, hasAccessToRestaurant, pedidosController.renderizarVistaPedidos);
+router.get(
+  '/vista/:slug',
+  isAuthenticated,
+  hasAccessToRestaurant,
+  checkRoleAccess(['admin', 'gestor', 'empleado']),
+  pedidosController.renderizarVistaPedidos
+);
 
 module.exports = router;

@@ -1,9 +1,14 @@
-// src/routes/views/restaurante.routes.js
 const express = require('express');
 const router = express.Router();
 const restauranteController = require('../../controllers/restauranteController');
+const { isAuthenticated, hasAccessToRestaurant, checkRoleAccess } = require('../../middlewares/auth');
 
-// 🔹 Renderiza la vista dinámica con productos del restaurante
-router.get('/:slug/productos', restauranteController.renderizarVistaProductos);
+router.get(
+  '/:slug/productos',
+  isAuthenticated,
+  hasAccessToRestaurant,
+  checkRoleAccess(['admin', 'gestor']),
+  restauranteController.renderizarVistaProductos
+);
 
 module.exports = router;
