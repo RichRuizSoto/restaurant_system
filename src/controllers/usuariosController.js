@@ -4,12 +4,33 @@ const usuariosService = require('../services/usuariosService'); // Importar el s
 exports.crearAdministrador = async (req, res) => {
   const { nombreAdmin, claveAdmin, restauranteId } = req.body;
 
+  // 1. Validación básica de entrada
+  if (!nombreAdmin || !claveAdmin || !restauranteId) {
+    return res.status(400).json({ error: 'Faltan campos requeridos' });
+  }
+
   try {
+    // 2. Verificar si ya existe un usuario con ese nombre
+    const existe = await usuariosService.existeUsuario(nombreAdmin);
+    if (existe) {
+      return res.status(409).json({ error: 'El nombre de usuario ya está en uso' });
+    }
+
+    // 3. Crear el administrador
     const result = await usuariosService.crearAdministrador(nombreAdmin, claveAdmin, restauranteId);
-    res.status(201).json(result); // Devolver mensaje de éxito
+
+    return res.status(201).json({
+      mensaje: 'Administrador creado exitosamente',
+      usuario: {
+        id: result.insertId,
+        nombre: nombreAdmin,
+        id_restaurante: restauranteId,
+        rol: 'admin',
+      },
+    });
   } catch (err) {
     console.error('[Backend] Error al crear el administrador:', err.message);
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: 'Error al crear el administrador' });
   }
 };
 

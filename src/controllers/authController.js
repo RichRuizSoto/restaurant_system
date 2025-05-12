@@ -34,16 +34,15 @@ exports.login = async (req, res) => {
     };
 
     const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, {
-      expiresIn: '1h',
-    });
-
-    // Establecer cookie segura (solo http, con opción de producción segura)
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 60 * 60 * 1000, // 1 hora
-    });
+        expiresIn: '3m', // 3 minutos
+      });
+      
+      res.cookie('token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 3 * 60 * 1000, // 3 minutos en milisegundos
+      });
 
     const returnTo = req.body.returnTo;
     if (!returnTo) {

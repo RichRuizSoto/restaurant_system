@@ -51,64 +51,71 @@
 <body>
   <div class="container py-5">
 
-    <!-- Crear Administrador -->
-    <div class="card form-section">
-      <div class="card-header bg-primary text-white">
-        <h4 class="mb-0"><i class="fas fa-user-plus me-2"></i>Crear Nuevo Administrador</h4>
+<!-- Crear Administrador -->
+<div class="card form-section">
+  <div class="card-header bg-primary text-white">
+    <h4 class="mb-0"><i class="fas fa-user-plus me-2"></i>Crear Nuevo Administrador</h4>
+  </div>
+  <div class="card-body">
+    <form id="formCrearAdministrador" class="needs-validation" novalidate>
+      <div class="mb-3">
+        <label for="restaurante" class="form-label">Selecciona Restaurante</label>
+        <select id="restaurante" name="restaurante" class="form-select" required>
+          <option value="" disabled selected>Selecciona un restaurante</option>
+        </select>
+        <small class="form-text text-muted">Selecciona el restaurante al cual se le asignará el administrador.</small> <!-- Indicación para el usuario -->
+        <div class="invalid-feedback">Por favor selecciona un restaurante.</div>
       </div>
-      <div class="card-body">
-        <form id="formCrearAdministrador" class="needs-validation" novalidate>
-          <div class="mb-3">
-            <label for="restaurante" class="form-label">Selecciona Restaurante</label>
-            <select id="restaurante" name="restaurante" class="form-select" required>
-              <option value="" disabled selected>Selecciona un restaurante</option>
-            </select>
-            <div class="invalid-feedback">Por favor selecciona un restaurante.</div>
-          </div>
-          <div class="mb-3">
-            <label for="nombre-admin" class="form-label">Nombre del Administrador</label>
-            <input type="text" id="nombre-admin" name="nombre-admin" class="form-control" required />
-            <div class="invalid-feedback">Por favor ingresa el nombre del administrador.</div>
-          </div>
-          <div class="mb-3">
-            <label for="clave-admin" class="form-label">Contraseña</label>
-            <input type="password" id="clave-admin" name="clave-admin" class="form-control" required />
-            <div class="invalid-feedback">Por favor ingresa la contraseña.</div>
-          </div>
-          <button type="submit" class="btn btn-success">
-            <i class="fas fa-user-plus"></i> Crear Administrador
-          </button>
-        </form>
+      <div class="mb-3">
+        <label for="nombre-admin" class="form-label">Nombre del Administrador</label>
+        <input type="text" id="nombre-admin" name="nombre-admin" class="form-control" required />
+        <small class="form-text text-muted">Ingresa el nombre completo del administrador.</small> <!-- Indicación para el usuario -->
+        <div class="invalid-feedback">Por favor ingresa el nombre del administrador.</div>
       </div>
-    </div>
+      <div class="mb-3">
+        <label for="clave-admin" class="form-label">Contraseña</label>
+        <input type="password" id="clave-admin" name="clave-admin" class="form-control" required />
+        <small class="form-text text-muted">Ingresa una contraseña segura para el administrador.</small> <!-- Indicación para el usuario -->
+        <div class="invalid-feedback">Por favor ingresa la contraseña.</div>
+      </div>
+      <button type="submit" class="btn btn-success">
+        <i class="fas fa-user-plus"></i> Crear Administrador
+      </button>
+    </form>
+  </div>
+</div>
 
-    <!-- Crear Establecimiento -->
-    <div class="card form-section">
-      <div class="card-header bg-secondary text-white">
-        <h4 class="mb-0"><i class="fas fa-store me-2"></i>Crear Nuevo Establecimiento</h4>
+
+<!-- Crear Establecimiento -->
+<div class="card form-section">
+  <div class="card-header bg-secondary text-white">
+    <h4 class="mb-0"><i class="fas fa-store me-2"></i>Crear Nuevo Establecimiento</h4>
+  </div>
+  <div class="card-body">
+    <form id="formCrearEstablecimiento" class="needs-validation" novalidate>
+      <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre del Establecimiento</label>
+        <input type="text" id="nombre" name="nombre" class="form-control" required />
+        <small class="form-text text-muted">Ingresa el nombre del nuevo establecimiento.</small> <!-- Indicación para el usuario -->
+        <div class="invalid-feedback">Por favor ingresa el nombre del establecimiento.</div>
       </div>
-      <div class="card-body">
-        <form id="formCrearEstablecimiento" class="needs-validation" novalidate>
-          <div class="mb-3">
-            <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" id="nombre" name="nombre" class="form-control" required />
-            <div class="invalid-feedback">Por favor ingresa el nombre del establecimiento.</div>
-          </div>
-          <div class="mb-3">
-            <label for="estado" class="form-label">Estado</label>
-            <select id="estado" name="estado" class="form-select" required>
-              <option value="">Selecciona una opción</option>
-              <option value="activo">Activo</option>
-              <option value="desactivo">Desactivado</option>
-            </select>
-            <div class="invalid-feedback">Selecciona un estado válido.</div>
-          </div>
-          <button type="submit" class="btn btn-success">
-            <i class="fas fa-plus-circle"></i> Crear
-          </button>
-        </form>
+      <div class="mb-3">
+        <label for="estado" class="form-label">Estado</label>
+        <select id="estado" name="estado" class="form-select" required>
+          <option value="">Selecciona una opción</option>
+          <option value="activo">Activo</option>
+          <option value="desactivo">Desactivado</option>
+        </select>
+        <small class="form-text text-muted">Selecciona si el establecimiento está activo o desactivado.</small> <!-- Indicación para el usuario -->
+        <div class="invalid-feedback">Selecciona un estado válido.</div>
       </div>
-    </div>
+      <button type="submit" class="btn btn-success">
+        <i class="fas fa-plus-circle"></i> Crear
+      </button>
+    </form>
+  </div>
+</div>
+
 
     <!-- Búsqueda -->
     <div class="my-5">

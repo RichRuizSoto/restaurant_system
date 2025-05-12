@@ -8,6 +8,13 @@ export function setIdRestaurante(id) {
   idRestaurante = id;
 }
 
+// Función para validar la clave del empleado
+function validarClave(clave) {
+  // Al menos 8 caracteres y debe incluir letras y números
+  const regex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+  return regex.test(clave);
+}
+
 // Registrar eventos para el formulario de agregar empleado
 export async function registrarEventosEmpleado() {
   // Obtenemos el formulario de agregar empleado
@@ -26,6 +33,12 @@ export async function registrarEventosEmpleado() {
     // Verificar que todos los campos obligatorios estén completos
     if (!data.nombreEmpleado || !data.claveEmpleado) {
       mostrarMensaje('Por favor, complete todos los campos.', 'error');
+      return;
+    }
+
+    // Validar la clave del empleado
+    if (!validarClave(data.claveEmpleado)) {
+      mostrarMensaje('La clave debe tener al menos 8 caracteres y contener una mezcla de letras y números.', 'error');
       return;
     }
 

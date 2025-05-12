@@ -46,43 +46,66 @@ export function inicializarEventos() {
   });
 
   // Evento para formulario de crear administrador
-const formAdmin = document.getElementById('formCrearAdministrador');
-formAdmin.addEventListener('submit', async (event) => {
-  event.preventDefault();
-
-  const nombreAdmin = document.getElementById('nombre-admin').value.trim();
-  const claveAdmin = document.getElementById('clave-admin').value;
-  const restauranteId = document.getElementById('restaurante').value;
-
-  if (!nombreAdmin || !claveAdmin || !restauranteId) {
-    mostrarToast('Todos los campos son obligatorios.', 'danger'); // Notificación de error
-    return;
-  }
-
-  try {
-    const res = await fetch('/api/usuarios/crearAdministrador', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nombreAdmin, claveAdmin, restauranteId })
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      mostrarToast(`No se pudo crear el administrador:\n${data.error}`, 'danger'); // Notificación de error
+  const formAdmin = document.getElementById('formCrearAdministrador');
+  formAdmin.addEventListener('submit', async (event) => {
+    event.preventDefault();
+  
+    const nombreAdmin = document.getElementById('nombre-admin').value.trim();
+    const claveAdmin = document.getElementById('clave-admin').value;
+    const restauranteId = document.getElementById('restaurante').value;
+  
+    // Validación de campos vacíos
+    if (!nombreAdmin || !claveAdmin || !restauranteId) {
+      mostrarToast('Todos los campos son obligatorios.', 'danger'); // Notificación de error
       return;
     }
-
-    // Aquí es donde se muestra el mensaje de éxito con la notificación
-    mostrarToast('Administrador creado con éxito', 'success'); // Notificación de éxito
-
-socket.emit('administradorActualizado');
-    formAdmin.reset();  // Limpiar el formulario después de la creación
-  } catch (err) {
-    console.error('[Frontend] Error al crear administrador:', err);
-    mostrarToast('Error inesperado al crear el administrador', 'danger'); // Notificación de error
-  }
-});
+  
+    // Validación adicional de los campos
+    if (!nombreAdmin) {
+      mostrarToast('Por favor ingresa el nombre del administrador.', 'danger');
+      return;
+    }
+    if (!claveAdmin) {
+      mostrarToast('Por favor ingresa la contraseña.', 'danger');
+      return;
+    }
+    if (!restauranteId) {
+      mostrarToast('Por favor selecciona un restaurante.', 'danger');
+      return;
+    }
+  
+    // Validación de la contraseña (al menos 8 caracteres y una mezcla de letras y números)
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
+    if (!passwordRegex.test(claveAdmin)) {
+      mostrarToast('La contraseña debe tener al menos 8 caracteres y debe contener una mezcla de letras y números.', 'danger');
+      return;
+    }
+  
+    try {
+      const res = await fetch('/api/usuarios/crearAdministrador', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombreAdmin, claveAdmin, restauranteId })
+      });
+  
+      const data = await res.json();
+  
+      if (!res.ok) {
+        mostrarToast(`No se pudo crear el administrador:\n${data.error}`, 'danger'); // Notificación de error
+        return;
+      }
+  
+      // Aquí es donde se muestra el mensaje de éxito con la notificación
+      mostrarToast('Administrador creado con éxito', 'success'); // Notificación de éxito
+  
+      socket.emit('administradorActualizado');
+      formAdmin.reset();  // Limpiar el formulario después de la creación
+    } catch (err) {
+      console.error('[Frontend] Error al crear administrador:', err);
+      mostrarToast('Error inesperado al crear el administrador', 'danger'); // Notificación de error
+    }
+  });
+  
 
 // Evento para el campo de búsqueda de establecimientos y administradores
 const inputBusqueda = document.getElementById('buscador'); // Capturamos el input de búsqueda
