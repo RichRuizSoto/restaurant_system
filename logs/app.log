@@ -397,3 +397,19 @@
 2025-05-05T05:15:02.693Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/pedidos a /Users/richardruiz/restaurant_system/src/public/restaurantes/pizzeria_roma_90/pedidos
 2025-05-05T05:15:02.698Z [33mwarn[39m: ⚠️ productos.html no encontrado en /Users/richardruiz/restaurant_system/src/public/restaurantes/pizzeria_roma_90/productos/productos.html para insertar el slug
 2025-05-05T05:15:02.699Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/restaurantes/pizzeria_roma_90
+2025-05-13T05:25:46.743Z [32minfo[39m: 🟢 Creando carpeta pública para el restaurante: donde_tere
+2025-05-13T05:25:46.753Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/login a /Users/richardruiz/restaurant_system/src/public/restaurantes/donde_tere/login
+2025-05-13T05:25:46.766Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/menu a /Users/richardruiz/restaurant_system/src/public/restaurantes/donde_tere/menu
+2025-05-13T05:25:46.771Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/productos a /Users/richardruiz/restaurant_system/src/public/restaurantes/donde_tere/productos
+2025-05-13T05:25:46.777Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/pedidos a /Users/richardruiz/restaurant_system/src/public/restaurantes/donde_tere/pedidos
+2025-05-13T05:25:46.782Z [33mwarn[39m: ⚠️ productos.html no encontrado en /Users/richardruiz/restaurant_system/src/public/restaurantes/donde_tere/productos/productos.html para insertar el slug
+2025-05-13T05:25:46.782Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/restaurantes/donde_tere
+2025-05-13T05:26:55.024Z [32minfo[39m: 🔄 Carpeta renombrada de gglllllnnnn_ppppp a fogoncito
+2025-05-13T05:28:10.087Z [32minfo[39m: 🟢 Creando carpeta pública para el restaurante: papitas_bryan
+2025-05-13T05:28:10.089Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/login a /Users/richardruiz/restaurant_system/src/public/restaurantes/papitas_bryan/login
+2025-05-13T05:28:10.094Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/menu a /Users/richardruiz/restaurant_system/src/public/restaurantes/papitas_bryan/menu
+2025-05-13T05:28:10.098Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/productos a /Users/richardruiz/restaurant_system/src/public/restaurantes/papitas_bryan/productos
+2025-05-13T05:28:10.102Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/pedidos a /Users/richardruiz/restaurant_system/src/public/restaurantes/papitas_bryan/pedidos
+2025-05-13T05:28:10.105Z [33mwarn[39m: ⚠️ productos.html no encontrado en /Users/richardruiz/restaurant_system/src/public/restaurantes/papitas_bryan/productos/productos.html para insertar el slug
+2025-05-13T05:28:10.106Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/restaurantes/papitas_bryan
+2025-05-13T05:29:10.815Z [32minfo[39m: 🔄 Carpeta renombrada de papitas_bryan a papitas_bryan1

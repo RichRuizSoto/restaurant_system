@@ -25,13 +25,13 @@ module.exports = (app) => {
   app.use('/auth', authViewRoutes);
 
   // Rutas API protegidas
-  app.use('/api/productos', isAuthenticated, checkRoleAccess(['gestor', 'admin']), productosRoutes);
-  app.use('/api/restaurantes', isAuthenticated, checkRoleAccess(['gestor', 'admin']), restauranteRoutes);
-  app.use('/api/gestor', isAuthenticated, checkRoleAccess(['gestor']), gestorRoutes);
+  app.use('/api/productos', productosRoutes);
+  app.use('/api/restaurantes', restauranteRoutes);
+  app.use('/api/gestor', gestorRoutes);
   app.use('/api/pedidos', pedidosRoutes);
-  app.use('/api/usuarios', isAuthenticated, checkRoleAccess(['gestor', 'admin']), usuariosRoutes);
+  app.use('/api/usuarios', usuariosRoutes);
   app.use('/api/categorias', categoriasRoutes);
-  app.use('/api/ganancias', isAuthenticated, checkRoleAccess(['gestor', 'admin']), gananciasRoutes);
+  app.use('/api/ganancias', gananciasRoutes);
 
   // Vistas protegidas
   app.use('/restaurantes', restauranteViewRoutes);

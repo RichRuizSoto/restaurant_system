@@ -5,9 +5,6 @@ const { isAuthenticated, hasAccessToRestaurant, checkRoleAccess } = require('../
 
 router.get(
   '/vista/:slug',
-  isAuthenticated,
-  hasAccessToRestaurant,
-  checkRoleAccess(['admin', 'gestor', 'empleado']),
   pedidosController.renderizarVistaPedidos
 );
 

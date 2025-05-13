@@ -5,9 +5,7 @@ const { isAuthenticated, hasAccessToRestaurant, checkRoleAccess } = require('../
 
 router.get(
   '/:slug/productos',
-  isAuthenticated,
-  hasAccessToRestaurant,
-  checkRoleAccess(['admin', 'gestor']),
+
   restauranteController.renderizarVistaProductos
 );
 
