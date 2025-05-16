@@ -1,0 +1,240 @@
+/* ----------------------------
+   Base & Layout
+---------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f4f6f8;
+  color: #2c3e50;
+  line-height: 1.6;
+  padding: 2rem;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+header h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: #2c3e50;
+  font-weight: 700;
+}
+
+/* Layout principal */
+main {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(300px, 1.3fr);
+  gap: 2rem;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding-bottom: 3rem;
+}
+
+/* ----------------------------
+   Productos por categoría
+---------------------------- */
+.categoria {
+  margin-bottom: 2.5rem;
+}
+
+.categoria h2 {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  color: #34495e;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 0.5rem;
+}
+
+.productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.producto-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.producto-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.producto-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.producto-card .descripcion {
+  font-size: 0.92rem;
+  color: #666;
+  margin-bottom: 0.8rem;
+}
+
+.producto-card .precio {
+  font-size: 1rem;
+  color: #2ecc71;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.btn-agregar {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.btn-agregar:hover {
+  background-color: #2980b9;
+}
+
+/* ----------------------------
+   Carrito
+---------------------------- */
+.carrito {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+  position: sticky;
+  top: 20px;
+  align-self: start;
+  height: fit-content;
+}
+
+.carrito h2 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+#lista-carrito {
+  list-style: none;
+  margin-bottom: 1.2rem;
+}
+
+.carrito-item {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.carrito-item-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+}
+
+.carrito-item-acciones {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.carrito-item-acciones button {
+  background: none;
+  border: none;
+  color: #e74c3c;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.carrito-item-acciones button:hover {
+  text-decoration: underline;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 1rem 0;
+}
+
+#mesa {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+#btn-enviar-pedido {
+  width: 100%;
+  padding: 0.9rem;
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#btn-enviar-pedido:hover {
+  background-color: #27ae60;
+}
+
+/* ----------------------------
+   Notificaciones
+---------------------------- */
+#notification-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.notification {
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  color: white;
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.4s ease;
+}
+
+.notification.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.notification.success { background-color: #27ae60; }
+.notification.error   { background-color: #e74c3c; }
+.notification.warning { background-color: #f39c12; }
+.notification.info    { background-color: #3498db; }
+
+/* ----------------------------
+   Responsividad
+---------------------------- */
+@media (max-width: 1024px) {
+  main {
+    grid-template-columns: 1fr;
+  }
+
+  .carrito {
+    position: static;
+    margin-top: 2rem;
+  }
+}

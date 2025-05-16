@@ -1,105 +1,71 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Menú de <%= restaurante.nombre %></title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= restaurante.nombre %> - Menú</title>
 
-  <!-- Vinculación de archivos CSS -->
-  <link rel="stylesheet" href="/styles/menu/reset.css">
-  <link rel="stylesheet" href="/styles/menu/global.css">
-  <link rel="stylesheet" href="/styles/menu/header.css">
-  <link rel="stylesheet" href="/styles/menu/restaurante.css">
-  <link rel="stylesheet" href="/styles/menu/categorias.css">
-  <link rel="stylesheet" href="/styles/menu/carrito.css">
-  <link rel="stylesheet" href="/styles/menu/notificaciones.css">
-  <link rel="stylesheet" href="/styles/menu/responsive.css">
+  <!-- Fuente moderna -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Font Awesome para íconos -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
+  <!-- Estilos -->
+  <link rel="stylesheet" href="/styles/menu/styles.css" />
 
-<body class="tema-oscuro"> <!-- o "tema-fantasia", o simplemente "" para claro -->
-  <div class="container">
-    <!-- Encabezado del sitio -->
-    <header>
-      <h1><i class="fas fa-utensils"></i> Menú de <%= restaurante.nombre %></h1>
-    </header>
-
-    <div class="notification-container" id="notification-container"></div>
-
-    <!-- Información del restaurante -->
-    <section class="info-restaurante">
-
-    
-
-    </section>
-
-    <!-- Secciones de productos por categoría -->
-    <% for (const categoria in productosPorCategoria) { %>
-      <section class="categoria">
-        <h2><i class="fas fa-tags"></i> <%= categoria %></h2>
-
-        <% productosPorCategoria[categoria].forEach(producto => { %>
-          <div class="producto">
-            <h3 class="producto-nombre"><%= producto.nombre_producto %></h3>
-            <p class="producto-descripcion"><%= producto.descripcion %></p>
-            <p class="producto-precio">$<%= producto.precio %></p>
-            <button class="btn-agregar" data-producto='<%- JSON.stringify(producto) %>'>
-              <i class="fas fa-cart-plus"></i> Agregar
-            </button>
-          </div>
-        <% }) %>
-      </section>
-    <% } %>
-
-    <!-- Sección del carrito -->
-    <section id="carrito">
-      <h2><i class="fas fa-receipt"></i> Tu Pedido</h2>
-
-      <label for="mesa"><i class="fas fa-chair"></i> Número de mesa:</label>
-      <input type="text" id="mesa" list="mesas-lista" placeholder="Escribe o selecciona una mesa">
-      <datalist id="mesas-lista">
-        <!-- Las opciones de mesa se llenarán dinámicamente con JS -->
-      </datalist>
-
-      <ul id="lista-carrito">
-        <!-- Elementos del carrito se insertan por JS -->
-      </ul>
-
-      <p class="total-carrito"><strong>Total: <span id="total-carrito">0.00</span></strong></p>
-
-      <button id="btn-enviar-pedido">
-        <i class="fas fa-paper-plane"></i> Enviar Pedido
-      </button>
-    </section>
-
-    <!-- Notificaciones emergentes -->
-    <div id="notification-container"></div>
-  </div>
-
-  <!-- Variable global para JS -->
+  <!-- Restaurante ID disponible para JS -->
   <script>
     window.restauranteId = <%= restaurante.id %>;
-
-    // Suponiendo que el número de mesas disponibles es 10
-    const mesas = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
-
-    const datalist = document.getElementById('mesas-lista');
-    
-    // Limpiamos las opciones anteriores
-    datalist.innerHTML = '';
-
-    // Generamos las opciones del datalist
-    mesas.forEach(mesa => {
-      const option = document.createElement('option');
-      option.value = mesa;
-      datalist.appendChild(option);
-    });
   </script>
+</head>
+<body>
+  <header>
+    <h1>Menú de <%= restaurante.nombre %></h1>
+  </header>
 
-  <!-- JS personalizado -->
-<script src="/socket.io/socket.io.js"></script>
+  <main>
+    <!-- Sección de productos por categoría -->
+    <div>
+      <% for (const categoria in productosPorCategoria) { %>
+        <section class="categoria">
+          <h2><%= categoria %></h2>
+          <div class="productos">
+            <% productosPorCategoria[categoria].forEach(producto => { %>
+              <div class="producto-card">
+                <h3><%= producto.nombre_producto %></h3>
+                <p class="descripcion"><%= producto.descripcion || 'Sin descripción' %></p>
+                <p class="precio">$<%= parseFloat(producto.precio).toFixed(2) %></p>
+                <button class="btn-agregar" data-producto='<%- JSON.stringify(producto) %>'>
+                  ➕ Agregar al carrito
+                </button>
+              </div>
+            <% }) %>
+          </div>
+        </section>
+      <% } %>
+    </div>
+
+    <!-- Carrito lateral fijo -->
+    <aside class="carrito">
+      <h2>🛒 Tu pedido</h2>
+
+      <ul id="lista-carrito"></ul>
+
+      <div class="total">
+        <strong>Total:</strong>
+        <span id="total-carrito">$0.00</span>
+      </div>
+
+      <label for="mesa">Número de mesa:</label>
+      <input type="number" id="mesa" min="1" placeholder="Ej. 5" />
+
+      <button id="btn-enviar-pedido">Enviar pedido</button>
+    </aside>
+  </main>
+
+  <!-- Contenedor de notificaciones -->
+  <div id="notification-container"></div>
+
+  <!-- Scripts -->
+  <script src="/socket.io/socket.io.js"></script>
   <script src="/scripts/menu.js"></script>
 </body>
 </html>
