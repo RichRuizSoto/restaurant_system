@@ -24,7 +24,7 @@ header {
 
 header h1 {
   font-size: clamp(2rem, 4vw, 3rem);
-  color: #2c3e50;
+  color: #046dd5;
   font-weight: 700;
 }
 
@@ -238,3 +238,69 @@ main {
     margin-top: 2rem;
   }
 }
+
+
+
+
+
+    /* Barra de navegación fija */
+    .barra-navegacion {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #7a779b;
+      color: white;
+      padding: 10px 0;
+      z-index: 1000;
+      display: flex;
+      overflow-x: auto;
+      white-space: nowrap;
+      justify-content: center;
+    }
+
+
+    .barra-navegacion a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      margin: 0 10px;
+      font-weight: bold;
+      transition: background-color 0.5s ease, color 0.5s ease; 
+      flex: 0 0 auto;
+    }
+
+    .barra-navegacion a:hover {
+      background-color: #8683aa; 
+      color: #fff;
+    }
+
+    /* Espacio para no solapar el contenido */
+    main {
+      margin-top: 40px; 
+    }
+
+    /* Desplazamiento suave */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .header_categorias_btn {
+
+    }
+
+
+
+
+
+
+
+    /* Estilos de transición para los botones del carrito */
+    .btn-agregar {
+      transition: background-color 0.5s ease, transform 0.5s ease; /* Transición suave */
+    }
+
+    .btn-agregar:hover {
+      background-color: #4CAF50; /* Cambio de color al pasar el mouse */
+      transform: scale(1.1); /* Efecto de ampliación en el hover */
+    }

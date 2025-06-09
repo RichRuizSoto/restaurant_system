@@ -1,15 +1,14 @@
-/* Header */
 header {
-    background-color: #141b22;
+    background-color: #0b74dd;
     padding: 20px;
     color: white;
     text-align: center;
     font-size: 1.5em;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    font-weight: normal; /* Asegura que no haya negrita */
+    box-shadow: 0 4px 12px rgba(176, 35, 35, 0.2);
+    font-weight: normal; 
 }
 
 header i {
     margin-right: 10px;
-    font-weight: normal; /* Asegura que no haya negrita en los iconos */
+    font-weight: normal;
 }

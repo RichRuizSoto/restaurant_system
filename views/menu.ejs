@@ -15,17 +15,25 @@
   <script>
     window.restauranteId = <%= restaurante.id %>;
   </script>
+
 </head>
 <body>
   <header>
     <h1>Menú de <%= restaurante.nombre %></h1>
   </header>
 
+  <!-- Barra de navegación con categorías -->
+  <div class="barra-navegacion">
+    <% for (const categoria in productosPorCategoria) { %>
+      <a class="header_categorias_btn" href="#<%= categoria %>"><%= categoria %></a>
+    <% } %>
+  </div>
+
   <main>
     <!-- Sección de productos por categoría -->
     <div>
       <% for (const categoria in productosPorCategoria) { %>
-        <section class="categoria">
+        <section class="categoria" id="<%= categoria %>">
           <h2><%= categoria %></h2>
           <div class="productos">
             <% productosPorCategoria[categoria].forEach(producto => { %>
