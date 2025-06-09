@@ -18,7 +18,7 @@ app.set('views', path.join(__dirname, '..', 'views'));
 // Middlewares globales
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser()); // <-- Necesario para leer cookies JWT
+app.use(cookieParser()); 
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Configurar middlewares personalizados y rutas
