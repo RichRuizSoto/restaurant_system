@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
         precio: p.precio
       })),
       total,
-      estado: 'solicitado' // 👈 BIEN
+      estado: 'solicitado' 
     };
 
     try {

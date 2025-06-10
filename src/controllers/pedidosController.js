@@ -40,7 +40,7 @@ exports.recibirPedido = async (req, res) => {
 
     nuevoPedido.productos = productos;
 
-    const io = req.app.get('io'); // ✅ Cambio clave aquí
+    const io = req.app.get('io'); 
     console.log('📡 Emitiendo nuevoPedido con datos completos:', nuevoPedido);
 
     io.to(`restaurante_${nuevoPedido.id_restaurante}`).emit('nuevoPedido', nuevoPedido);
