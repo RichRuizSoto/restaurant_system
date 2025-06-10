@@ -51,6 +51,13 @@ exports.crearPedido = async (pedido) => {
 
         pedidoId = result.insertId;
         insertado = true;
+
+        await conn.query(`
+  INSERT INTO tiempo_promedio_pedido (id_restaurante, id_pedido)
+  VALUES (?, ?)`,
+          [pedido.id_restaurante, pedidoId]
+        );
+
       } catch (err) {
         if (err.code !== 'ER_DUP_ENTRY') throw err;
         // Si es duplicado, intentar de nuevo
@@ -221,32 +228,68 @@ exports.obtenerPedidosPorRestaurante = async (restId) => {
 
 // Actualizar estado de un pedido y devolver con productos
 exports.cambiarEstadoPedido = async (idPedido, nuevoEstado) => {
-  // Actualizar el estado
-  await db.query('UPDATE pedidos SET estado = ? WHERE id = ?', [nuevoEstado, idPedido]);
+  const conn = await db.getConnection();
+  try {
+    await conn.beginTransaction();
 
-  // Obtener el pedido actualizado
-  const [rows] = await db.query('SELECT * FROM pedidos WHERE id = ?', [idPedido]);
-  const pedido = rows[0];
+    // Actualizar el estado
+    await conn.query('UPDATE pedidos SET estado = ? WHERE id = ?', [nuevoEstado, idPedido]);
 
-  if (!pedido) return null;
+    // Actualizar tiempos en tiempo_promedio_pedido
+    if (nuevoEstado === 'listo') {
+      await conn.query(`
+        UPDATE tiempo_promedio_pedido
+        SET 
+          hora_listo = NOW(),
+          duracion_solicitado_listo = TIMESTAMPDIFF(MINUTE, hora_solicitado, NOW())
+        WHERE id_pedido = ?`, [idPedido]);
+    }
 
-  // Obtener los productos asociados al pedido
-  const [productos] = await db.query(`
-    SELECT dp.id_producto, dp.cantidad, dp.precio_unitario, pr.nombre_producto
-    FROM detalle_pedido dp
-    JOIN productos pr ON dp.id_producto = pr.id
-    WHERE dp.id_pedido = ?
-  `, [idPedido]);
+    if (nuevoEstado === 'pagado') {
+      await conn.query(`
+        UPDATE tiempo_promedio_pedido
+        SET 
+          hora_pagado = NOW(),
+          duracion_listo_pagado = TIMESTAMPDIFF(MINUTE, hora_listo, NOW()),
+          duracion_solicitado_pagado = TIMESTAMPDIFF(MINUTE, hora_solicitado, NOW())
+        WHERE id_pedido = ?`, [idPedido]);
+    }
 
-  pedido.productos = productos.map(p => ({
-    id_producto: p.id_producto,
-    cantidad: p.cantidad,
-    precio_unitario: p.precio_unitario,
-    nombre: p.nombre_producto || `Producto ${p.id_producto}`
-  }));
+    // Obtener el pedido actualizado
+    const [rows] = await conn.query('SELECT * FROM pedidos WHERE id = ?', [idPedido]);
+    const pedido = rows[0];
 
-  return pedido;
+    if (!pedido) {
+      await conn.rollback();
+      return null;
+    }
+
+    // Obtener los productos asociados al pedido
+    const [productos] = await conn.query(`
+      SELECT dp.id_producto, dp.cantidad, dp.precio_unitario, pr.nombre_producto
+      FROM detalle_pedido dp
+      JOIN productos pr ON dp.id_producto = pr.id
+      WHERE dp.id_pedido = ?`, [idPedido]);
+
+    pedido.productos = productos.map(p => ({
+      id_producto: p.id_producto,
+      cantidad: p.cantidad,
+      precio_unitario: p.precio_unitario,
+      nombre: p.nombre_producto || `Producto ${p.id_producto}`
+    }));
+
+    await conn.commit();
+    return pedido;
+
+  } catch (err) {
+    await conn.rollback();
+    console.error('❌ [Error en cambiarEstadoPedido]', err);
+    throw err;
+  } finally {
+    conn.release();
+  }
 };
+
 
 // Obtener los productos de un pedido específico por ID
 exports.obtenerProductosPorPedido = async (idPedido) => {
