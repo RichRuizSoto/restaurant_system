@@ -42,11 +42,10 @@ exports.recibirPedido = async (req, res) => {
 
     const io = req.app.get('io'); 
     console.log('📡 Emitiendo nuevoPedido con datos completos:', nuevoPedido);
-
     io.to(`restaurante_${nuevoPedido.id_restaurante}`).emit('nuevoPedido', nuevoPedido);
 
     res.status(201).json({
-      pedido: nuevoPedido,
+      data: nuevoPedido,
       numero_orden: nuevoPedido.numero_orden
     });
 

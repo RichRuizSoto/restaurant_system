@@ -1,29 +1,8 @@
+const restauranteId = window.restauranteId || document.getElementById('restaurante-id')?.value; //Asegura que restauranteId existe
+
 document.addEventListener('DOMContentLoaded', () => {
-  const socket = io();  // Establece la conexión WebSocket
+  const socket = io();
   const sonidoNotificacion = new Audio('/sounds/notificacion.mp3');
-
-  
-// Asegurar que restauranteId existe
-const restauranteId = window.restauranteId || document.getElementById('restaurante-id')?.value;
-if (restauranteId) {
-  console.log('➡️ Uniendo a sala: restaurante_' + restauranteId);
-  socket.emit('unirseSala', `restaurante_${restauranteId}`);
-}
-
-socket.on('nuevoPedido', (pedido) => {
-  console.log('[WS] 🆕 Nuevo pedido recibido:', pedido);
-  
-  if (pedido.estado !== 'solicitado') {
-    console.warn('⛔ Pedido ignorado por estado no válido:', pedido.estado);
-    return;
-  }
-
-  agregarPedidoAlDOM(pedido);
-  sonidoNotificacion.play();
-  notificarEstadoActualizado(pedido.id, pedido.estado, pedido.numero_orden);
-});
-
-
 
   // Conexión WebSocket
   socket.on('connect', () => {
@@ -32,10 +11,25 @@ socket.on('nuevoPedido', (pedido) => {
     if (restauranteId) {
       console.log('🔗 Uniéndose a sala restaurante_', restauranteId);
       socket.emit('unirseARestaurante', restauranteId);
-      console.log(`➡️ Uniendo a sala: restaurante_${restauranteId}`);
     } else {
       console.warn('⚠️ No se encontró restauranteId');
     }
+  });
+
+  //Asegura que aparecezca en tiempo real el pedido recien creado
+  socket.on('nuevoPedido', (pedido) => {
+    console.log('[WS] 🆕 Nuevo pedido recibido:', pedido);
+
+    if (pedido.estado !== 'solicitado') {
+      console.warn('⛔ Pedido ignorado por estado no válido:', pedido.estado);
+      return;
+    }
+
+    socket.emit('unirseASalaExclusiva', restauranteId, pedido.id);
+
+    agregarPedidoAlDOM(pedido);
+    sonidoNotificacion.play();
+    notificarEstadoActualizado(pedido.id, pedido.estado, pedido.numero_orden);
   });
 
   socket.onAny((event, ...args) => {
@@ -76,7 +70,7 @@ socket.on('nuevoPedido', (pedido) => {
   cambiarSeccionActiva('solicitado');
 });
 
-// 🔃 Cargar pedidos existentes en estado 'solicitado' al iniciar
+// Cargar pedidos existentes en estado 'solicitado' al iniciar
 async function cargarPedidosIniciales() {
   try {
     const res = await fetch(`/api/pedidos/estado/${window.restauranteId}`);
@@ -94,7 +88,7 @@ async function cargarPedidosIniciales() {
 
 cargarPedidosIniciales();
 
-// ✅ Función para insertar pedido en el DOM
+// Función para insertar pedido en el DOM
 function agregarPedidoAlDOM(pedido) {
   if (!pedido || !pedido.id || !pedido.numero_orden || !pedido.productos) {
     console.warn('⚠️ Pedido inválido o incompleto:', pedido);
@@ -115,7 +109,7 @@ function agregarPedidoAlDOM(pedido) {
     item.querySelector('.pedido-header span:nth-child(3)').textContent = `Total: $${parseFloat(pedido.total).toFixed(2)}`;
     item.querySelector('.pedido-header span:nth-child(4)').textContent = `Creado: ${new Date(pedido.creado_en).toLocaleString()}`;
 
-    item.querySelector('.productos-list').innerHTML = pedido.productos.map(prod => 
+    item.querySelector('.productos-list').innerHTML = pedido.productos.map(prod =>
       `<li class="producto-item">${prod.cantidad} × ${prod.nombre || `Producto ${prod.id_producto}`}</li>`
     ).join('');
   } else {
@@ -175,6 +169,11 @@ function actualizarEstadoPedido(idPedido, nuevoEstado) {
     .then(data => {
       if (data.pedido) {
         notificarEstadoActualizado(idPedido, nuevoEstado, data.pedido.numero_orden);
+
+
+
+        
+
       }
     })
     .catch(err => {

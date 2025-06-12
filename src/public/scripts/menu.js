@@ -5,17 +5,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const mesaInput = document.getElementById('mesa');
   const restauranteId = window.restauranteId;
   let carrito = cargarCarrito();
+  const sonidoNotificacion = new Audio('/sounds/notificacion.mp3');
+
 
   // Conectar a WebSocket y unirse a la sala
   const socket = io();
   if (window.restauranteId) {
     socket.emit('unirseARestaurante', window.restauranteId);
     console.log(`➡️ Uniendo a sala: restaurante_${restauranteId}`);
-
   }
 
   socket.on('pedidoConfirmado', (data) => {
     showNotification(`🎉 Tu pedido #${data.numero_orden} ha sido confirmado`, 'success');
+  });
+
+
+    socket.on('nuevoEstadoPedido', (estado) => {
+    sonidoNotificacion.play();
+    showNotification(`🎉 Tu pedido esta ${estado}`, 'info');
   });
 
 
@@ -32,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       notification.classList.remove('show');
       setTimeout(() => notification.remove(), 500);
-    }, 4000);
+    }, 10000);
   }
 
   // Escuchar botones "Agregar" (después de que se hayan agregado dinámicamente los productos)
@@ -167,11 +174,18 @@ document.addEventListener('DOMContentLoaded', () => {
       const { data, numero_orden } = await res.json();
 
       if (res.ok) {
-        showNotification(`🛎️ Pedido nuevo recibido - Mesa ${pedido.mesa} - Orden #${numero_orden}`, 'info');
+        showNotification(`🛎️ Pedido nuevo recibido - Mesa ${data.mesa} - Orden #${numero_orden}`, 'info');
         carrito = [];
         guardarCarrito();
         renderizarCarrito();
         mesaInput.value = '';
+
+
+
+        socket.emit('unirseASalaExclusiva', restauranteId, data.id);
+
+
+
       } else {
         showNotification(data?.mensaje || 'Error al enviar el pedido', 'error');
       }

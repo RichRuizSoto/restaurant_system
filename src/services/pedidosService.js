@@ -53,8 +53,8 @@ exports.crearPedido = async (pedido) => {
         insertado = true;
 
         await conn.query(`
-  INSERT INTO tiempo_promedio_pedido (id_restaurante, id_pedido)
-  VALUES (?, ?)`,
+          INSERT INTO tiempo_promedio_pedido (id_restaurante, id_pedido)
+          VALUES (?, ?)`,
           [pedido.id_restaurante, pedidoId]
         );
 
@@ -235,6 +235,11 @@ exports.cambiarEstadoPedido = async (idPedido, nuevoEstado) => {
     // Actualizar el estado
     await conn.query('UPDATE pedidos SET estado = ? WHERE id = ?', [nuevoEstado, idPedido]);
 
+    const [[{ id_restaurante: restauranteId }]] = await conn.query(
+      'SELECT id_restaurante FROM pedidos WHERE id = ?',
+      [idPedido]
+    );
+
     // Actualizar tiempos en tiempo_promedio_pedido
     if (nuevoEstado === 'listo') {
       await conn.query(`
@@ -243,6 +248,9 @@ exports.cambiarEstadoPedido = async (idPedido, nuevoEstado) => {
           hora_listo = NOW(),
           duracion_solicitado_listo = TIMESTAMPDIFF(MINUTE, hora_solicitado, NOW())
         WHERE id_pedido = ?`, [idPedido]);
+
+      const io = socket.getSocket();
+      io.to(`sala_${restauranteId}_${idPedido}`).emit('nuevoEstadoPedido', 'listo');
     }
 
     if (nuevoEstado === 'pagado') {

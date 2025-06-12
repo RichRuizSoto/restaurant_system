@@ -30,7 +30,7 @@
         res.render('menu', {
             restaurante,
             productosPorCategoria,
-            slug // ✅ AÑADIR ESTA LÍNEA
+            slug
         });
         
 

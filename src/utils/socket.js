@@ -29,12 +29,25 @@ function setupSocket(server, app) {
 
     socket.emit('actualizarEstablecimientos');
 
-    // 🧩 Cliente se une a su restaurante
+    // Cliente se une a su restaurante
     socket.on('unirseARestaurante', (restauranteId) => {
       if (!restauranteId) return;
       socket.join(`restaurante_${restauranteId}`);
       console.log(`📡 Cliente unido a sala restaurante_${restauranteId}`);
     });
+
+
+
+
+    // Cliente se une a su sala exclusiva
+    socket.on('unirseASalaExclusiva', (restauranteId, pedidoId) => {
+      if (!restauranteId || !pedidoId) return;
+      socket.join(`sala_${restauranteId}_${pedidoId}`);
+      console.log(`👤 Cliente unido a sala ${restauranteId}_${pedidoId}`);
+    });
+
+
+
 
     socket.on('restauranteCreado', () => {
       io.emit('actualizarEstablecimientos');
