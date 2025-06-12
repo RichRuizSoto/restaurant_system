@@ -315,3 +315,22 @@ exports.obtenerProductosPorPedido = async (idPedido) => {
     nombre: p.nombre_producto
   }));
 };
+
+
+exports.obtenerPromedioUltimos10 = async (idRestaurante) => {
+  const [rows] = await db.query(`
+    SELECT duracion_solicitado_listo 
+    FROM tiempo_promedio_pedido 
+    WHERE id_restaurante = ? 
+      AND duracion_solicitado_listo IS NOT NULL 
+    ORDER BY hora_listo DESC 
+    LIMIT 10
+  `, [idRestaurante]);
+
+  if (!rows.length) return null;
+
+  const total = rows.reduce((acc, row) => acc + row.duracion_solicitado_listo, 0);
+  const promedio = total / rows.length;
+
+  return promedio;
+};

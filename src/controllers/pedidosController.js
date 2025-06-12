@@ -1,6 +1,6 @@
 const pedidosService = require('../services/pedidosService');
 const restaurantesService = require('../services/restaurantesService');
-const { getSocket } = require('../utils/socket');
+const socket = require('../utils/socket'); // Asegúrate de importar el socket
 
 const ESTADOS_VALIDOS = ['solicitado', 'listo', 'pagado', 'cancelado'];
 
@@ -30,6 +30,14 @@ exports.recibirPedido = async (req, res) => {
 
     const nuevoPedido = await pedidosService.crearPedido(pedido);
     const productosDB = await pedidosService.obtenerProductosPorPedido(nuevoPedido.id);
+    const promedio = await pedidosService.obtenerPromedioUltimos10(pedido.id_restaurante);
+
+    if (promedio) {
+          console.log(promedio)
+
+      const io = socket.getSocket();
+      io.to(`sala_${pedido.id_restaurante}_${pedido.id}`).emit('promedioSolicitadoListo', promedio);
+    }
 
     const productos = productosDB.map(p => ({
       id_producto: p.id_producto,
@@ -40,13 +48,14 @@ exports.recibirPedido = async (req, res) => {
 
     nuevoPedido.productos = productos;
 
-    const io = req.app.get('io'); 
+    const io = req.app.get('io');
     console.log('📡 Emitiendo nuevoPedido con datos completos:', nuevoPedido);
     io.to(`restaurante_${nuevoPedido.id_restaurante}`).emit('nuevoPedido', nuevoPedido);
 
     res.status(201).json({
       data: nuevoPedido,
-      numero_orden: nuevoPedido.numero_orden
+      numero_orden: nuevoPedido.numero_orden,
+      promedio
     });
 
   } catch (err) {
@@ -205,5 +214,29 @@ exports.renderizarVistaPedidos = async (req, res, next) => {
   } catch (error) {
     console.error('❌ [Error en renderizarVistaPedidos]', error);
     next(error);
+  }
+};
+
+exports.obtenerPromedioSolicitadoAListo = async (req, res) => {
+  try {
+    const idRestaurante = parseInt(req.params.restauranteId, 10);
+    if (isNaN(idRestaurante)) {
+      return res.status(400).json({ mensaje: 'ID de restaurante inválido' });
+    }
+
+    const promedio = await pedidosService.obtenerPromedioUltimos10(idRestaurante);
+
+    if (promedio === null) {
+      return res.status(404).json({ mensaje: 'No hay suficientes datos para calcular el promedio' });
+    }
+
+    res.json({
+      restauranteId: idRestaurante,
+      promedio_minutos: promedio.toFixed(2)
+    });
+
+  } catch (err) {
+    console.error('❌ [Error en obtenerPromedioSolicitadoAListo]', err);
+    res.status(500).json({ mensaje: 'Error al calcular el promedio' });
   }
 };

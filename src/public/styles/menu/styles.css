@@ -257,6 +257,7 @@ main {
       display: flex;
       overflow-x: auto;
       white-space: nowrap;
+      justify-content: center;
     }
 
 
@@ -283,10 +284,6 @@ main {
     /* Desplazamiento suave */
     html {
       scroll-behavior: smooth;
-    }
-
-    .header_categorias_btn {
-
     }
 
 

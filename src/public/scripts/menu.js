@@ -20,10 +20,16 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
-    socket.on('nuevoEstadoPedido', (estado) => {
+  socket.on('nuevoEstadoPedido', (estado) => {
     sonidoNotificacion.play();
     showNotification(`🎉 Tu pedido esta ${estado}`, 'info');
   });
+
+  socket.on('promedioSolicitadoListo', (promedio) => {
+    sonidoNotificacion.play();
+    showNotification(`Tiempo promedio: ${promedio} minutos`, 'info');
+  });
+
 
 
   // Mostrar notificación
@@ -161,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
         precio: p.precio
       })),
       total,
-      estado: 'solicitado' 
+      estado: 'solicitado'
     };
 
     try {
@@ -171,11 +177,13 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify(pedido)
       });
 
-      const { data, numero_orden } = await res.json();
+      const { data, numero_orden, promedio } = await res.json();
 
       if (res.ok) {
         showNotification(`🛎️ Pedido nuevo recibido - Mesa ${data.mesa} - Orden #${numero_orden}`, 'info');
-        carrito = [];
+        setTimeout(() => {
+          showNotification(`🕖 Tiempo estimado ${promedio} minutos`, 'info');
+        }, 3 * 1000); carrito = [];
         guardarCarrito();
         renderizarCarrito();
         mesaInput.value = '';
