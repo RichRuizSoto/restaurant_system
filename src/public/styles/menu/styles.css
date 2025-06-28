@@ -11,21 +11,20 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  background-color: #f4f6f8;
+  background-color: #041f1e;
   color: #2c3e50;
   line-height: 1.6;
-  padding: 2rem;
 }
 
 header {
-  margin-top: 30px;
+  margin-top: 3rem;
   text-align: center;
-  margin-bottom: 3rem;
+  background-color: #f4f6f8;
 }
 
 header h1 {
   font-size: clamp(2rem, 4vw, 3rem);
-  color: #046dd5;
+  color: #1e2d2f;
   font-weight: 700;
 }
 
@@ -34,16 +33,15 @@ main {
   display: grid;
   grid-template-columns: minmax(0, 4fr) minmax(300px, 1.3fr);
   gap: 2rem;
-  max-width: 1600px;
-  margin: 0 auto;
-  padding-bottom: 3rem;
+  padding: 0.4rem;
+  background-color: #f4f6f8;
 }
 
 /* ----------------------------
    Productos por categoría
 ---------------------------- */
 .categoria {
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .categoria h2 {
@@ -51,48 +49,48 @@ main {
   margin-bottom: 1rem;
   color: #34495e;
   border-bottom: 2px solid #e0e0e0;
-  padding-bottom: 0.5rem;
 }
 
 .productos {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 0.5rem;
 }
 
 .producto-card {
   background: #ffffff;
-  border-radius: 12px;
-  padding: 1.5rem;
+  border-radius: 5px;
+  padding: 0.5rem;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .producto-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-1px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
 .producto-card h3 {
   font-size: 1.1rem;
   margin-bottom: 0.5rem;
+  color: #2e17c4;
 }
 
 .producto-card .descripcion {
   font-size: 0.92rem;
   color: #666;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.2rem;
 }
 
 .producto-card .precio {
-  font-size: 1rem;
-  color: #2ecc71;
-  font-weight: 600;
-  margin-bottom: 1rem;
+  font-size: 0.92rem;
+  color: #666;
+  margin-bottom: 0.2rem;
+  padding-bottom: 0.3rem;
 }
 
 .btn-agregar {
-  background-color: #3498db;
+  background-color: #1e2d2f;
   color: white;
   border: none;
   padding: 0.75rem;
@@ -105,8 +103,10 @@ main {
 }
 
 .btn-agregar:hover {
-  background-color: #2980b9;
+  background-color: #3b5d62;
+  transform: scale(1.01);
 }
+
 
 /* ----------------------------
    Carrito
@@ -151,7 +151,7 @@ main {
 
 .carrito-item-acciones button {
   background: none;
-  border: none;
+  border: 1px;
   color: #e74c3c;
   font-size: 0.85rem;
   cursor: pointer;
@@ -221,10 +221,22 @@ main {
   transform: translateY(0);
 }
 
-.notification.success { background-color: #27ae60; }
-.notification.error   { background-color: #e74c3c; }
-.notification.warning { background-color: #f39c12; }
-.notification.info    { background-color: #3498db; }
+.notification.success {
+  background-color: #27ae60;
+}
+
+.notification.error {
+  background-color: #e74c3c;
+}
+
+.notification.warning {
+  background-color: #f39c12;
+}
+
+.notification.info {
+  background-color: #ffffff;
+  color: black;
+}
 
 /* ----------------------------
    Responsividad
@@ -244,47 +256,42 @@ main {
 
 
 
-    /* Barra de navegación fija */
-    .barra-navegacion {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background-color: #7a779b;
-      color: white;
-      padding: 1px 0;
-      z-index: 1000;
-      display: flex;
-      overflow-x: auto;
-      white-space: nowrap;
-      justify-content: center;
-    }
+/* Barra de navegación fija */
+.barra-navegacion {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #041f1e;
+  color: white;
+  padding: 1px 0;
+  z-index: 1000;
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  justify-content: center;
+}
 
 
-    .barra-navegacion a {
-      color: white;
-      text-decoration: none;
-      padding: 10px 20px;
-      margin: 0 10px;
-      font-weight: bold;
-      transition: background-color 0.5s ease, color 0.5s ease; 
-      flex: 0 0 auto;
-    }
+.barra-navegacion a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-weight: bold;
+  transition: background-color 0.5s ease, color 0.5s ease;
+  flex: 0 0 auto;
+}
 
-    .barra-navegacion a:hover {
-      background-color: #8683aa; 
-      color: #fff;
-    }
+.barra-navegacion a:hover {
+  background-color: #8683aa;
+  color: #fff;
+}
 
-    /* Espacio para no solapar el contenido */
-    main {
-      margin-top: 40px; 
-    }
-
-    /* Desplazamiento suave */
-    html {
-      scroll-behavior: smooth;
-    }
+/* Desplazamiento suave */
+html {
+  scroll-behavior: smooth;
+}
 
 
 
@@ -292,12 +299,8 @@ main {
 
 
 
-    /* Estilos de transición para los botones del carrito */
-    .btn-agregar {
-      transition: background-color 0.5s ease, transform 0.5s ease; /* Transición suave */
-    }
-
-    .btn-agregar:hover {
-      background-color: #4CAF50; /* Cambio de color al pasar el mouse */
-      transform: scale(1.1); /* Efecto de ampliación en el hover */
-    }
+/* Estilos de transición para los botones del carrito */
+.btn-agregar {
+  transition: background-color 0.5s ease, transform 0.5s ease;
+  /* Transición suave */
+}

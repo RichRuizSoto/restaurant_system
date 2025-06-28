@@ -18,18 +18,20 @@
 
 </head>
 <body>
+
   <header>
     <h1>Menú de <%= restaurante.nombre %></h1>
   </header>
 
-  <!-- Barra de navegación con categorías -->
+  <main class="main">
+
+   <!-- Barra de navegación con categorías -->
   <div class="barra-navegacion">
     <% for (const categoria in productosPorCategoria) { %>
       <a class="header_categorias_btn" href="#<%= categoria %>"><%= categoria %></a>
     <% } %>
   </div>
 
-  <main>
     <!-- Sección de productos por categoría -->
     <div>
       <% for (const categoria in productosPorCategoria) { %>
