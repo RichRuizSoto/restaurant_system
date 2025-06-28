@@ -87,9 +87,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       li.innerHTML = `
         <div class="carrito-item-info">
-          <span class="carrito-item-nombre">${item.nombre}</span>
-          <span class="carrito-item-cantidad">x${item.cantidad}</span>
-          <span class="carrito-item-precio">$${(item.precio * item.cantidad).toFixed(2)}</span>
+          <span class="carrito-item-nombre">${item.nombre}
+            <span class="carrito-item-cantidad">x${item.cantidad}</span>
+          </span>
+          <span class="carrito-item-precio">₡${(item.precio * item.cantidad).toFixed(2)}</span>
         </div>
         <div class="carrito-item-acciones">
           <!-- Botón para quitar el artículo -->
@@ -112,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Mostrar el total calculado en el carrito
-    totalCarrito.textContent = `$${total.toFixed(2)}`;
+    totalCarrito.textContent = `₡${total.toFixed(2)}`;
 
     // Quitar producto
     document.querySelectorAll('.quitar').forEach(btn => {
@@ -157,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return showNotification('El carrito está vacío', 'warning');
     }
 
-    const total = parseFloat(totalCarrito.textContent.replace('$', ''));
+    const total = parseFloat(totalCarrito.textContent.replace('₡', ''));
     const pedido = {
       id_restaurante: restauranteId,
       mesa,

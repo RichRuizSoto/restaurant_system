@@ -9,6 +9,10 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 'Inter', sans-serif;
   background-color: #041f1e;
@@ -24,7 +28,7 @@ header {
 
 header h1 {
   font-size: clamp(2rem, 4vw, 3rem);
-  color: #1e2d2f;
+  color: #041f1e;
   font-weight: 700;
 }
 
@@ -73,7 +77,7 @@ main {
 .producto-card h3 {
   font-size: 1.1rem;
   margin-bottom: 0.5rem;
-  color: #2e17c4;
+  color: #D1603D;
 }
 
 .producto-card .descripcion {
@@ -83,14 +87,14 @@ main {
 }
 
 .producto-card .precio {
-  font-size: 0.92rem;
+  font-size: 0.8rem;
   color: #666;
   margin-bottom: 0.2rem;
   padding-bottom: 0.3rem;
 }
 
 .btn-agregar {
-  background-color: #1e2d2f;
+  background-color: #00635D;
   color: white;
   border: none;
   padding: 0.75rem;
@@ -99,7 +103,12 @@ main {
   font-size: 0.95rem;
   font-weight: 500;
   width: 100%;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.5s ease, transform 0.5s ease;
+
+}
+
+.orden-btn {
+
 }
 
 .btn-agregar:hover {
@@ -113,27 +122,27 @@ main {
 ---------------------------- */
 .carrito {
   background: #fff;
-  padding: 1.5rem;
-  border-radius: 16px;
+  padding: 0.8rem;
+  border-radius: 6px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
   position: sticky;
-  top: 20px;
+  top: 3.5rem;
   align-self: start;
   height: fit-content;
 }
 
 .carrito h2 {
   font-size: 1.4rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.2rem;
 }
 
 #lista-carrito {
   list-style: none;
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.2rem;
 }
 
 .carrito-item {
-  padding: 0.75rem 0;
+  padding: 0.5rem 0;
   border-bottom: 1px solid #e0e0e0;
 }
 
@@ -145,14 +154,16 @@ main {
 
 .carrito-item-acciones {
   display: flex;
-  gap: 10px;
+  gap: 15px;
   margin-top: 5px;
 }
 
 .carrito-item-acciones button {
-  background: none;
+  background-color: #613453;
+  padding: 0.2rem 0.7rem;
   border: 1px;
-  color: #e74c3c;
+  border-radius: 5px;
+  color: #EEF4ED;
   font-size: 0.85rem;
   cursor: pointer;
 }
@@ -166,12 +177,12 @@ main {
   justify-content: space-between;
   font-size: 1rem;
   font-weight: 600;
-  margin: 1rem 0;
+  margin: 0.5rem 0;
 }
 
 #mesa {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.6rem;
   border: 1px solid #ccc;
   border-radius: 8px;
   margin-bottom: 1rem;
@@ -180,8 +191,8 @@ main {
 
 #btn-enviar-pedido {
   width: 100%;
-  padding: 0.9rem;
-  background-color: #2ecc71;
+  padding: 0.8rem;
+  background-color: #01172F;
   color: white;
   border: none;
   border-radius: 10px;
@@ -192,7 +203,7 @@ main {
 }
 
 #btn-enviar-pedido:hover {
-  background-color: #27ae60;
+  background-color: #033b76;
 }
 
 /* ----------------------------
@@ -269,7 +280,6 @@ main {
   display: flex;
   overflow-x: auto;
   white-space: nowrap;
-  justify-content: center;
 }
 
 
@@ -294,13 +304,3 @@ html {
 }
 
 
-
-
-
-
-
-/* Estilos de transición para los botones del carrito */
-.btn-agregar {
-  transition: background-color 0.5s ease, transform 0.5s ease;
-  /* Transición suave */
-}

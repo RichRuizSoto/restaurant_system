@@ -27,9 +27,10 @@
 
    <!-- Barra de navegación con categorías -->
   <div class="barra-navegacion">
+    <a class="header_categorias_btn orden-btn" href="#seccion-carrito">Orden</a>
     <% for (const categoria in productosPorCategoria) { %>
       <a class="header_categorias_btn" href="#<%= categoria %>"><%= categoria %></a>
-    <% } %>
+    <% } %>    
   </div>
 
     <!-- Sección de productos por categoría -->
@@ -42,9 +43,9 @@
               <div class="producto-card">
                 <h3><%= producto.nombre_producto %></h3>
                 <p class="descripcion"><%= producto.descripcion || 'Sin descripción' %></p>
-                <p class="precio">$<%= parseFloat(producto.precio).toFixed(2) %></p>
+                <p class="precio">₡<%= parseFloat(producto.precio).toFixed(2) %></p>
                 <button class="btn-agregar" data-producto='<%- JSON.stringify(producto) %>'>
-                  ➕ Agregar al carrito
+                  + Agregar a la orden
                 </button>
               </div>
             <% }) %>
@@ -54,14 +55,14 @@
     </div>
 
     <!-- Carrito lateral fijo -->
-    <aside class="carrito">
-      <h2>🛒 Tu pedido</h2>
+    <aside class="carrito" id="seccion-carrito">
+      <h2>Tu Orden</h2>
 
       <ul id="lista-carrito"></ul>
 
       <div class="total">
         <strong>Total:</strong>
-        <span id="total-carrito">$0.00</span>
+        <span id="total-carrito">₡0.00</span>
       </div>
 
       <label for="mesa">Número de mesa:</label>
