@@ -104,11 +104,6 @@ main {
   font-weight: 500;
   width: 100%;
   transition: background-color 0.5s ease, transform 0.5s ease;
-
-}
-
-.orden-btn {
-
 }
 
 .btn-agregar:hover {
@@ -263,11 +258,9 @@ main {
   }
 }
 
-
-
-
-
-/* Barra de navegación fija */
+/* ----------------------------
+    Barra de navegación fija
+---------------------------- */
 .barra-navegacion {
   position: fixed;
   top: 0;
@@ -291,14 +284,18 @@ main {
   font-weight: bold;
   transition: background-color 0.5s ease, color 0.5s ease;
   flex: 0 0 auto;
+  border-radius: 10px;
 }
 
 .barra-navegacion a:hover {
-  background-color: #8683aa;
+  background-color: #57c0c0;
   color: #fff;
 }
 
-/* Desplazamiento suave */
+.orden-a {
+  background-color: #5a728b;
+}
+
 html {
   scroll-behavior: smooth;
 }
