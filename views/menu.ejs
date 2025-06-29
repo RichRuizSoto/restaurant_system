@@ -65,8 +65,22 @@
         <span id="total-carrito">₡0.00</span>
       </div>
 
-      <label for="mesa">Número de mesa:</label>
-      <input type="number" id="mesa" min="1" placeholder="Ej. 5" />
+
+
+<div class="tipo-servicio">
+  <p><strong>Tipo de servicio:</strong></p>
+  <div class="botones-servicio">
+    <button type="button" class="servicio-btn" data-servicio="delivery">Delivery</button>
+    <button type="button" class="servicio-btn" data-servicio="pickup">Pickup</button>
+    <button type="button" class="servicio-btn" data-servicio="restaurante">Restaurante</button>
+  </div>
+</div>
+
+<div id="form-servicio" class="form-servicio oculto">
+  <!-- Aquí se insertará el formulario dinámico según el tipo -->
+</div>
+
+
 
       <button id="btn-enviar-pedido">Enviar pedido</button>
     </aside>

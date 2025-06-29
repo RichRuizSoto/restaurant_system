@@ -2,10 +2,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const listaCarrito = document.getElementById('lista-carrito');
   const totalCarrito = document.getElementById('total-carrito');
   const btnEnviar = document.getElementById('btn-enviar-pedido');
-  const mesaInput = document.getElementById('mesa');
   const restauranteId = window.restauranteId;
   let carrito = cargarCarrito();
   const sonidoNotificacion = new Audio('/sounds/notificacion.mp3');
+  const formServicio = document.getElementById('form-servicio');
+let tipoServicioSeleccionado = null;
 
 
   // Conectar a WebSocket y unirse a la sala
@@ -156,27 +157,63 @@ function showNotification(message, type = 'success') {
 
   // Enviar pedido
   btnEnviar.addEventListener('click', async () => {
-    const mesa = parseInt(mesaInput.value);
-    if (!mesa || mesa <= 0) {
-      return showNotification('Por favor ingresa un número de mesa válido', 'error');
-    }
 
     if (carrito.length === 0) {
       return showNotification('El carrito está vacío', 'warning');
     }
 
     const total = parseFloat(totalCarrito.textContent.replace('₡', ''));
-    const pedido = {
-      id_restaurante: restauranteId,
-      mesa,
-      productos: carrito.map(p => ({
-        id_producto: p.id_producto,
-        cantidad: p.cantidad,
-        precio: p.precio
-      })),
-      total,
-      estado: 'solicitado'
-    };
+
+if (!tipoServicioSeleccionado) {
+  return showNotification('Selecciona un tipo de servicio', 'warning');
+}
+
+// Obtener datos según el tipo de servicio
+let nombre = '';
+let telefono = '';
+let direccion = '';
+let mesa = null;
+
+if (tipoServicioSeleccionado === 'delivery') {
+  nombre = document.getElementById('nombre')?.value.trim();
+  telefono = document.getElementById('telefono')?.value.trim();
+  direccion = document.getElementById('direccion')?.value.trim();
+
+  if (!nombre || !telefono || !direccion) {
+    return showNotification('Completa todos los campos de Delivery', 'warning');
+  }
+} else if (tipoServicioSeleccionado === 'pickup') {
+  nombre = document.getElementById('nombre')?.value.trim();
+  telefono = document.getElementById('telefono')?.value.trim();
+
+  if (!nombre || !telefono) {
+    return showNotification('Completa nombre y teléfono para Pickup', 'warning');
+  }
+} else if (tipoServicioSeleccionado === 'restaurante') {
+  mesa = parseInt(document.getElementById('mesa')?.value);
+  if (!mesa || mesa <= 0) {
+    return showNotification('Ingresa un número de mesa válido', 'warning');
+  }
+}
+
+
+
+const pedido = {
+  id_restaurante: restauranteId,
+  tipo_servicio: tipoServicioSeleccionado,
+  nombre,
+  telefono,
+  direccion,
+  mesa,
+  productos: carrito.map(p => ({
+    id_producto: p.id_producto,
+    cantidad: p.cantidad,
+    precio: p.precio
+  })),
+  total,
+  estado: 'solicitado'
+};
+
 
     try {
       const res = await fetch('/api/pedidos', {
@@ -191,10 +228,14 @@ function showNotification(message, type = 'success') {
         showNotification(`🛎️ Pedido nuevo recibido - Mesa ${data.mesa} - Orden #${numero_orden}`, 'info');
         setTimeout(() => {
           showNotification(`🕖 Tiempo estimado ${promedio} minutos`, 'info');
-        }, 3 * 1000); carrito = [];
+        }, 3 * 1000); 
+        carrito = [];
+
         guardarCarrito();
         renderizarCarrito();
-        mesaInput.value = '';
+                formServicio.classList.add('oculto');
+formServicio.innerHTML = '';
+tipoServicioSeleccionado = null;
 
 
 
@@ -238,7 +279,44 @@ function showNotification(message, type = 'success') {
     }
   }
 
+  const servicioBtns = document.querySelectorAll('.servicio-btn');
+
+
+servicioBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    tipoServicioSeleccionado = btn.dataset.servicio;
+    servicioBtns.forEach(btn => {
+  btn.classList.remove('active');
+  if (btn.dataset.servicio === tipoServicioSeleccionado) {
+    btn.classList.add('active');
+  }
+});
+    formServicio.classList.remove('oculto');
+    formServicio.innerHTML = ''; // Limpiar antes de agregar nuevos campos
+
+    if (tipoServicioSeleccionado === 'delivery') {
+      formServicio.innerHTML = `
+        <input type="text" id="nombre" placeholder="Nombre completo" required />
+        <input type="tel" id="telefono" placeholder="Teléfono" required />
+        <input type="text" id="direccion" placeholder="Dirección" required />
+      `;
+    } else if (tipoServicioSeleccionado === 'pickup') {
+      formServicio.innerHTML = `
+        <input type="text" id="nombre" placeholder="Nombre completo" required />
+        <input type="tel" id="telefono" placeholder="Teléfono" required />
+      `;
+    } else if (tipoServicioSeleccionado === 'restaurante') {
+      formServicio.innerHTML = `
+        <input type="number" id="mesa" min="1" placeholder="Número de mesa" required />
+      `;
+    }
+  });
+});
+
+
   escucharBotonesAgregar();
 
   renderizarCarrito();
 });
+
+
