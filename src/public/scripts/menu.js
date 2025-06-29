@@ -33,20 +33,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   // Mostrar notificación
-  function showNotification(message, type = 'success') {
-    const container = document.getElementById('notification-container');
-    const notification = document.createElement('div');
-    notification.classList.add('notification', type);
-    notification.textContent = message;
-    container.appendChild(notification);
-
-    requestAnimationFrame(() => notification.classList.add('show'));
-
-    setTimeout(() => {
-      notification.classList.remove('show');
-      setTimeout(() => notification.remove(), 500);
-    }, 10000);
+function showNotification(message, type = 'success') {
+  const container = document.getElementById('notification-container');
+  const existing = container.querySelectorAll('.notification');
+  if (existing.length >= 3) {
+    container.removeChild(existing[0]); 
   }
+
+  const notification = document.createElement('div');
+  notification.classList.add('notification', type);
+  notification.textContent = message;
+
+  container.appendChild(notification);
+
+  requestAnimationFrame(() => notification.classList.add('show'));
+
+  setTimeout(() => {
+    notification.classList.remove('show');
+    setTimeout(() => notification.remove(), 400);
+  }, 10 * 1000);
+}
+
 
   // Escuchar botones "Agregar" (después de que se hayan agregado dinámicamente los productos)
   function escucharBotonesAgregar() {
