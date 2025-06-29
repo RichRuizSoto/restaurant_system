@@ -3,6 +3,7 @@ const restaurantesService = require('../services/restaurantesService');
 const socket = require('../utils/socket'); // Asegúrate de importar el socket
 
 const ESTADOS_VALIDOS = ['solicitado', 'listo', 'pagado', 'cancelado'];
+const TIPOS_SERVICIO_VALIDOS = ['restaurante', 'delivery', 'pickup'];
 
 // 🟢 Crear nuevo pedido
 exports.recibirPedido = async (req, res) => {
@@ -13,7 +14,8 @@ exports.recibirPedido = async (req, res) => {
       !pedido.id_restaurante ||
       typeof pedido.total !== 'number' ||
       !Array.isArray(pedido.productos) ||
-      pedido.productos.length === 0
+      pedido.productos.length === 0 ||
+      !TIPOS_SERVICIO_VALIDOS.includes(pedido.tipo_servicio)
     ) {
       return res.status(400).json({ mensaje: 'Pedido inválido: faltan datos requeridos' });
     }

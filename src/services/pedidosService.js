@@ -39,13 +39,14 @@ exports.crearPedido = async (pedido) => {
       try {
         const [result] = await conn.query(
           `INSERT INTO pedidos 
-            (id_restaurante, numero_orden, mesa, total, estado, creado_en)
-           VALUES (?, ?, ?, ?, 'solicitado', NOW())`,
+            (id_restaurante, numero_orden, mesa, total, estado, creado_en, tipo_servicio)
+           VALUES (?, ?, ?, ?, 'solicitado', NOW(), ?)`,
           [
             pedido.id_restaurante,
             numeroOrden,
-            pedido.mesa || 1,
-            pedido.total
+            pedido.mesa || 0,
+            pedido.total,
+            pedido.tipo_servicio
           ]
         );
 
@@ -157,7 +158,7 @@ exports.obtenerPedidoPorId = async (idPedido) => {
   try {
     const [result] = await conn.query(
       `SELECT p.id, p.numero_orden, p.mesa, p.total, p.estado, p.creado_en, 
-       dp.id_producto, dp.cantidad, dp.precio_unitario, pr.nombre_producto
+       dp.id_producto, dp.cantidad, dp.precio_unitario, pr.nombre_producto, p.tipo_servicio
        FROM pedidos p
        JOIN detalle_pedido dp ON p.id = dp.id_pedido
        JOIN productos pr ON dp.id_producto = pr.id
@@ -174,6 +175,7 @@ exports.obtenerPedidoPorId = async (idPedido) => {
       total: result[0].total,
       estado: result[0].estado,
       creado_en: result[0].creado_en,
+      tipo_servicio: result[0].tipo_servicio,
       productos: result.map(row => ({
         id_producto: row.id_producto,
         cantidad: row.cantidad,
@@ -192,7 +194,7 @@ exports.obtenerPedidoPorId = async (idPedido) => {
 // Obtener todos los pedidos con detalles para un restaurante
 exports.obtenerPedidosPorRestaurante = async (restId) => {
   const [rows] = await db.query(`
-    SELECT p.*, dp.id_producto, dp.cantidad, dp.precio_unitario, pr.nombre_producto
+    SELECT p.*, dp.id_producto, dp.cantidad, dp.precio_unitario, pr.nombre_producto, p.tipo_servicio
     FROM pedidos p
     JOIN detalle_pedido dp ON p.id = dp.id_pedido
     JOIN productos pr ON dp.id_producto = pr.id
@@ -211,7 +213,8 @@ exports.obtenerPedidosPorRestaurante = async (restId) => {
         total: row.total,
         estado: row.estado,
         creado_en: row.creado_en,
-        productos: []
+        productos: [],
+        tipo_servicio: row.tipo_servicio
       };
     }
 

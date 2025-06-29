@@ -1,4 +1,4 @@
-const Producto = require('../models/producto');  // Asegúrate de que este es el nombre correcto de tu archivo modelo
+const Producto = require('../models/Producto');  // Asegúrate de que este es el nombre correcto de tu archivo modelo
 const db = require('../core/config/database');
 
 // 📥 Crear producto

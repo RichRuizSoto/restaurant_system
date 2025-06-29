@@ -108,6 +108,7 @@ function agregarPedidoAlDOM(pedido) {
     item.querySelector('.pedido-header span:nth-child(2)').textContent = `Mesa: ${pedido.mesa}`;
     item.querySelector('.pedido-header span:nth-child(3)').textContent = `Total: $${parseFloat(pedido.total).toFixed(2)}`;
     item.querySelector('.pedido-header span:nth-child(4)').textContent = `Creado: ${new Date(pedido.creado_en).toLocaleString()}`;
+    item.querySelector('.pedido-header span:nth-child(5)').textContent = `Servicio: ${pedido.tipo_servicio}`;
 
     item.querySelector('.productos-list').innerHTML = pedido.productos.map(prod =>
       `<li class="producto-item">${prod.cantidad} × ${prod.nombre || `Producto ${prod.id_producto}`}</li>`
@@ -127,6 +128,7 @@ function agregarPedidoAlDOM(pedido) {
         <span><strong>Mesa:</strong> ${pedido.mesa}</span>
         <span><strong>Total:</strong> $${parseFloat(pedido.total).toFixed(2)}</span>
         <span><strong>Creado:</strong> ${new Date(pedido.creado_en).toLocaleString()}</span>
+        <span><strong>Servicio:</strong> ${pedido.tipo_servicio}</span>
       </div>
       <ul class="productos-list">${productosHTML}</ul>
       <div class="pedido-acciones">${getBotonesParaEstado(pedido.id, pedido.estado)}</div>

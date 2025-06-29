@@ -52,6 +52,7 @@
                   <span><strong>Mesa:</strong> <%= pedido.mesa %></span>
                   <span><strong>Total:</strong> $<%= parseFloat(pedido.total).toFixed(2) %></span>
                   <span><strong>Creado:</strong> <%= pedido.creado_en ? new Date(pedido.creado_en).toLocaleString() : 'Fecha no disponible' %></span>
+                  <span><strong>Servicio:</strong> <%= pedido.tipo_servicio %></span>
                 </div>
 
                 <ul class="productos-list">
