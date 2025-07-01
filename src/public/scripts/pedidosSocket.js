@@ -67,7 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  cambiarSeccionActiva('solicitado');
+  cargarPedidosIniciales();
+
 });
 
 // Cargar pedidos existentes en estado 'solicitado' al iniciar
@@ -86,7 +87,11 @@ async function cargarPedidosIniciales() {
   }
 }
 
-cargarPedidosIniciales();
+
+
+
+
+
 
 // Función para insertar pedido en el DOM
 function agregarPedidoAlDOM(pedido) {
@@ -128,7 +133,7 @@ function agregarPedidoAlDOM(pedido) {
         <span><strong>Mesa:</strong> ${pedido.mesa}</span>
         <span><strong>Total:</strong> $${parseFloat(pedido.total).toFixed(2)}</span>
         <span><strong>Creado:</strong> ${new Date(pedido.creado_en).toLocaleString()}</span>
-        <span><strong>Servicio:</strong> ${pedido.tipo_servicio}</span>
+        <button><strong>Informacion</strong> ${pedido.tipo_servicio}</button>
       </div>
       <ul class="productos-list">${productosHTML}</ul>
       <div class="pedido-acciones">${getBotonesParaEstado(pedido.id, pedido.estado)}</div>
