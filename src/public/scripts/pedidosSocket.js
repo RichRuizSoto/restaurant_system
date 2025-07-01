@@ -173,9 +173,61 @@ function getBotonesParaEstado(id, estado) {
 
 
 function mostrarInformacionPedido(id) {
-  alert(`ℹ️ Mostrar información detallada del pedido con ID: ${id}`);
-  // Aquí puedes personalizar para abrir un modal, redirigir, o mostrar más detalles.
+  fetch(`/api/pedidos/${id}`)
+    .then(res => res.json())
+    .then(data => {
+      const pedido = data.pedido;
+      if (!pedido) return mostrarMensajeError('Pedido no encontrado');
+
+      const modalBody = document.getElementById('modal-body-content');
+
+      const detallesCliente = (pedido.nombre || pedido.telefono || pedido.direccion) ? `
+        <h3>Datos del Cliente</h3>
+        <p><strong>Nombre:</strong> ${pedido.nombre || '—'}</p>
+        <p><strong>Teléfono:</strong> ${pedido.telefono || '—'}</p>
+        <p><strong>Dirección:</strong> ${pedido.direccion || '—'}</p>
+      ` : '';
+
+      modalBody.innerHTML = `
+        <p><strong>Orden #:</strong> ${pedido.numero_orden}</p>
+        <p><strong>Mesa:</strong> ${pedido.mesa}</p>
+        <p><strong>Total:</strong> $${parseFloat(pedido.total).toFixed(2)}</p>
+        <p><strong>Estado:</strong> ${pedido.estado}</p>
+        <p><strong>Tipo de servicio:</strong> ${pedido.tipo_servicio}</p>
+        <p><strong>Creado en:</strong> ${new Date(pedido.creado_en).toLocaleString()}</p>
+
+        ${detallesCliente}
+
+        <h3>Productos</h3>
+        <ul>
+          ${Array.isArray(pedido.productos) ? pedido.productos.map(p => `
+            <li>${p.cantidad} × ${p.nombre || 'Producto sin nombre'} - $${parseFloat(p.precio_unitario).toFixed(2)}</li>
+          `).join('') : '<li>No hay productos</li>'}
+        </ul>
+      `;
+
+      // Mostrar modal
+      const modal = document.getElementById('modal-info');
+      modal.classList.remove('hidden');
+
+      // Agregar evento para cerrar modal clickeando en la "X"
+      document.getElementById('modal-close-btn').onclick = cerrarModal;
+
+      // También cerrar modal si el usuario clickea fuera del contenido
+      modal.onclick = (e) => {
+        if (e.target === modal) cerrarModal();
+      };
+    })
+    .catch(err => {
+      console.error('❌ Error al obtener detalles del pedido:', err);
+      mostrarMensajeError('No se pudo cargar la información del pedido.');
+    });
 }
+
+function cerrarModal() {
+  document.getElementById('modal-info').classList.add('hidden');
+}
+
 
 
 // 🔁 Actualizar estado de pedido

@@ -79,6 +79,18 @@
 
   </main>
 
+  <!-- Modal de información del pedido -->
+<div id="modal-info" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-content">
+    <button id="modal-close-btn" class="modal-close" aria-label="Cerrar modal">&times;</button>
+    <div id="modal-body-content">
+      <!-- Aquí se inyecta la info del pedido -->
+    </div>
+  </div>
+</div>
+
+
+
   <script>
   window.restauranteId = <%= restId %>;
 </script>

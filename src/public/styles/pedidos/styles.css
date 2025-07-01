@@ -331,3 +331,95 @@ main {
     margin: 1rem;
   }
 }
+
+/* ============================================================
+      Modal con la informacion del pedido
+============================================================ */
+/* ============================================================
+      Modal con la información del pedido (mejorado)
+============================================================ */
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.modal.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 95%;
+  box-shadow: 0 8px 24px rgba(26, 188, 156, 0.3);
+  position: relative;
+  font-size: 1rem;
+  color: #2c3e50;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1.2rem;
+  font-size: 1.6rem;
+  color: #1abc9c;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  border: none;
+  background: transparent;
+}
+
+.modal-close:hover {
+  color: #16a085;
+}
+
+.modal-content h3 {
+  margin-top: 1rem;
+  margin-bottom: 0.6rem;
+  color: #1abc9c;
+  font-weight: 700;
+  border-bottom: 2px solid #1abc9c;
+  padding-bottom: 0.25rem;
+}
+
+.modal-content p {
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.modal-content ul {
+  list-style: disc inside;
+  margin-top: 0.5rem;
+  padding-left: 1rem;
+  color: #34495e;
+}
+
+.modal-content ul li {
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+}
+
+.modal-content strong {
+  color: #16a085;
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 1.5rem 1.8rem;
+    font-size: 0.9rem;
+  }
+}

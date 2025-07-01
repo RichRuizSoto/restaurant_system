@@ -39,14 +39,17 @@ exports.crearPedido = async (pedido) => {
       try {
         const [result] = await conn.query(
           `INSERT INTO pedidos 
-            (id_restaurante, numero_orden, mesa, total, estado, creado_en, tipo_servicio)
-           VALUES (?, ?, ?, ?, 'solicitado', NOW(), ?)`,
+           (id_restaurante, numero_orden, mesa, total, estado, creado_en, tipo_servicio, nombre, telefono, direccion)
+           VALUES (?, ?, ?, ?, 'solicitado', NOW(), ?, ?, ?, ?)`,
           [
             pedido.id_restaurante,
             numeroOrden,
             pedido.mesa || 0,
             pedido.total,
-            pedido.tipo_servicio
+            pedido.tipo_servicio,
+            pedido.nombre || null,
+            pedido.telefono || null,
+            pedido.direccion || null
           ]
         );
 
@@ -115,6 +118,7 @@ exports.crearPedido = async (pedido) => {
 
 
 
+
 // Obtener un pedido por número de orden
 exports.obtenerPedidoPorNumero = async (numeroOrden) => {
   const conn = await db.getConnection();
@@ -157,8 +161,10 @@ exports.obtenerPedidoPorId = async (idPedido) => {
   const conn = await db.getConnection();
   try {
     const [result] = await conn.query(
-      `SELECT p.id, p.numero_orden, p.mesa, p.total, p.estado, p.creado_en, 
-       dp.id_producto, dp.cantidad, dp.precio_unitario, pr.nombre_producto, p.tipo_servicio
+      `SELECT 
+         p.id, p.numero_orden, p.mesa, p.total, p.estado, p.creado_en, 
+         p.tipo_servicio, p.nombre, p.telefono, p.direccion, -- 🟢 NUEVOS CAMPOS
+         dp.id_producto, dp.cantidad, dp.precio_unitario, pr.nombre_producto
        FROM pedidos p
        JOIN detalle_pedido dp ON p.id = dp.id_pedido
        JOIN productos pr ON dp.id_producto = pr.id
@@ -176,6 +182,9 @@ exports.obtenerPedidoPorId = async (idPedido) => {
       estado: result[0].estado,
       creado_en: result[0].creado_en,
       tipo_servicio: result[0].tipo_servicio,
+      nombre: result[0].nombre,           // 🟢
+      telefono: result[0].telefono,       // 🟢
+      direccion: result[0].direccion,     // 🟢
       productos: result.map(row => ({
         id_producto: row.id_producto,
         cantidad: row.cantidad,
@@ -189,6 +198,7 @@ exports.obtenerPedidoPorId = async (idPedido) => {
     conn.release();
   }
 };
+
 
 
 // Obtener todos los pedidos con detalles para un restaurante
