@@ -44,7 +44,7 @@
                 <div class="pedido-header">
                   <span><strong>Orden:</strong> #<%= pedido.numero_orden %></span>
                   <span><strong>Mesa:</strong> <%= pedido.mesa %></span>
-                  <span><strong>Total:</strong> $<%= parseFloat(pedido.total).toFixed(2) %></span>
+                  <span><strong>Total:</strong> ₡<%= parseFloat(pedido.total).toFixed(2) %></span>
                   <span><strong>Creado:</strong> <%= pedido.creado_en ? new Date(pedido.creado_en).toLocaleString() : 'Fecha no disponible' %></span>
                   <span><strong>Servicio:</strong> <%= pedido.tipo_servicio %></span>
                 </div>
@@ -54,7 +54,7 @@
                     <% pedido.productos.forEach(prod => { %>
                       <li class="producto-item">
                         <%= (prod.nombre && prod.nombre.trim()) ? prod.nombre : `Producto ID ${prod.id_producto}` %> × <%= prod.cantidad %> 
-                        ($<%= prod.precio_unitario ?? prod.precio ?? '---' %>)
+                        (₡<%= prod.precio_unitario ?? prod.precio ?? '---' %>)
                       </li>
                     <% }) %>
                   <% } else { %>

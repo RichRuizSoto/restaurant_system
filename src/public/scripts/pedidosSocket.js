@@ -114,7 +114,7 @@ function agregarPedidoAlDOM(pedido) {
   if (item) {
     item.querySelector('.pedido-header span:nth-child(1)').textContent = `Orden: #${pedido.numero_orden}`;
     item.querySelector('.pedido-header span:nth-child(2)').textContent = `Mesa: ${pedido.mesa}`;
-    item.querySelector('.pedido-header span:nth-child(3)').textContent = `Total: $${parseFloat(pedido.total).toFixed(2)}`;
+    item.querySelector('.pedido-header span:nth-child(3)').textContent = `Total: ₡${parseFloat(pedido.total).toFixed(2)}`;
     item.querySelector('.pedido-header span:nth-child(4)').textContent = `Creado: ${new Date(pedido.creado_en).toLocaleString()}`;
     item.querySelector('.pedido-header span:nth-child(5)').textContent = `Servicio: ${pedido.tipo_servicio}`;
 
@@ -134,7 +134,7 @@ function agregarPedidoAlDOM(pedido) {
       <div class="pedido-header">
         <span><strong>Orden:</strong> #${pedido.numero_orden}</span>
         <span><strong>Mesa:</strong> ${pedido.mesa}</span>
-        <span><strong>Total:</strong> $${parseFloat(pedido.total).toFixed(2)}</span>
+        <span><strong>Total:</strong> ₡${parseFloat(pedido.total).toFixed(2)}</span>
         <span><strong>Creado:</strong> ${new Date(pedido.creado_en).toLocaleString()}</span>
         <span><strong>Servicio:</strong> ${pedido.tipo_servicio}</buttspanon>
       </div>
@@ -191,7 +191,7 @@ function mostrarInformacionPedido(id) {
       modalBody.innerHTML = `
         <p><strong>Orden #:</strong> ${pedido.numero_orden}</p>
         <p><strong>Mesa:</strong> ${pedido.mesa}</p>
-        <p><strong>Total:</strong> $${parseFloat(pedido.total).toFixed(2)}</p>
+        <p><strong>Total:</strong> ₡${parseFloat(pedido.total).toFixed(2)}</p>
         <p><strong>Estado:</strong> ${pedido.estado}</p>
         <p><strong>Tipo de servicio:</strong> ${pedido.tipo_servicio}</p>
         <p><strong>Creado en:</strong> ${new Date(pedido.creado_en).toLocaleString()}</p>
@@ -201,7 +201,7 @@ function mostrarInformacionPedido(id) {
         <h3>Productos</h3>
         <ul>
           ${Array.isArray(pedido.productos) ? pedido.productos.map(p => `
-            <li>${p.cantidad} × ${p.nombre || 'Producto sin nombre'} - $${parseFloat(p.precio_unitario).toFixed(2)}</li>
+            <li>${p.cantidad} × ${p.nombre || 'Producto sin nombre'} - ₡${parseFloat(p.precio_unitario).toFixed(2)}</li>
           `).join('') : '<li>No hay productos</li>'}
         </ul>
       `;
@@ -257,21 +257,25 @@ function actualizarEstadoPedido(idPedido, nuevoEstado) {
 // 🔔 Notificación visual
 function notificarEstadoActualizado(id, estado, numero_orden) {
   const mensaje = `📦 Pedido #${numero_orden} actualizado a "${estado}"`;
-  const noti = document.createElement('div');
-  noti.className = 'notification';
-  noti.textContent = mensaje;
-  document.body.appendChild(noti);
-  setTimeout(() => noti.remove(), 5000);
+  mostrarNotificacion(mensaje, false);
 }
 
-// ❌ Notificación de error
 function mostrarMensajeError(msg) {
-  const error = document.createElement('div');
-  error.className = 'error-message';
-  error.textContent = msg;
-  document.body.appendChild(error);
-  setTimeout(() => error.remove(), 5000);
+  mostrarNotificacion(msg, true);
 }
+
+function mostrarNotificacion(texto, esError = false) {
+  const noti = document.createElement('div');
+  noti.className = esError ? 'error-message' : 'notification';
+  noti.textContent = texto;
+
+  document.body.appendChild(noti);
+
+  setTimeout(() => {
+    if (document.body.contains(noti)) noti.remove();
+  }, 10 * 1000);
+}
+
 
 // 🧭 Cambiar sección activa
 function cambiarSeccionActiva(seccion) {
