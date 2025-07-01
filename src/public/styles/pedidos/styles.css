@@ -218,6 +218,16 @@ main {
   background-color: #c0392b;
 }
 
+.button.info-button {
+  background-color: #8b8b8b;
+  color: white;
+}
+
+.button.info-button:hover {
+  background-color: #464646;
+}
+
+
 /* ============================================================
    ✅ ESTADO FINALIZADO (TEXTO VERDE)
 ============================================================ */

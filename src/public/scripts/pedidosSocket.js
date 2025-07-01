@@ -77,11 +77,14 @@ async function cargarPedidosIniciales() {
     const res = await fetch(`/api/pedidos/estado/${window.restauranteId}`);
     const data = await res.json();
 
-    if (data.solicitado && Array.isArray(data.solicitado)) {
-      data.solicitado.forEach(pedido => {
-        agregarPedidoAlDOM(pedido);
-      });
-    }
+    const estados = ['solicitado', 'listo', 'pagado', 'cancelado'];
+    estados.forEach(estado => {
+      if (data[estado] && Array.isArray(data[estado])) {
+        data[estado].forEach(pedido => {
+          agregarPedidoAlDOM(pedido);
+        });
+      }
+    });
   } catch (err) {
     console.error('❌ Error al cargar pedidos iniciales:', err);
   }
@@ -133,7 +136,7 @@ function agregarPedidoAlDOM(pedido) {
         <span><strong>Mesa:</strong> ${pedido.mesa}</span>
         <span><strong>Total:</strong> $${parseFloat(pedido.total).toFixed(2)}</span>
         <span><strong>Creado:</strong> ${new Date(pedido.creado_en).toLocaleString()}</span>
-        <button><strong>Informacion</strong> ${pedido.tipo_servicio}</button>
+        <span><strong>Servicio:</strong> ${pedido.tipo_servicio}</buttspanon>
       </div>
       <ul class="productos-list">${productosHTML}</ul>
       <div class="pedido-acciones">${getBotonesParaEstado(pedido.id, pedido.estado)}</div>
@@ -150,20 +153,30 @@ function agregarPedidoAlDOM(pedido) {
 
 // ♻️ Obtener botones por estado
 function getBotonesParaEstado(id, estado) {
+
   if (estado === 'solicitado') {
     return `
       <button class="button" onclick="actualizarEstadoPedido(${id}, 'listo')">Marcar como listo</button>
       <button class="button cancel-button" onclick="actualizarEstadoPedido(${id}, 'cancelado')">Cancelar pedido</button>
-    `;
+      <button class="button info-button" onclick="mostrarInformacionPedido(${id})"><i class="fas fa-info-circle"></i> Información</button>
+      `;
   } else if (estado === 'listo') {
     return `
       <button class="button" onclick="actualizarEstadoPedido(${id}, 'pagado')">Marcar como pagado</button>
       <button class="button cancel-button" onclick="actualizarEstadoPedido(${id}, 'cancelado')">Cancelar pedido</button>
+      <button class="button info-button" onclick="mostrarInformacionPedido(${id})"><i class="fas fa-info-circle"></i> Información</button>
     `;
   } else {
     return `<span class="estado-finalizado">Pedido ${estado}</span>`;
   }
 }
+
+
+function mostrarInformacionPedido(id) {
+  alert(`ℹ️ Mostrar información detallada del pedido con ID: ${id}`);
+  // Aquí puedes personalizar para abrir un modal, redirigir, o mostrar más detalles.
+}
+
 
 // 🔁 Actualizar estado de pedido
 function actualizarEstadoPedido(idPedido, nuevoEstado) {
