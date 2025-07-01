@@ -9,34 +9,28 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <!-- Otros estilos -->
-  <link rel="stylesheet" href="/styles/pedidos/reset.css">
-  <link rel="stylesheet" href="/styles/pedidos/base.css">
-  <link rel="stylesheet" href="/styles/pedidos/sections.css">
-  <link rel="stylesheet" href="/styles/pedidos/pedido.css">
-  <link rel="stylesheet" href="/styles/pedidos/buttons.css">
-  <link rel="stylesheet" href="/styles/pedidos/notifications.css">
-  <link rel="stylesheet" href="/styles/pedidos/navigation.css">
-  <link rel="stylesheet" href="/styles/pedidos/typography.css">
-  <link rel="stylesheet" href="/styles/pedidos/responsive.css">
+  <link rel="stylesheet" href="/styles/pedidos/styles.css">
 </head>
 <body>
-  <main>
 
-    <!-- Navegación -->
-    <nav class="nav-buttons" role="tablist" aria-label="Estados de pedidos">
-      <button class="nav-button active" role="tab" aria-selected="true" data-seccion="solicitado" id="btn-solicitado">
-        <i class="fas fa-hourglass-start"></i> Solicitado
-      </button>
-      <button class="nav-button" role="tab" aria-selected="false" data-seccion="listo" id="btn-listo">
-        <i class="fas fa-check-circle"></i> Listo
-      </button>
-      <button class="nav-button" role="tab" aria-selected="false" data-seccion="pagado" id="btn-pagado">
-        <i class="fas fa-credit-card"></i> Pagado
-      </button>
-      <button class="nav-button" role="tab" aria-selected="false" data-seccion="cancelado" id="btn-cancelado">
-        <i class="fas fa-ban"></i> Cancelado
-      </button>
-    </nav>
+  <!-- Barra de navegación fija -->
+  <nav class="nav-buttons fixed-nav" role="tablist" aria-label="Estados de pedidos">
+    <button class="nav-button active" role="tab" aria-selected="true" data-seccion="solicitado" id="btn-solicitado">
+      <i class="fas fa-hourglass-start"></i> Solicitado
+    </button>
+    <button class="nav-button" role="tab" aria-selected="false" data-seccion="listo" id="btn-listo">
+      <i class="fas fa-check-circle"></i> Listo
+    </button>
+    <button class="nav-button" role="tab" aria-selected="false" data-seccion="pagado" id="btn-pagado">
+      <i class="fas fa-credit-card"></i> Pagado
+    </button>
+    <button class="nav-button" role="tab" aria-selected="false" data-seccion="cancelado" id="btn-cancelado">
+      <i class="fas fa-ban"></i> Cancelado
+    </button>
+  </nav>
+
+
+  <main>
 
     <!-- Secciones de pedidos -->
     <% const estados = ['solicitado', 'listo', 'pagado', 'cancelado']; %>
