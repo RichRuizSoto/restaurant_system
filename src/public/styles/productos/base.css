@@ -85,12 +85,12 @@ button,
 }
 
 .btn-primary {
-  background-color: #3498db;
+  background-color: #535353;
   color: white;
 }
 
 .btn-primary:hover {
-  background-color: #2980b9;
+  background-color: #838383;
 }
 
 .btn-warning {
@@ -102,12 +102,12 @@ button,
   background-color: #d35400;
 }
 
-.btn-danger {
+.btn-success {
   background-color: #e74c3c;
   color: white;
 }
 
-.btn-danger:hover {
+.btn-success:hover {
   background-color: #c0392b;
 }
 
@@ -192,10 +192,10 @@ table tr:hover {
 }
 
 .badge-entrada { background-color: #1abc9c; }
-.badge-menu    { background-color: #3498db; }
-.badge-combo   { background-color: #9b59b6; }
-.badge-postre  { background-color: #f39c12; }
-.badge-bebida  { background-color: #e67e22; }
+.badge-menu    { background-color: #6c61e7; }
+.badge-combo   { background-color: #5094e8; }
+.badge-postre  { background-color: #E56399; }
+.badge-bebida  { background-color: #FBAF00; }
 .badge-default { background-color: #7f8c8d; }
 
 /* Modal Categoría */
@@ -233,7 +233,7 @@ table tr:hover {
 }
 
 .toast {
-  background-color: #2ecc71;
+  background-color: rgba(46, 204, 113, 0.7); 
   color: white;
   padding: 0.8rem 1rem;
   border-radius: 5px;
@@ -244,7 +244,7 @@ table tr:hover {
 }
 
 .toast.error {
-  background-color: #e74c3c;
+  background-color: rgba(231, 76, 60, 0.9); /* Rojo con 90% de opacidad */
 }
 
 .toast .close-toast {
@@ -255,6 +255,26 @@ table tr:hover {
   margin-left: auto;
   cursor: pointer;
 }
+
+.toast.success {
+  background-color: rgba(46, 204, 113, 0.9); /* verde */
+}
+
+.toast.error {
+  background-color: rgba(231, 76, 60, 0.9); /* rojo */
+}
+
+.toast.warning {
+  background-color: rgba(243, 156, 18, 0.9); /* naranja (similar a #f39c12) */
+  color: #fff;
+}
+
+.toast.info {
+  background-color: rgba(52, 152, 219, 0.9); /* azul (#3498db) */
+  color: #fff;
+}
+
+
 
 /* Responsive */
 @media (max-width: 1024px) {

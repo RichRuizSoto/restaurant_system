@@ -31,11 +31,7 @@ function mostrarNotificacion(mensaje, tipo) {
   const contenido = document.createElement('span');
   contenido.textContent = mensaje;
   const closeButton = document.createElement('button');
-  closeButton.classList.add('close-toast');
-  closeButton.innerHTML = '&times;';
-  closeButton.onclick = () => toast.remove();
   toast.appendChild(contenido);
-  toast.appendChild(closeButton);
   document.getElementById('toast-container').appendChild(toast);
   setTimeout(() => toast.remove(), 5000);
 }
@@ -120,13 +116,15 @@ async function obtenerProductos() {
           <td>${p.id}</td>
           <td>${p.nombre_producto}</td>
           <td>${p.descripcion || ''}</td>
-          <td>$${precio.toFixed(2)}</td>
+          <td>₡${precio.toFixed(2)}</td>
           <td><span class="${obtenerClaseCategoria(categoriaNombre)}">${categoriaNombre}</span></td>
           <td>${p.disponible ? 'Sí' : 'No'}</td>
-          <td>
-            <button onclick="cargarProducto(${p.id})">Editar</button>
-            <button onclick="toggleDisponibilidad(${p.id}, ${p.disponible})">${p.disponible ? 'Desactivar' : 'Activar'}</button>
-          </td>
+<td>
+  <button class="btn-primary" onclick="cargarProducto(${p.id})">Editar</button>
+  <button class="${p.disponible ? 'btn-danger' : 'btn-success'}" onclick="toggleDisponibilidad(${p.id}, ${p.disponible})">
+    ${p.disponible ? 'Activado' : 'Desactivado'}
+  </button>
+</td>
         </tr>`;
     });
   } catch (err) {
