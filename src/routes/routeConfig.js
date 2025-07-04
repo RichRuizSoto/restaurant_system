@@ -14,6 +14,7 @@ const pedidosViewRoutes = require('./views/pedidos');
 const authViewRoutes = require('./views/auth');
 const errorViewRoutes = require('./views/error');
 const adminViewRoutes = require('./views/admin');
+const usuariosViewRoutes = require('./views/usuarios');
 
 
 const {
@@ -41,6 +42,7 @@ module.exports = (app) => {
   app.use('/menu', menuViewRoutes);
   app.use('/pedidos', pedidosViewRoutes);
   app.use('/admin', adminViewRoutes);
+  app.use('/crear-empleado', usuariosViewRoutes);
 
 
   // Rutas de error
