@@ -4,7 +4,7 @@ const pedidosController = require('../../controllers/pedidosController');
 const { isAuthenticated, hasAccessToRestaurant, checkRoleAccess } = require('../../middlewares/auth');
 
 router.get(
-  '/vista/:slug',
+  '/:slug',
   pedidosController.renderizarVistaPedidos
 );
 
