@@ -179,6 +179,10 @@ table tbody tr:nth-child(even) {
   background-color: #3b82f6;
 }
 
+.badge.cancelled {
+  background-color: #d9534f; /* o algún color que represente cancelado */
+}
+
 /* Footer */
 .footer {
   margin-top: auto;

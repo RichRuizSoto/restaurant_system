@@ -9,5 +9,7 @@ router.get('/:id', pedidosController.verPedido);
 router.get('/estado/:restId', pedidosController.obtenerPedidosPorEstado);
 router.get('/hoy/:restId', pedidosController.obtenerCantidadPedidosHoy);
 router.put('/:id/estado', pedidosController.actualizarEstadoPedido);
+router.get('/ultimos/:restId', pedidosController.obtenerUltimosPedidos);
+
 
 module.exports = router;

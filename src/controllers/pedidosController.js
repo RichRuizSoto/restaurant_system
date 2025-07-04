@@ -226,4 +226,13 @@ exports.obtenerCantidadPedidosHoy = async (req, res) => {
 };
 
 
-
+exports.obtenerUltimosPedidos = async (req, res) => {
+  try {
+    const idRestaurante = req.params.restId;
+    const ultimos = await pedidosService.obtenerUltimosPedidos(idRestaurante); // lo agregas al service
+    res.json(ultimos);
+  } catch (err) {
+    console.error('❌ [Error en obtenerUltimosPedidos]', err);
+    res.status(500).json({ mensaje: 'Error al obtener últimos pedidos' });
+  }
+};

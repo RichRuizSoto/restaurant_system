@@ -358,3 +358,15 @@ exports.obtenerCantidadPedidosHoy = async (restId) => {
 
   return rows[0].cantidad;
 };
+
+exports.obtenerUltimosPedidos = async (idRestaurante) => {
+  const [result] = await db.query(`
+    SELECT numero_orden, nombre, total, estado, creado_en
+    FROM pedidos
+    WHERE id_restaurante = ?
+    ORDER BY creado_en DESC
+    LIMIT 10
+  `, [idRestaurante]);
+
+  return result;
+};
