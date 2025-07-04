@@ -4,7 +4,7 @@ const restauranteController = require('../../controllers/restauranteController')
 const { isAuthenticated, hasAccessToRestaurant, checkRoleAccess } = require('../../middlewares/auth');
 
 router.get(
-  '/:slug/productos',
+  '/:slug/',
 
   restauranteController.renderizarVistaProductos
 );

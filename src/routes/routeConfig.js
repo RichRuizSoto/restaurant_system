@@ -36,7 +36,7 @@ module.exports = (app) => {
   app.use('/api/ganancias', gananciasRoutes);
 
   // Vistas protegidas
-  app.use('/restaurantes', restauranteViewRoutes);
+  app.use('/productos', restauranteViewRoutes);
   app.use('/gestores', gestorViewRoutes);
   app.use('/menu', menuViewRoutes);
   app.use('/pedidos', pedidosViewRoutes);
