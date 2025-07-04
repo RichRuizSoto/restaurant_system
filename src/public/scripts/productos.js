@@ -72,7 +72,7 @@ async function cargarCategorias() {
     });
     copiarOpcionesCategorias();
   } catch (error) {
-    mostrarMensaje('Error al cargar categorías', 'error');
+    mostrarNotificacion('Error al cargar categorías', 'error');
   }
 }
 
@@ -107,7 +107,7 @@ async function obtenerProductos() {
         </tr>`;
     });
   } catch (error) {
-    mostrarMensaje('Error al cargar productos', 'error');
+    mostrarNotificacion('Error al cargar productos', 'error');
   }
 }
 
@@ -120,9 +120,9 @@ window.cargarProducto = async function (id) {
     document.getElementById('edit_descripcion').value = p.descripcion || '';
     document.getElementById('edit_precio').value = p.precio;
     document.getElementById('edit_categoria').value = p.categoria;
-    document.getElementById('modalEditarProducto').style.display = 'block';
+    document.getElementById('modalEditarProducto').style.display = 'flex';
   } catch {
-    mostrarMensaje("Error al cargar el producto", 'error');
+    mostrarNotificacion("Error al cargar el producto", 'error');
   }
 };
 
@@ -133,10 +133,10 @@ window.toggleDisponibilidad = async function (id, estadoActual) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ disponible: estadoActual ? 0 : 1 })
     });
-    mostrarMensaje('Estado actualizado');
+    mostrarNotificacion('Estado actualizado');
     obtenerProductos();
   } catch {
-    mostrarMensaje('Error al actualizar disponibilidad', 'error');
+    mostrarNotificacion('Error al actualizar disponibilidad', 'error');
   }
 };
 
@@ -158,10 +158,10 @@ function registrarEventos() {
         body: JSON.stringify(data)
       });
       form.reset();
-      mostrarMensaje('Producto agregado');
+      mostrarNotificacion('Producto agregado');
       obtenerProductos();
     } catch (err) {
-      mostrarMensaje(err.error || 'Error al agregar producto', 'error');
+      mostrarNotificacion(err.error || 'Error al agregar producto', 'error');
     }
   });
 
@@ -182,10 +182,10 @@ function registrarEventos() {
       });
       productoEnEdicion = null;
       document.getElementById('modalEditarProducto').style.display = 'none';
-      mostrarMensaje('Producto actualizado');
+      mostrarNotificacion('Producto actualizado');
       obtenerProductos();
     } catch {
-      mostrarMensaje('Error al actualizar producto', 'error');
+      mostrarNotificacion('Error al actualizar producto', 'error');
     }
   });
 
@@ -204,7 +204,7 @@ function registrarEventos() {
 
   document.getElementById('btnGuardarCategoria').addEventListener('click', async () => {
     const nombre = document.getElementById('nombre_categoria').value.trim();
-    if (!nombre) return mostrarMensaje('Nombre de categoría requerido', 'error');
+    if (!nombre) return mostrarNotificacion('Nombre de categoría requerido', 'error');
 
     try {
       await fetchJSON('/api/categorias/agregar', {
@@ -214,9 +214,9 @@ function registrarEventos() {
       });
       await cargarCategorias();
       document.getElementById('formCategoria').style.display = 'none';
-      mostrarMensaje('Categoría agregada');
+      mostrarNotificacion('Categoría agregada');
     } catch {
-      mostrarMensaje('Error al agregar categoría', 'error');
+      mostrarNotificacion('Error al agregar categoría', 'error');
     }
   });
 
@@ -248,6 +248,6 @@ function filtrarProductos() {
     await obtenerProductos();
     registrarEventos();
   } catch (err) {
-    mostrarMensaje('Error al cargar restaurante', 'error');
+    mostrarNotificacion('Error al cargar restaurante', 'error');
   }
 })();

@@ -180,7 +180,7 @@ table tbody tr:nth-child(even) {
 }
 
 .badge.cancelled {
-  background-color: #d9534f; /* o algún color que represente cancelado */
+  background-color: #d9534f;
 }
 
 /* Footer */

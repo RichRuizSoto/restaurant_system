@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
 /* General */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f5f7fa;
   margin: 0;
   padding: 0 1rem;
@@ -14,7 +16,7 @@ main {
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  overflow-x: auto; /* Para permitir scroll horizontal si hace falta */
+  overflow-x: auto;
 }
 
 /* Formularios */
@@ -51,7 +53,16 @@ select {
   border-radius: 5px;
   font-size: 1rem;
   box-sizing: border-box;
+  
 }
+
+.input-control:focus,
+textarea:focus,
+select:focus {
+  border-color: #6c61e7;
+  box-shadow: 0 0 0 2px rgba(108, 97, 231, 0.2);
+}
+
 
 textarea {
   resize: vertical;
@@ -113,12 +124,12 @@ button,
 
 /* Tabla de productos */
 #productos-container {
-  overflow-x: auto; /* Scroll horizontal si no cabe */
+  overflow-x: auto;
 }
 
 table {
   width: 100%;
-  min-width: 700px; /* Forzar mínimo para columnas */
+  min-width: 700px;
   border-collapse: collapse;
   margin-top: 1rem;
   table-layout: fixed;
@@ -141,38 +152,38 @@ table td {
 
 table th:nth-child(1),
 table td:nth-child(1) {
-  width: 5%;  /* ID */
+  width: 5%;
 }
 
 table th:nth-child(2),
 table td:nth-child(2) {
-  width: 20%; /* Nombre */
+  width: 20%;
 }
 
 table th:nth-child(3),
 table td:nth-child(3) {
-  width: 25%; /* Descripción */
+  width: 25%;
 }
 
 table th:nth-child(4),
 table td:nth-child(4) {
-  width: 10%; /* Precio */
+  width: 10%;
 }
 
 table th:nth-child(5),
 table td:nth-child(5) {
-  width: 15%; /* Categoría */
+  width: 15%;
 }
 
 table th:nth-child(6),
 table td:nth-child(6) {
-  width: 10%; /* Disponible */
+  width: 10%;
   text-align: center;
 }
 
 table th:nth-child(7),
 table td:nth-child(7) {
-  width: 15%; /* Acciones */
+  width: 15%;
   text-align: center;
 }
 
@@ -244,37 +255,22 @@ table tr:hover {
 }
 
 .toast.error {
-  background-color: rgba(231, 76, 60, 0.9); /* Rojo con 90% de opacidad */
-}
-
-.toast .close-toast {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 1.2rem;
-  margin-left: auto;
-  cursor: pointer;
+  background-color: rgba(231, 76, 60, 0.9);
 }
 
 .toast.success {
-  background-color: rgba(46, 204, 113, 0.9); /* verde */
-}
-
-.toast.error {
-  background-color: rgba(231, 76, 60, 0.9); /* rojo */
+  background-color: rgba(46, 204, 113, 0.9);
 }
 
 .toast.warning {
-  background-color: rgba(243, 156, 18, 0.9); /* naranja (similar a #f39c12) */
+  background-color: rgba(243, 156, 18, 0.9);
   color: #fff;
 }
 
 .toast.info {
-  background-color: rgba(52, 152, 219, 0.9); /* azul (#3498db) */
+  background-color: rgba(52, 152, 219, 0.9);
   color: #fff;
 }
-
-
 
 /* Responsive */
 @media (max-width: 1024px) {
@@ -297,7 +293,8 @@ table tr:hover {
     min-width: 500px;
   }
 
-  table th, table td {
+  table th,
+  table td {
     font-size: 0.85rem;
   }
 }
@@ -307,7 +304,8 @@ table tr:hover {
     min-width: 450px;
   }
 
-  table th, table td {
+  table th,
+  table td {
     font-size: 0.75rem;
     padding: 0.5rem 0.3rem;
   }
@@ -317,121 +315,125 @@ table tr:hover {
   }
 }
 
-/* =================== */
-/* Modal de edición    */
-/* =================== */
-#modalEditarProducto.modal {
+
+/* Estilo del fondo del modal */
+.modal {
+  display: none; /* se muestra con JS */
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1050;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: none;
-  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.5); /* fondo oscuro translúcido */
+  backdrop-filter: blur(2px);
+
+  /* ✅ Para centrar vertical y horizontalmente */
+  display: flex;
   justify-content: center;
-  animation: fadeIn 0.3s ease-in-out;
+  align-items: center;
 }
 
-#modalEditarProducto .modal-content {
+/* Contenido del modal */
+.modal-content {
   background-color: #ffffff;
-  border-radius: 12px;
   padding: 2rem;
-  width: 100%;
+  border-radius: 10px;
   max-width: 500px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   position: relative;
-  animation: slideUp 0.3s ease-out;
-  box-sizing: border-box;
+  animation: fadeIn 0.3s ease-out;
 }
 
-/* Modal close button */
+/* Botón de cerrar */
 .close-modal {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  font-size: 1.4rem;
-  color: #999;
-  background: none;
-  border: none;
+  font-size: 1.5rem;
   cursor: pointer;
+  color: #555;
   transition: color 0.2s ease;
 }
 
 .close-modal:hover {
-  color: #333;
+  color: #e74c3c;
 }
 
-/* Modal header */
-#modalEditarProducto h3 {
-  margin-top: 0;
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: #2c3e50;
-  margin-bottom: 1.2rem;
-  text-align: center;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 0.5rem;
+/* Formulario dentro del modal */
+.modal-content form {
+  display: flex;
+  flex-direction: column;
 }
 
-/* Inputs inside modal */
-#formEditarProducto input,
-#formEditarProducto textarea,
-#formEditarProducto select {
+.modal-content .form-group {
+  margin-bottom: 1rem;
+}
+
+.modal-content label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
   width: 100%;
-  padding: 0.6rem 0.8rem;
+  padding: 0.6rem;
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 1rem;
-  box-sizing: border-box;
+  font-family: inherit;
 }
 
-#formEditarProducto .form-group {
-  margin-bottom: 1.2rem;
+.modal-content textarea {
+  resize: vertical;
+  min-height: 80px;
 }
 
-#formEditarProducto label {
-  display: block;
-  margin-bottom: 0.4rem;
-  font-weight: 600;
-  color: #444;
+.modal-content .form-actions {
+  text-align: right;
+  margin-top: 1.5rem;
 }
 
-/* Submit button */
-#formEditarProducto .btn-warning {
-  background-color: #f39c12;
-  color: white;
+/* ✅ Botón actualizado: ya no es naranja */
+.modal-content .btn-warning {
+  background-color: #3498db; /* azul */
+  color: #fff;
   padding: 0.6rem 1.2rem;
-  font-size: 1rem;
   border: none;
   border-radius: 6px;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.2s ease;
 }
 
-#formEditarProducto .btn-warning:hover {
-  background-color: #d35400;
+.modal-content .btn-warning:hover {
+  background-color: #2980b9; /* azul oscuro al pasar el mouse */
 }
 
-/* Animaciones */
+/* Animación suave al abrir el modal */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-@keyframes slideUp {
-  from { transform: translateY(30px); opacity: 0; }
-  to   { transform: translateY(0); opacity: 1; }
-}
-
-/* Responsive modal */
-@media (max-width: 600px) {
-  #modalEditarProducto .modal-content {
-    width: 90%;
-    padding: 1.5rem;
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
   }
 }
 
+/* Responsivo para pantallas pequeñas */
+@media (max-width: 500px) {
+  .modal-content {
+    padding: 1.2rem;
+  }
 
-
+  .close-modal {
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+}
