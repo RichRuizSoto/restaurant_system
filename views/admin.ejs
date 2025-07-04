@@ -49,10 +49,10 @@
   <h3>Pedidos Hoy</h3>
   <p id="pedidos-hoy">Cargando...</p>
 </div>
-        <div class="card">
-          <h3>Ingresos</h3>
-          <p>$450.00</p>
-        </div>
+<div class="card">
+  <h3>Ingresos</h3>
+  <p id="ingresos-hoy">$0.00</p>
+</div>
         <div class="card">
           <h3>Productos Activos</h3>
           <p>48</p>
@@ -147,6 +147,27 @@
         .catch(err => contador.textContent = "Error");
     }
   });
+  document.addEventListener("DOMContentLoaded", async () => {
+  const restId = '<%= restId %>';
+
+  try {
+    // Actualizar pedidos hoy (ya tienes este)
+    const resPedidos = await fetch(`/api/pedidos/hoy/${restId}`);
+    const dataPedidos = await resPedidos.json();
+    document.getElementById("pedidos-hoy").textContent = dataPedidos.pedidosHoy;
+
+    // Obtener ingresos hoy
+    const resIngresos = await fetch(`/api/ganancias/ingresos/hoy/${restId}`);
+    const dataIngresos = await resIngresos.json();
+    document.getElementById("ingresos-hoy").textContent = `$${Number(dataIngresos.ingresosHoy).toFixed(2)}`;
+
+  } catch (err) {
+    console.error("Error al obtener datos:", err);
+    document.getElementById("pedidos-hoy").textContent = "Error";
+    document.getElementById("ingresos-hoy").textContent = "Error";
+  }
+});
+
 </script>
 
 
