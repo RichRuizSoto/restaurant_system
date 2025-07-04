@@ -174,3 +174,15 @@ exports.eliminarEmpleado = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+exports.contarEmpleadosPorRestaurante = async (req, res) => {
+  const { restauranteId } = req.params;
+
+  try {
+    const count = await usuariosService.contarEmpleadosPorRestaurante(restauranteId);
+    res.status(200).json({ totalEmpleados: count });
+  } catch (err) {
+    console.error('[Backend] Error al contar empleados:', err.message);
+    res.status(500).json({ error: 'Error al contar empleados' });
+  }
+};

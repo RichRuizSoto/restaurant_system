@@ -226,3 +226,16 @@ exports.existeUsuario = async (nombre) => {
     return rows.length > 0;
   };
   
+
+exports.contarEmpleadosPorRestaurante = async (restauranteId) => {
+  try {
+    const [rows] = await db.query(
+      `SELECT COUNT(*) AS total FROM usuarios WHERE id_restaurante = ? AND rol = 'empleado'`,
+      [restauranteId]
+    );
+    return rows[0].total;
+  } catch (err) {
+    console.error('[Service] Error al contar empleados:', err.message);
+    throw err;
+  }
+};

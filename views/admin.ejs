@@ -58,11 +58,11 @@
   <h3>Productos Activos</h3>
 <p id="productos-activos"></p>
 </div>
+<div class="card">
+  <h3>Perfiles Registrados</h3>
+  <p id="perfiles-registrados"></p>
+</div>
 
-        <div class="card">
-          <h3>Perfiles Registrados</h3>
-          <p>134</p>
-        </div>
       </section>
 
       <!-- Actividad reciente -->
@@ -154,11 +154,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     const dataProductos = await resProductos.json();
     document.getElementById("productos-activos").textContent = dataProductos.productosActivos;
 
+    // Perfiles registrados (empleados)
+const resEmpleados = await fetch(`/api/usuarios/empleados/count/${restId}`);
+const dataEmpleados = await resEmpleados.json();
+document.getElementById("perfiles-registrados").textContent = dataEmpleados.totalEmpleados;
+
+
   } catch (err) {
     console.error("❌ Error al obtener datos:", err);
     document.getElementById("pedidos-hoy").textContent = "Error";
     document.getElementById("ingresos-hoy").textContent = "Error";
     document.getElementById("productos-activos").textContent = "Error";
+    document.getElementById("perfiles-registrados").textContent = "Error";
+
   }
 });
 
