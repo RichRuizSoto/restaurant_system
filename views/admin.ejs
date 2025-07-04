@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel Administrativo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles/system/admin.css" />
+</head>
+<body>
+  <div class="admin-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h2 class="logo">🍽️ Mi Restaurante</h2>
+      <nav>
+        <ul>
+          <li><a href="/menu"><i class='bx bx-book-open'></i> Menú</a></li>
+          <li><a href="/pedidos"><i class='bx bx-receipt'></i> Pedidos</a></li>
+          <li><a href="/reportes"><i class='bx bx-bar-chart-alt-2'></i> Reportes</a></li>
+          <li><a href="/crear-perfil"><i class='bx bx-user-plus'></i> Crear Perfil</a></li>
+          <li><a href="/ventas"><i class='bx bx-dollar-circle'></i> Ventas</a></li>
+          <li><a href="/configuracion"><i class='bx bx-cog'></i> Configuración</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main panel -->
+    <main class="main-panel">
+      <!-- Header -->
+      <header class="main-header">
+        <div>
+          <h1>Panel Administrativo</h1>
+          <p>Bienvenido, <strong>Administrador</strong></p>
+        </div>
+        <div class="header-right">
+          <input type="text" placeholder="Buscar..." />
+          <div class="user-menu">
+            <i class='bx bx-user-circle'></i>
+            <a href="/logout">Cerrar sesión</a>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard KPIs -->
+      <section class="dashboard-widgets">
+        <div class="card">
+          <h3>Pedidos Hoy</h3>
+          <p>23</p>
+        </div>
+        <div class="card">
+          <h3>Ingresos</h3>
+          <p>$450.00</p>
+        </div>
+        <div class="card">
+          <h3>Productos Activos</h3>
+          <p>48</p>
+        </div>
+        <div class="card">
+          <h3>Clientes Registrados</h3>
+          <p>134</p>
+        </div>
+      </section>
+
+      <!-- Actividad reciente -->
+      <section class="recent-activity">
+        <h2>Últimos pedidos</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Cliente</th>
+              <th>Total</th>
+              <th>Estado</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>#10023</td>
+              <td>Juan Pérez</td>
+              <td>$25.00</td>
+              <td><span class="badge delivered">Entregado</span></td>
+              <td>03/07/2025</td>
+            </tr>
+            <tr>
+              <td>#10022</td>
+              <td>Laura Díaz</td>
+              <td>$48.00</td>
+              <td><span class="badge pending">Pendiente</span></td>
+              <td>03/07/2025</td>
+            </tr>
+            <tr>
+              <td>#10021</td>
+              <td>Mario Gómez</td>
+              <td>$19.00</td>
+              <td><span class="badge preparing">Preparando</span></td>
+              <td>02/07/2025</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <p>&copy; 2025 Sistema de Restaurantes. Todos los derechos reservados.</p>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>

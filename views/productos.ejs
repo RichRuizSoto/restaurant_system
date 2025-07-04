@@ -126,6 +126,43 @@
     </form>
   </main>
 
+<div id="modalEditarProducto" class="modal" style="display: none;">
+  <div class="modal-content">
+    <span class="close-modal" id="cerrarModal">&times;</span>
+    <h3>Editar Producto</h3>
+    <form id="formEditarProducto">
+      <input type="hidden" name="id" id="edit_id">
+
+      <div class="form-group">
+        <label for="edit_nombre_producto">Nombre del producto:</label>
+        <input type="text" id="edit_nombre_producto" required>
+      </div>
+
+      <div class="form-group">
+        <label for="edit_descripcion">Descripción:</label>
+        <textarea id="edit_descripcion"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="edit_precio">Precio:</label>
+        <input type="number" id="edit_precio" step="0.01" required>
+      </div>
+
+      <div class="form-group">
+        <label for="edit_categoria">Categoría:</label>
+        <select id="edit_categoria" required>
+          <!-- Se llenará dinámicamente -->
+        </select>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-warning">Actualizar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
   <!-- Contenedor de notificaciones -->
   <div id="toast-container"></div>
 

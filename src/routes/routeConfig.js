@@ -13,6 +13,8 @@ const menuViewRoutes = require('./views/menu');
 const pedidosViewRoutes = require('./views/pedidos');
 const authViewRoutes = require('./views/auth');
 const errorViewRoutes = require('./views/error');
+const adminViewRoutes = require('./views/admin');
+
 
 const {
   isAuthenticated,
@@ -38,6 +40,8 @@ module.exports = (app) => {
   app.use('/gestores', gestorViewRoutes);
   app.use('/menu', menuViewRoutes);
   app.use('/pedidos', pedidosViewRoutes);
+  app.use('/admin', adminViewRoutes);
+
 
   // Rutas de error
   app.use('/', errorViewRoutes);

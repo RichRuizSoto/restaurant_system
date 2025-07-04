@@ -134,17 +134,61 @@ async function obtenerProductos() {
 }
 
 window.cargarProducto = async function (id) {
-  const p = await fetchJSON(`/api/productos/${idRestaurante}/${id}`);
-  const form = document.getElementById('formProducto');
-  form.nombre_producto.value = p.nombre_producto;
-  form.descripcion.value = p.descripcion;
-  form.precio.value = p.precio;
-  form.categoria.value = p.categoria;
-  productoEnEdicion = p.id;
-  document.getElementById('btnGuardar').style.display = 'none';
-  document.getElementById('btnActualizar').style.display = 'inline-block';
-  document.getElementById('btnCancelar').style.display = 'inline-block';
+  try {
+    const p = await fetchJSON(`/api/productos/${idRestaurante}/${id}`);
+    productoEnEdicion = p.id;
+
+    // Llenar campos en el modal
+    document.getElementById('edit_id').value = p.id;
+    document.getElementById('edit_nombre_producto').value = p.nombre_producto;
+    document.getElementById('edit_descripcion').value = p.descripcion || '';
+    document.getElementById('edit_precio').value = p.precio;
+    document.getElementById('edit_categoria').value = p.categoria;
+
+    // Mostrar modal
+    document.getElementById('modalEditarProducto').style.display = 'block';
+  } catch (err) {
+    mostrarMensaje("Error al cargar el producto", 'error');
+  }
 };
+
+document.getElementById('cerrarModal').addEventListener('click', () => {
+  document.getElementById('modalEditarProducto').style.display = 'none';
+});
+
+document.getElementById('formEditarProducto').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const data = {
+    nombre_producto: document.getElementById('edit_nombre_producto').value.trim(),
+    descripcion: document.getElementById('edit_descripcion').value.trim(),
+    precio: parseFloat(document.getElementById('edit_precio').value),
+    categoria: document.getElementById('edit_categoria').value,
+    disponible: 1
+  };
+
+  try {
+    await fetchJSON(`/api/productos/${idRestaurante}/${productoEnEdicion}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    mostrarMensaje('Producto actualizado exitosamente', 'success');
+    document.getElementById('modalEditarProducto').style.display = 'none';
+    productoEnEdicion = null;
+    obtenerProductos();
+  } catch (error) {
+    mostrarMensaje('Error al actualizar el producto', 'error');
+  }
+});
+
+function copiarOpcionesCategorias() {
+  const origen = document.getElementById('categoria');
+  const destino = document.getElementById('edit_categoria');
+  destino.innerHTML = origen.innerHTML;
+}
+
 
 window.toggleDisponibilidad = async function (id, estadoActual) {
   const nuevoEstado = estadoActual ? 0 : 1;

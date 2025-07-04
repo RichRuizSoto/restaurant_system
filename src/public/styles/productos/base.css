@@ -317,3 +317,121 @@ table tr:hover {
   }
 }
 
+/* =================== */
+/* Modal de edición    */
+/* =================== */
+#modalEditarProducto.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1050;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+#modalEditarProducto .modal-content {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: slideUp 0.3s ease-out;
+  box-sizing: border-box;
+}
+
+/* Modal close button */
+.close-modal {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.4rem;
+  color: #999;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.close-modal:hover {
+  color: #333;
+}
+
+/* Modal header */
+#modalEditarProducto h3 {
+  margin-top: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 1.2rem;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+/* Inputs inside modal */
+#formEditarProducto input,
+#formEditarProducto textarea,
+#formEditarProducto select {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+#formEditarProducto .form-group {
+  margin-bottom: 1.2rem;
+}
+
+#formEditarProducto label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+  color: #444;
+}
+
+/* Submit button */
+#formEditarProducto .btn-warning {
+  background-color: #f39c12;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#formEditarProducto .btn-warning:hover {
+  background-color: #d35400;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+/* Responsive modal */
+@media (max-width: 600px) {
+  #modalEditarProducto .modal-content {
+    width: 90%;
+    padding: 1.5rem;
+  }
+}
+
+
+
