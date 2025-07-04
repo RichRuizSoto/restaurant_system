@@ -347,3 +347,14 @@ exports.obtenerPromedioUltimos10 = async (idRestaurante) => {
 
   return promedio;
 };
+
+// 📅 Obtener cantidad de pedidos de hoy para un restaurante
+exports.obtenerCantidadPedidosHoy = async (restId) => {
+  const [rows] = await db.query(`
+    SELECT COUNT(*) AS cantidad
+    FROM pedidos
+    WHERE id_restaurante = ? AND DATE(creado_en) = CURDATE()
+  `, [restId]);
+
+  return rows[0].cantidad;
+};

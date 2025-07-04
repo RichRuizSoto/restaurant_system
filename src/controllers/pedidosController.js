@@ -212,3 +212,18 @@ exports.renderizarVistaPedidos = async (req, res, next) => {
   }
 };
 
+// 📅 Obtener cantidad de pedidos de hoy
+exports.obtenerCantidadPedidosHoy = async (req, res) => {
+  try {
+    const idRestaurante = req.params.restId;
+
+    const cantidad = await pedidosService.obtenerCantidadPedidosHoy(idRestaurante);
+    res.json({ pedidosHoy: cantidad });
+  } catch (error) {
+    console.error('❌ [Error en obtenerCantidadPedidosHoy]', error);
+    res.status(500).json({ mensaje: 'Error al obtener pedidos del día' });
+  }
+};
+
+
+

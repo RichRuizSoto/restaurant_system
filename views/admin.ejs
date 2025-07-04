@@ -45,10 +45,10 @@
 
       <!-- Dashboard KPIs -->
       <section class="dashboard-widgets">
-        <div class="card">
-          <h3>Pedidos Hoy</h3>
-          <p>23</p>
-        </div>
+<div class="card">
+  <h3>Pedidos Hoy</h3>
+  <p id="pedidos-hoy">Cargando...</p>
+</div>
         <div class="card">
           <h3>Ingresos</h3>
           <p>$450.00</p>
@@ -108,5 +108,21 @@
       </footer>
     </main>
   </div>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    const restId = '<%= restId %>'; // Asegúrate de pasar `restId` al renderizar admin.ejs
+
+    try {
+      const res = await fetch(`/api/pedidos/hoy/${restId}`);
+      const data = await res.json();
+      document.getElementById("pedidos-hoy").textContent = data.pedidosHoy;
+    } catch (err) {
+      console.error("Error al obtener pedidos de hoy:", err);
+      document.getElementById("pedidos-hoy").textContent = "Error";
+    }
+  });
+</script>
+
 </body>
 </html>
