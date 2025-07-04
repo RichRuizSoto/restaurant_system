@@ -186,3 +186,15 @@ exports.contarEmpleadosPorRestaurante = async (req, res) => {
     res.status(500).json({ error: 'Error al contar empleados' });
   }
 };
+
+exports.mostrarEmpleadosPorRestaurante = async (req, res) => {
+  const { restauranteId } = req.params;
+
+  try {
+    const empleados = await usuariosService.mostrarEmpleadosPorRestaurante(restauranteId);
+    res.status(200).json(empleados);
+  } catch (err) {
+    console.error('[Backend] Error al obtener empleados por restaurante:', err.message);
+    res.status(500).json({ error: 'Error al obtener empleados' });
+  }
+};

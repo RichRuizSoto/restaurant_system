@@ -14,6 +14,34 @@ function mostrarMensaje(msg, tipo = 'success') {
   setTimeout(() => toast.remove(), 3000);
 }
 
+    async function cargarEmpleados() {
+  if (!idRestauranteEmpleado) return;
+
+  try {
+    const empleados = await fetchJSON(`/api/usuarios/empleados/por-restaurante/${idRestauranteEmpleado}`);
+    const tbody = document.querySelector('#tabla-empleados tbody');
+    tbody.innerHTML = ''; // Limpiar antes de renderizar
+
+    if (empleados.length === 0) {
+      const fila = document.createElement('tr');
+      fila.innerHTML = `<td colspan="2">No hay empleados registrados aún.</td>`;
+      return tbody.appendChild(fila);
+    }
+
+    empleados.forEach(emp => {
+      const fila = document.createElement('tr');
+      fila.innerHTML = `
+        <td>${emp.nombre}</td>
+        <td>${new Date(emp.creado_en).toLocaleString('es-ES')}</td>
+      `;
+      tbody.appendChild(fila);
+    });
+  } catch (error) {
+    mostrarMensaje('Error al cargar empleados', 'error');
+  }
+}
+
+
 let idRestauranteEmpleado = null;
 
 function setIdRestauranteEmpleados(id) {
@@ -49,6 +77,10 @@ async function registrarEventosEmpleado() {
       });
       mostrarMensaje(result.mensaje || 'Empleado agregado exitosamente', 'success');
       form.reset();
+    await cargarEmpleados(); // ✅ recargar la tabla
+
+    
+
     } catch (error) {
       const mensajes = Array.isArray(error.error) ? error.error.join(' | ') : (error.error || 'Error general');
       mostrarMensaje(mensajes, 'error');
@@ -63,6 +95,8 @@ async function registrarEventosEmpleado() {
     const data = await res.json();
     setIdRestauranteEmpleados(data.id);
     registrarEventosEmpleado();
+        await cargarEmpleados(); // ✅ cargar empleados al entrar
+
   } catch {
     mostrarMensaje('Error al obtener restaurante', 'error');
   }

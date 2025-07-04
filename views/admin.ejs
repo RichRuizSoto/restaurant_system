@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Ingresos hoy
     const resIngresos = await fetch(`/api/ganancias/ingresos/hoy/${restId}`);
     const dataIngresos = await resIngresos.json();
-    document.getElementById("ingresos-hoy").textContent = `$${Number(dataIngresos.ingresosHoy).toFixed(2)}`;
+    document.getElementById("ingresos-hoy").textContent = `₡${Number(dataIngresos.ingresosHoy).toFixed(2)}`;
 
     // Productos activos
     const resProductos = await fetch(`/api/productos/activos/count/${restId}`);

@@ -239,3 +239,17 @@ exports.contarEmpleadosPorRestaurante = async (restauranteId) => {
     throw err;
   }
 };
+
+
+exports.mostrarEmpleadosPorRestaurante = async (restauranteId) => {
+  try {
+    const [rows] = await db.query(
+      `SELECT id, nombre, creado_en FROM usuarios WHERE id_restaurante = ? AND rol = 'empleado' ORDER BY creado_en DESC`,
+      [restauranteId]
+    );
+    return rows;
+  } catch (err) {
+    console.error('[Service] Error al obtener empleados:', err.message);
+    throw err;
+  }
+};

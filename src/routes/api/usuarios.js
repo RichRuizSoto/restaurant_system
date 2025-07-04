@@ -14,5 +14,7 @@ router.get('/empleados/:id', usuariosController.mostrarEmpleado);
 router.put('/empleados/:id', usuariosController.editarInformacionEmpleado);
 router.delete('/empleados/:id', usuariosController.eliminarEmpleado);
 router.get('/empleados/count/:restauranteId', usuariosController.contarEmpleadosPorRestaurante);
+router.get('/empleados/por-restaurante/:restauranteId', usuariosController.mostrarEmpleadosPorRestaurante);
+
 
 module.exports = router;
