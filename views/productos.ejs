@@ -2,29 +2,28 @@
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gestión de Productos</title>
 
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/styles/productos/base.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles/productos/base.css" />
 </head>
 
 <body>
-
   <main>
     <section id="mensaje"></section>
 
     <!-- Formulario de productos -->
     <form id="formProducto" aria-labelledby="formProducto">
-      <input type="hidden" name="id_restaurante" id="id_restaurante">
+      <input type="hidden" name="id_restaurante" id="id_restaurante" />
 
       <fieldset class="card-style">
         <legend><i class="fas fa-info-circle"></i> Información del Producto</legend>
 
         <div class="form-group">
           <label for="nombre_producto">Nombre del producto:</label>
-          <input type="text" name="nombre_producto" id="nombre_producto" class="input-control" required>
+          <input type="text" name="nombre_producto" id="nombre_producto" class="input-control" required />
         </div>
 
         <div class="form-group">
@@ -35,7 +34,7 @@
 
         <div class="form-group">
           <label for="precio">Precio:</label>
-          <input type="number" name="precio" id="precio" class="input-control" step="0.01" required>
+          <input type="number" name="precio" id="precio" class="input-control" step="0.01" required />
         </div>
 
         <div class="form-group spacing-below">
@@ -46,7 +45,7 @@
         </div>
 
         <div class="form-group spacing-below">
-          <button type="button" id="btnAgregarCategoria" class="btn-primary" aria-label="Agregar Categoría">
+          <button type="button" id="btnAgregarCategoria" class="btn-primary">
             <i class="fas fa-plus-circle"></i> Agregar Categoría
           </button>
         </div>
@@ -55,7 +54,7 @@
           <h3>Agregar Nueva Categoría</h3>
           <div class="form-group">
             <label for="nombre_categoria">Nombre de la categoría:</label>
-            <input type="text" id="nombre_categoria" name="nombre_categoria" class="input-control">
+            <input type="text" id="nombre_categoria" name="nombre_categoria" class="input-control" />
           </div>
           <div class="form-actions">
             <button type="button" id="btnGuardarCategoria" class="btn-primary">Guardar</button>
@@ -79,12 +78,12 @@
 
     <section id="buscador-container">
       <label for="buscador">Buscar producto:</label>
-      <input type="text" id="buscador" placeholder="Buscar producto..." aria-label="Buscar producto">
+      <input type="text" id="buscador" placeholder="Buscar producto..." />
     </section>
 
     <section id="productos-container">
       <h2>Lista de Productos</h2>
-      <table id="tablaProductos" aria-labelledby="productos-container">
+      <table id="tablaProductos">
         <thead>
           <tr>
             <th>ID</th>
@@ -100,71 +99,39 @@
       </table>
     </section>
 
-    <!-- Formulario para agregar empleados -->
-    <form id="formEmpleado" aria-labelledby="formEmpleado" style="margin-top: 2rem;">
-      <fieldset class="card-style">
-        <legend><i class="fas fa-user-plus"></i> Agregar Empleado</legend>
-
-        <input type="hidden" name="rol" value="empleado">
-
-        <div class="form-group">
-          <label for="nombre_empleado">Nombre del Empleado:</label>
-          <input type="text" name="nombre" id="nombre_empleado" class="input-control" required>
-        </div>
-
-        <div class="form-group">
-          <label for="clave_empleado">Clave (contraseña):</label>
-          <input type="password" name="clave" id="clave_empleado" class="input-control" required>
-        </div>
-
-        <div class="form-actions">
-          <button type="submit" id="btnGuardarEmpleado" class="btn-primary">
-            <i class="fas fa-user-plus"></i> Agregar Empleado
-          </button>
-        </div>
-      </fieldset>
-    </form>
+    <!-- Modal editar producto -->
+    <div id="modalEditarProducto" class="modal" style="display: none;">
+      <div class="modal-content">
+        <span class="close-modal" id="cerrarModal">&times;</span>
+        <h3>Editar Producto</h3>
+        <form id="formEditarProducto">
+          <input type="hidden" name="id" id="edit_id" />
+          <div class="form-group">
+            <label for="edit_nombre_producto">Nombre del producto:</label>
+            <input type="text" id="edit_nombre_producto" required />
+          </div>
+          <div class="form-group">
+            <label for="edit_descripcion">Descripción:</label>
+            <textarea id="edit_descripcion"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="edit_precio">Precio:</label>
+            <input type="number" id="edit_precio" step="0.01" required />
+          </div>
+          <div class="form-group">
+            <label for="edit_categoria">Categoría:</label>
+            <select id="edit_categoria" required></select>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn-warning">Actualizar</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </main>
 
-<div id="modalEditarProducto" class="modal" style="display: none;">
-  <div class="modal-content">
-    <span class="close-modal" id="cerrarModal">&times;</span>
-    <h3>Editar Producto</h3>
-    <form id="formEditarProducto">
-      <input type="hidden" name="id" id="edit_id">
-
-      <div class="form-group">
-        <label for="edit_nombre_producto">Nombre del producto:</label>
-        <input type="text" id="edit_nombre_producto" required>
-      </div>
-
-      <div class="form-group">
-        <label for="edit_descripcion">Descripción:</label>
-        <textarea id="edit_descripcion"></textarea>
-      </div>
-
-      <div class="form-group">
-        <label for="edit_precio">Precio:</label>
-        <input type="number" id="edit_precio" step="0.01" required>
-      </div>
-
-      <div class="form-group">
-        <label for="edit_categoria">Categoría:</label>
-        <select id="edit_categoria" required>
-          <!-- Se llenará dinámicamente -->
-        </select>
-      </div>
-
-      <div class="form-actions">
-        <button type="submit" class="btn-warning">Actualizar</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-
   <!-- Contenedor de notificaciones -->
-  <div id="toast-container"></div>
+  <div id="toast-container" aria-live="polite" aria-atomic="true" style="position: fixed; top: 1rem; right: 1rem; z-index: 9999;"></div>
 
   <!-- Script principal -->
   <script type="module" src="/scripts/productos.js"></script>
