@@ -75,7 +75,7 @@
               <th>Cliente</th>
               <th>Total</th>
               <th>Estado</th>
-              <th>Fecha</th>
+              <th>Hora de Solicitud</th>
             </tr>
           </thead>
 <tbody id="tabla-actividad-reciente">
@@ -128,14 +128,18 @@ if (tabla && pedido) {
   };
 
   const estadoClase = estadoMap[pedido.estado] || "pending";
-  const fechaPedido = new Date(pedido.creado_en).toLocaleDateString("es-ES");
+const horaPedido = new Date(pedido.creado_en).toLocaleTimeString("es-ES", {
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: false
+});
 
   nuevaFila.innerHTML = `
     <td>#${pedido.numero_orden}</td>
     <td>${pedido.nombre || "Cliente"}</td>
     <td>₡${parseFloat(pedido.total).toFixed(2)}</td>
     <td><span class="badge ${estadoClase}">${pedido.estado.charAt(0).toUpperCase() + pedido.estado.slice(1)}</span></td>
-    <td>${fechaPedido}</td>
+<td>${horaPedido}</td>
   `;
 
   // Insertar arriba de la tabla (últimos primero)
@@ -188,14 +192,18 @@ try {
       cancelado: "cancelled"
     };
     const estadoClase = estadoMap[pedido.estado] || "pending";
-    const fechaPedido = new Date(pedido.creado_en).toLocaleDateString("es-ES");
+const horaPedido = new Date(pedido.creado_en).toLocaleTimeString("es-ES", {
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: false
+});
 
     fila.innerHTML = `
       <td>#${pedido.numero_orden}</td>
       <td>${pedido.nombre || "Cliente"}</td>
       <td>₡${parseFloat(pedido.total).toFixed(2)}</td>
       <td><span class="badge ${estadoClase}">${pedido.estado.charAt(0).toUpperCase() + pedido.estado.slice(1)}</span></td>
-      <td>${fechaPedido}</td>
+<td>${horaPedido}</td>
     `;
     tablaActividad.appendChild(fila);
   });
