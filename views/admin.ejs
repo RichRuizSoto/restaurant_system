@@ -124,5 +124,31 @@
   });
 </script>
 
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+  const restauranteId = '<%= restId %>'; // Asegúrate de que `restId` se pasa desde el servidor al renderizar `admin.ejs`
+
+  socket.emit('unirseARestaurante', restauranteId);
+
+  socket.on('nuevoPedido', (pedido) => {
+    console.log('📦 Nuevo pedido recibido:', pedido);
+
+    // Actualizar contador de pedidos hoy
+    const contador = document.getElementById("pedidos-hoy");
+
+    if (contador && !isNaN(parseInt(contador.textContent))) {
+      contador.textContent = parseInt(contador.textContent) + 1;
+    } else {
+      // Si es la primera vez o está mal cargado
+      fetch(`/api/pedidos/hoy/${restauranteId}`)
+        .then(res => res.json())
+        .then(data => contador.textContent = data.pedidosHoy)
+        .catch(err => contador.textContent = "Error");
+    }
+  });
+</script>
+
+
 </body>
 </html>
