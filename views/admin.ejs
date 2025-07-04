@@ -54,10 +54,11 @@
   <h3>Ingresos</h3>
   <p id="ingresos-hoy">$0.00</p>
 </div>
-        <div class="card">
-          <h3>Productos Activos</h3>
-          <p>48</p>
-        </div>
+<div class="card">
+  <h3>Productos Activos</h3>
+<p id="productos-activos">Cargando...</p>
+</div>
+
         <div class="card">
           <h3>Clientes Registrados</h3>
           <p>134</p>
@@ -110,20 +111,6 @@
     </main>
   </div>
 
-  <script>
-  document.addEventListener("DOMContentLoaded", async () => {
-    const restId = '<%= restId %>'; // Asegúrate de pasar `restId` al renderizar admin.ejs
-
-    try {
-      const res = await fetch(`/api/pedidos/hoy/${restId}`);
-      const data = await res.json();
-      document.getElementById("pedidos-hoy").textContent = data.pedidosHoy;
-    } catch (err) {
-      console.error("Error al obtener pedidos de hoy:", err);
-      document.getElementById("pedidos-hoy").textContent = "Error";
-    }
-  });
-</script>
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
@@ -148,26 +135,33 @@
         .catch(err => contador.textContent = "Error");
     }
   });
-  document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const restId = '<%= restId %>';
 
   try {
-    // Actualizar pedidos hoy (ya tienes este)
+    // Pedidos hoy
     const resPedidos = await fetch(`/api/pedidos/hoy/${restId}`);
     const dataPedidos = await resPedidos.json();
     document.getElementById("pedidos-hoy").textContent = dataPedidos.pedidosHoy;
 
-    // Obtener ingresos hoy
+    // Ingresos hoy
     const resIngresos = await fetch(`/api/ganancias/ingresos/hoy/${restId}`);
     const dataIngresos = await resIngresos.json();
     document.getElementById("ingresos-hoy").textContent = `$${Number(dataIngresos.ingresosHoy).toFixed(2)}`;
 
+    // Productos activos
+    const resProductos = await fetch(`/api/productos/activos/count/${restId}`);
+    const dataProductos = await resProductos.json();
+    document.getElementById("productos-activos").textContent = dataProductos.productosActivos;
+
   } catch (err) {
-    console.error("Error al obtener datos:", err);
+    console.error("❌ Error al obtener datos:", err);
     document.getElementById("pedidos-hoy").textContent = "Error";
     document.getElementById("ingresos-hoy").textContent = "Error";
+    document.getElementById("productos-activos").textContent = "Error";
   }
 });
+
 
 </script>
 

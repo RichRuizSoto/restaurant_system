@@ -128,3 +128,17 @@ exports.obtenerProductosPorRestaurante = async (req, res, next) => {
     res.status(500).json({ error: 'Error al obtener productos' });
   }
 };
+
+// ✅ Contar productos activos
+exports.contarProductosActivos = async (req, res, next) => {
+  const { idRestaurante } = req.params;
+
+  try {
+    const productos = await productosService.obtenerProductosPorRestaurante(idRestaurante);
+    const activos = productos.filter(p => p.disponible === 1).length;
+    res.json({ productosActivos: activos });
+  } catch (error) {
+    console.error('❌ Error al contar productos activos:', error);
+    res.status(500).json({ error: 'Error al contar productos activos' });
+  }
+};

@@ -13,5 +13,7 @@ router.post('/agregar', validarProductoCreacion, validarExistenciaRestaurante, p
 router.get('/:idRestaurante', productosController.obtenerProductosPorRestaurante);
 router.get('/:restId/:id', validarExistenciaProducto, productosController.obtenerProductoPorId);
 router.put('/:restId/:id', validarDatosActualizacion, validarDisponibilidad, validarExistenciaProducto, productosController.actualizarProducto);
+router.get('/activos/count/:idRestaurante', productosController.contarProductosActivos);
+
 
 module.exports = router;
