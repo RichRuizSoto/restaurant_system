@@ -112,7 +112,7 @@ body {
   background-color: white;
   padding: 1.2rem;
   border-radius: 10px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
   text-align: center;
 }
 
@@ -140,7 +140,7 @@ table {
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
 table thead {
@@ -190,4 +190,20 @@ table tbody tr:nth-child(even) {
   text-align: center;
   font-size: 0.85rem;
   color: #94a3b8;
+}
+
+.card {
+  transition: all 0.3s ease;
+}
+
+.card.resaltar {
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+  z-index: 2;
+}
+
+
+.resaltar {
+  background-color: rgba(56, 189, 248, 0.1) !important;
+  transition: all 0.3s ease;
+  z-index: 1;
 }

@@ -6,7 +6,7 @@
   <title>Panel Administrativo</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="/styles/system/admin.css" />
+  <link rel="stylesheet" href="/styles/admin/styles.css" />
 </head>
 <body>
   <div class="admin-container">
@@ -14,29 +14,27 @@
     <aside class="sidebar">
       <h2 class="logo">🍽️ Mi Restaurante</h2>
       <nav>
-<ul>
-  <li><a href="/menu/<%= slug %>"><i class='bx bx-book-open'></i> Menú</a></li>
-  <li><a href="/pedidos/<%= slug %>"><i class='bx bx-receipt'></i> Pedidos</a></li>
-  <li><a href="/productos/<%= slug %>"><i class='bx bx-shopping-bag'></i> Productos</a></li>
-  <li><a href="/crear-empleado/<%= slug %>"><i class='bx bx-user-plus'></i> Crear Perfil</a></li>
-  <li><a><i class='bx bx-bar-chart-alt-2'></i> Reportes</a></li>
-  <li><a><i class='bx bx-dollar-circle'></i> Ventas</a></li>
-  <li><a><i class='bx bx-cog'></i> Configuración</a></li>
-</ul>
-
+        <ul>
+          <li><a href="/menu/<%= slug %>"><i class='bx bx-book-open'></i> Menú</a></li>
+          <li><a href="/pedidos/<%= slug %>"><i class='bx bx-receipt'></i> Pedidos</a></li>
+          <li><a href="/productos/<%= slug %>"><i class='bx bx-shopping-bag'></i> Productos</a></li>
+          <li><a href="/crear-empleado/<%= slug %>"><i class='bx bx-user-plus'></i> Crear Perfil</a></li>
+          <li><a><i class='bx bx-bar-chart-alt-2'></i> Reportes</a></li>
+          <li><a><i class='bx bx-dollar-circle'></i> Ventas</a></li>
+          <li><a><i class='bx bx-cog'></i> Configuración</a></li>
+        </ul>
       </nav>
     </aside>
 
     <!-- Main panel -->
     <main class="main-panel">
-      <!-- Header -->
       <header class="main-header">
         <div>
           <h1>Panel Administrativo</h1>
           <p>Bienvenido, <strong>Administrador</strong></p>
         </div>
         <div class="header-right">
-          <input type="text" placeholder="Buscar..." />
+          <input type="text" id="buscador-panel" placeholder="Buscar..." />
           <div class="user-menu">
             <i class='bx bx-user-circle'></i>
             <a href="/logout">Cerrar sesión</a>
@@ -44,28 +42,25 @@
         </div>
       </header>
 
-      <!-- Dashboard KPIs -->
       <section class="dashboard-widgets">
-<div class="card">
-  <h3>Pedidos Hoy</h3>
-  <p id="pedidos-hoy"></p>
-</div>
-<div class="card">
-  <h3>Ingresos</h3>
-  <p id="ingresos-hoy"></p>
-</div>
-<div class="card">
-  <h3>Productos Activos</h3>
-<p id="productos-activos"></p>
-</div>
-<div class="card">
-  <h3>Perfiles Registrados</h3>
-  <p id="perfiles-registrados"></p>
-</div>
-
+        <div class="card">
+          <h3>Pedidos Hoy</h3>
+          <p id="pedidos-hoy"></p>
+        </div>
+        <div class="card">
+          <h3>Ingresos</h3>
+          <p id="ingresos-hoy"></p>
+        </div>
+        <div class="card">
+          <h3>Productos Activos</h3>
+          <p id="productos-activos"></p>
+        </div>
+        <div class="card">
+          <h3>Perfiles Registrados</h3>
+          <p id="perfiles-registrados"></p>
+        </div>
       </section>
 
-      <!-- Actividad reciente -->
       <section class="recent-activity">
         <h2>Últimos pedidos</h2>
         <table>
@@ -78,154 +73,24 @@
               <th>Hora de Solicitud</th>
             </tr>
           </thead>
-<tbody id="tabla-actividad-reciente">
-  <!-- Aquí se insertarán dinámicamente los nuevos pedidos -->
-</tbody>
-
+          <tbody id="tabla-actividad-reciente">
+            <!-- Se insertan dinámicamente -->
+          </tbody>
         </table>
       </section>
 
-      <!-- Footer -->
       <footer class="footer">
         <p>&copy; 2025 Sistema de Restaurantes. Todos los derechos reservados.</p>
       </footer>
     </main>
   </div>
 
-
-<script src="/socket.io/socket.io.js"></script>
-<script>
-  const socket = io();
-  const restauranteId = '<%= restId %>'; // Asegúrate de que `restId` se pasa desde el servidor al renderizar `admin.ejs`
-
-  socket.emit('unirseARestaurante', restauranteId);
-
-  socket.on('nuevoPedido', (pedido) => {
-    console.log('📦 Nuevo pedido recibido:', pedido);
-
-    // Actualizar contador de pedidos hoy
-    const contador = document.getElementById("pedidos-hoy");
-
-    if (contador && !isNaN(parseInt(contador.textContent))) {
-      contador.textContent = parseInt(contador.textContent) + 1;
-    } else {
-      // Si es la primera vez o está mal cargado
-      fetch(`/api/pedidos/hoy/${restauranteId}`)
-        .then(res => res.json())
-        .then(data => contador.textContent = data.pedidosHoy)
-        .catch(err => contador.textContent = "Error");
-    }
-
-    const tabla = document.getElementById("tabla-actividad-reciente");
-if (tabla && pedido) {
-  const nuevaFila = document.createElement("tr");
-
-  const estadoMap = {
-    solicitado: "pending",
-    listo: "preparing",
-    pagado: "delivered",
-    cancelado: "cancelled"
-  };
-
-  const estadoClase = estadoMap[pedido.estado] || "pending";
-const horaPedido = new Date(pedido.creado_en).toLocaleTimeString("es-ES", {
-  hour: '2-digit',
-  minute: '2-digit',
-  hour12: false
-});
-
-  nuevaFila.innerHTML = `
-    <td>#${pedido.numero_orden}</td>
-    <td>${pedido.nombre || "Cliente"}</td>
-    <td>₡${parseFloat(pedido.total).toFixed(2)}</td>
-    <td><span class="badge ${estadoClase}">${pedido.estado.charAt(0).toUpperCase() + pedido.estado.slice(1)}</span></td>
-<td>${horaPedido}</td>
-  `;
-
-  // Insertar arriba de la tabla (últimos primero)
-  tabla.prepend(nuevaFila);
-
-  // Limitar a los 10 pedidos más recientes
-  if (tabla.children.length > 10) {
-    tabla.removeChild(tabla.lastChild);
-  }
-}
-
-  });
-document.addEventListener("DOMContentLoaded", async () => {
-  const restId = '<%= restId %>';
-
-  try {
-    // Pedidos hoy
-    const resPedidos = await fetch(`/api/pedidos/hoy/${restId}`);
-    const dataPedidos = await resPedidos.json();
-    document.getElementById("pedidos-hoy").textContent = dataPedidos.pedidosHoy;
-
-    // Ingresos hoy
-    const resIngresos = await fetch(`/api/ganancias/ingresos/hoy/${restId}`);
-    const dataIngresos = await resIngresos.json();
-    document.getElementById("ingresos-hoy").textContent = `₡${Number(dataIngresos.ingresosHoy).toFixed(2)}`;
-
-    // Productos activos
-    const resProductos = await fetch(`/api/productos/activos/count/${restId}`);
-    const dataProductos = await resProductos.json();
-    document.getElementById("productos-activos").textContent = dataProductos.productosActivos;
-
-    // Perfiles registrados (empleados)
-const resEmpleados = await fetch(`/api/usuarios/empleados/count/${restId}`);
-const dataEmpleados = await resEmpleados.json();
-document.getElementById("perfiles-registrados").textContent = dataEmpleados.totalEmpleados;
-
-// Últimos pedidos
-const tablaActividad = document.getElementById("tabla-actividad-reciente");
-
-try {
-  const resActividad = await fetch(`/api/pedidos/ultimos/${restId}`);
-  const ultimos = await resActividad.json();
-
-  ultimos.forEach(pedido => {
-    const fila = document.createElement("tr");
-    const estadoMap = {
-      solicitado: "pending",
-      listo: "preparing",
-      pagado: "delivered",
-      cancelado: "cancelled"
-    };
-    const estadoClase = estadoMap[pedido.estado] || "pending";
-const horaPedido = new Date(pedido.creado_en).toLocaleTimeString("es-ES", {
-  hour: '2-digit',
-  minute: '2-digit',
-  hour12: false
-});
-
-    fila.innerHTML = `
-      <td>#${pedido.numero_orden}</td>
-      <td>${pedido.nombre || "Cliente"}</td>
-      <td>₡${parseFloat(pedido.total).toFixed(2)}</td>
-      <td><span class="badge ${estadoClase}">${pedido.estado.charAt(0).toUpperCase() + pedido.estado.slice(1)}</span></td>
-<td>${horaPedido}</td>
-    `;
-    tablaActividad.appendChild(fila);
-  });
-} catch (err) {
-  console.error("Error al cargar últimos pedidos", err);
-}
-
-
-
-  } catch (err) {
-    console.error("❌ Error al obtener datos:", err);
-    document.getElementById("pedidos-hoy").textContent = "Error";
-    document.getElementById("ingresos-hoy").textContent = "Error";
-    document.getElementById("productos-activos").textContent = "Error";
-    document.getElementById("perfiles-registrados").textContent = "Error";
-
-  }
-});
-
-
-</script>
-
-
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const restId = "<%= restId %>"; // Se pasa desde el servidor a JS
+  </script>
+  <script src="/scripts/admin.js"></script>
 </body>
 </html>
+
+
