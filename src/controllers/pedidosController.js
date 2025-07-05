@@ -165,7 +165,6 @@ exports.actualizarEstadoPedido = async (req, res, next) => {
     //Uso de WebSocket para segun estado
     if (nuevoEstado === 'listo') {
       io.to(`sala_${restauranteId}_${id}`).emit('nuevoEstadoPedido', 'listo');
-      console.log('aqui');
     } 
     if (nuevoEstado === 'pagado') {
        const ingresosHoy = await gananciasService.obtenerIngresosHoy(restauranteId);
