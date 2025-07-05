@@ -61,10 +61,18 @@ exports.obtenerProductoPorId = async (req, res, next) => {
 // ✏️ Actualizar un producto
 exports.actualizarProducto = async (req, res, next) => {
   const { id } = req.params;
+  const { restId } = req.params;
   const data = req.body;
 
   try {
     const actualizado = await productosService.actualizarProducto(id, data);
+    const productosActivos = await productosService.obtenerProductosActivos(restId);
+
+    const cantidadProductosAct = productosActivos.length;
+
+    const io = req.app.get('io');
+    io.to(`restaurante_${restId}`).emit('productosActivos', cantidadProductosAct);
+
     res.json({
       mensaje: 'Producto actualizado',
       producto: actualizado

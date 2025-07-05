@@ -50,6 +50,12 @@ socket.on('ingresosHoy', (ingresos) => {
     ingresosHoy.textContent = '₡' + ingresos;
 });
 
+socket.on('productosActivos', (cantidadProductosAct) => {
+  const estado = document.getElementById("productos-activos");
+  estado.textContent = cantidadProductosAct;
+});
+
+
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     //Renderizado KPIs e Info
