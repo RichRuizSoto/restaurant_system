@@ -156,14 +156,14 @@ function getBotonesParaEstado(id, estado) {
 
   if (estado === 'solicitado') {
     return `
-      <button class="button" onclick="actualizarEstadoPedido(${id}, 'listo')">Marcar como listo</button>
-      <button class="button cancel-button" onclick="actualizarEstadoPedido(${id}, 'cancelado')">Cancelar pedido</button>
+      <button class="button" onclick="actualizarEstadoPedido(${id}, 'listo', restauranteId)">Marcar como listo</button>
+      <button class="button cancel-button" onclick="actualizarEstadoPedido(${id}, 'cancelado', restauranteId)">Cancelar pedido</button>
       <button class="button info-button" onclick="mostrarInformacionPedido(${id})"><i class="fas fa-info-circle"></i> Información</button>
       `;
   } else if (estado === 'listo') {
     return `
-      <button class="button" onclick="actualizarEstadoPedido(${id}, 'pagado')">Marcar como pagado</button>
-      <button class="button cancel-button" onclick="actualizarEstadoPedido(${id}, 'cancelado')">Cancelar pedido</button>
+      <button class="button" onclick="actualizarEstadoPedido(${id}, 'pagado', restauranteId)">Marcar como pagado</button>
+      <button class="button cancel-button" onclick="actualizarEstadoPedido(${id}, 'cancelado', restauranteId)">Cancelar pedido</button>
       <button class="button info-button" onclick="mostrarInformacionPedido(${id})"><i class="fas fa-info-circle"></i> Información</button>
     `;
   } else {
@@ -231,11 +231,11 @@ function cerrarModal() {
 
 
 // 🔁 Actualizar estado de pedido
-function actualizarEstadoPedido(idPedido, nuevoEstado) {
+function actualizarEstadoPedido(idPedido, nuevoEstado, restauranteId) {
   fetch(`/api/pedidos/${idPedido}/estado`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ nuevoEstado })
+    body: JSON.stringify({ nuevoEstado, restauranteId })
   })
     .then(res => res.json())
     .then(data => {

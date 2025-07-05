@@ -45,8 +45,14 @@ socket.on('nuevoPedido', (pedido) => {
   }
 });
 
+socket.on('ingresosHoy', (ingresos) => {
+  const ingresosHoy = document.getElementById("ingresos-hoy");
+    ingresosHoy.textContent = '₡' + ingresos;
+});
+
 document.addEventListener("DOMContentLoaded", async () => {
   try {
+    //Renderizado KPIs e Info
     const resPedidos = await fetch(`/api/pedidos/hoy/${restId}`);
     const dataPedidos = await resPedidos.json();
     document.getElementById("pedidos-hoy").textContent = dataPedidos.pedidosHoy;
@@ -63,6 +69,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const dataEmpleados = await resEmpleados.json();
     document.getElementById("perfiles-registrados").textContent = dataEmpleados.totalEmpleados;
 
+    //Renderizado Tabla de ultimos pedidos
     const tablaActividad = document.getElementById("tabla-actividad-reciente");
     const resActividad = await fetch(`/api/pedidos/ultimos/${restId}`);
     const ultimos = await resActividad.json();
@@ -91,44 +98,40 @@ document.addEventListener("DOMContentLoaded", async () => {
       `;
       tablaActividad.appendChild(fila);
     });
+
+    //Renderizado atravez del buscador
+    const buscador = document.getElementById('buscador-panel');
+    buscador.addEventListener('input', () => {
+      const valor = buscador.value.toLowerCase().trim();
+
+      document.querySelectorAll('.resaltar, .ocultar').forEach(el => {
+        el.classList.remove('resaltar', 'ocultar');
+      });
+      if (valor === '') return;
+
+      const elementos = document.querySelectorAll('main *:not(script):not(style):not(input):not(.sidebar *)');
+      elementos.forEach(el => {
+        if (!el.children.length && el.textContent.trim()) {
+          const texto = el.textContent.toLowerCase();
+
+          if (texto.includes(valor)) {
+            const contenedor = el.closest('.card, tr, section, article, div');
+            if (contenedor) contenedor.classList.add('resaltar');
+          }
+        }
+      });
+
+      document.querySelectorAll('.card, tr, section, article, div').forEach(contenedor => {
+        if (!contenedor.classList.contains('resaltar')) {
+          contenedor.classList.add('ocultar');
+        }
+      });
+    });
+
   } catch (err) {
     console.error("❌ Error al obtener datos:", err);
     ["pedidos-hoy", "ingresos-hoy", "productos-activos", "perfiles-registrados"].forEach(id => {
       document.getElementById(id).textContent = "Error";
     });
   }
-});
-
-// Buscador
-document.addEventListener('DOMContentLoaded', () => {
-  const buscador = document.getElementById('buscador-panel');
-
-  buscador.addEventListener('input', () => {
-    const valor = buscador.value.toLowerCase().trim();
-
-    document.querySelectorAll('.resaltar, .ocultar').forEach(el => {
-      el.classList.remove('resaltar', 'ocultar');
-    });
-
-    if (valor === '') return;
-
-    const elementos = document.querySelectorAll('main *:not(script):not(style):not(input):not(.sidebar *)');
-
-    elementos.forEach(el => {
-      if (!el.children.length && el.textContent.trim()) {
-        const texto = el.textContent.toLowerCase();
-
-        if (texto.includes(valor)) {
-          const contenedor = el.closest('.card, tr, section, article, div');
-          if (contenedor) contenedor.classList.add('resaltar');
-        }
-      }
-    });
-
-    document.querySelectorAll('.card, tr, section, article, div').forEach(contenedor => {
-      if (!contenedor.classList.contains('resaltar')) {
-        contenedor.classList.add('ocultar');
-      }
-    });
-  });
 });

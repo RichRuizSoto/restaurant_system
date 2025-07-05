@@ -1,6 +1,7 @@
 const pedidosService = require('../services/pedidosService');
 const restaurantesService = require('../services/restaurantesService');
 const socket = require('../utils/socket'); // Asegúrate de importar el socket
+const gananciasService = require('../services/gananciasService');
 
 const ESTADOS_VALIDOS = ['solicitado', 'listo', 'pagado', 'cancelado'];
 const TIPOS_SERVICIO_VALIDOS = ['restaurante', 'delivery', 'pickup'];
@@ -129,7 +130,10 @@ exports.obtenerPedidosPorEstado = async (req, res, next) => {
 // 🔁 Actualizar estado de pedido
 exports.actualizarEstadoPedido = async (req, res, next) => {
   const { id } = req.params;
-  const { nuevoEstado } = req.body;
+  const { nuevoEstado} = req.body;
+  const { restauranteId } = req.body;
+  const io = req.app.get('io');
+
 
   try {
     if (!ESTADOS_VALIDOS.includes(nuevoEstado)) {
@@ -139,12 +143,10 @@ exports.actualizarEstadoPedido = async (req, res, next) => {
     const pedidoActualizado = await pedidosService.cambiarEstadoPedido(id, nuevoEstado);
     if (!pedidoActualizado) return res.status(404).json({ mensaje: 'Pedido no encontrado' });
 
-    const io = req.app.get('io');
 
     // Obtener productos con nombre para el evento WebSocket
     const productos = await pedidosService.obtenerProductosPorPedido(pedidoActualizado.id);
 
-    // Emitir el evento de estado actualizado (correcto)
     io.to(`restaurante_${pedidoActualizado.id_restaurante}`).emit('estadoPedidoActualizado', {
       idPedido: pedidoActualizado.id,
       nuevoEstado: pedidoActualizado.estado,
@@ -160,8 +162,16 @@ exports.actualizarEstadoPedido = async (req, res, next) => {
       }))
     });
 
-
-
+    //Uso de WebSocket para segun estado
+    if (nuevoEstado === 'listo') {
+      io.to(`sala_${restauranteId}_${id}`).emit('nuevoEstadoPedido', 'listo');
+      console.log('aqui');
+    } 
+    if (nuevoEstado === 'pagado') {
+       const ingresosHoy = await gananciasService.obtenerIngresosHoy(restauranteId);
+      io.to(`restaurante_${restauranteId}`).emit('ingresosHoy', ingresosHoy);
+    }
+    
     res.json({
       mensaje: `Pedido actualizado a "${nuevoEstado}"`,
       pedido: pedidoActualizado

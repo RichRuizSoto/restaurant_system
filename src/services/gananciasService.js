@@ -1,17 +1,14 @@
 const db = require('../core/config/database');
 
-const obtenerGananciasPorDia = async (id_restaurante) => {
-  const [rows] = await db.execute(`
-    SELECT fecha_creado, SUM(total) AS total_diario
-    FROM pedidos
-    WHERE estado = 'pagado' AND id_restaurante = ?
-    GROUP BY fecha_creado
-    ORDER BY fecha_creado ASC
-  `, [id_restaurante]);
+exports.obtenerIngresosHoy = async (idRestaurante) => {
+  const query = `
+    SELECT SUM(total) AS ingresosHoy 
+    FROM pedidos 
+    WHERE id_restaurante = ? 
+      AND fecha_creado = CURDATE() 
+      AND estado = 'pagado'
+  `;
 
-  return rows;
-};
-
-module.exports = {
-  obtenerGananciasPorDia,
+  const [rows] = await db.query(query, [idRestaurante]);
+  return rows[0].ingresosHoy || 0;
 };

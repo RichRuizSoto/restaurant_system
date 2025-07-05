@@ -261,9 +261,6 @@ exports.cambiarEstadoPedido = async (idPedido, nuevoEstado) => {
           hora_listo = NOW(),
           duracion_solicitado_listo = TIMESTAMPDIFF(MINUTE, hora_solicitado, NOW())
         WHERE id_pedido = ?`, [idPedido]);
-
-      const io = socket.getSocket();
-      io.to(`sala_${restauranteId}_${idPedido}`).emit('nuevoEstadoPedido', 'listo');
     }
 
     if (nuevoEstado === 'pagado') {
@@ -369,4 +366,19 @@ exports.obtenerUltimosPedidos = async (idRestaurante) => {
   `, [idRestaurante]);
 
   return result;
+};
+
+exports.obtenerIngresosHoy = async (idRestaurante) => {
+  const [result] = await db.query(`
+    SELECT 
+      SUM(total) AS ingresos_hoy
+    FROM 
+      pedidos
+    WHERE 
+      id_restaurante = ? 
+      AND estado = 'pagado'
+      AND DATE(creado_en) = CURDATE()
+  `, [idRestaurante]);
+
+  return result[0]; // Retorna un objeto con la propiedad ingresos_hoy
 };
