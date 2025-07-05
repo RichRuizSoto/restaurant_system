@@ -227,29 +227,37 @@ exports.existeUsuario = async (nombre) => {
   };
   
 
-exports.contarEmpleadosPorRestaurante = async (restauranteId) => {
+exports.contarPerfilesPorRestaurante = async (restauranteId) => {
   try {
     const [rows] = await db.query(
-      `SELECT COUNT(*) AS total FROM usuarios WHERE id_restaurante = ? AND rol = 'empleado'`,
+      `SELECT COUNT(*) AS total 
+       FROM usuarios 
+       WHERE id_restaurante = ? AND rol IN ('empleado', 'admin')`,
       [restauranteId]
     );
+
     return rows[0].total;
   } catch (err) {
-    console.error('[Service] Error al contar empleados:', err.message);
+    console.error('[Service] Error al contar perfiles:', err.message);
     throw err;
   }
 };
 
 
-exports.mostrarEmpleadosPorRestaurante = async (restauranteId) => {
+
+exports.mostrarPerfilesPorRestaurante = async (restauranteId) => {
   try {
     const [rows] = await db.query(
-      `SELECT id, nombre, creado_en FROM usuarios WHERE id_restaurante = ? AND rol = 'empleado' ORDER BY creado_en DESC`,
+      `SELECT id, nombre, creado_en, rol 
+       FROM usuarios 
+       WHERE id_restaurante = ? 
+         AND rol IN ('empleado', 'admin') 
+       ORDER BY creado_en DESC`,
       [restauranteId]
     );
     return rows;
   } catch (err) {
-    console.error('[Service] Error al obtener empleados:', err.message);
+    console.error('[Service] Error al obtener perfiles:', err.message);
     throw err;
   }
 };

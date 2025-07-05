@@ -175,11 +175,11 @@ exports.eliminarEmpleado = async (req, res) => {
   }
 };
 
-exports.contarEmpleadosPorRestaurante = async (req, res) => {
+exports.contarPerfilesPorRestaurante = async (req, res) => {
   const { restauranteId } = req.params;
 
   try {
-    const count = await usuariosService.contarEmpleadosPorRestaurante(restauranteId);
+    const count = await usuariosService.contarPerfilesPorRestaurante(restauranteId);
     res.status(200).json({ totalEmpleados: count });
   } catch (err) {
     console.error('[Backend] Error al contar empleados:', err.message);
@@ -187,11 +187,11 @@ exports.contarEmpleadosPorRestaurante = async (req, res) => {
   }
 };
 
-exports.mostrarEmpleadosPorRestaurante = async (req, res) => {
+exports.mostrarPerfilesPorRestaurante = async (req, res) => {
   const { restauranteId } = req.params;
 
   try {
-    const empleados = await usuariosService.mostrarEmpleadosPorRestaurante(restauranteId);
+    const empleados = await usuariosService.mostrarPerfilesPorRestaurante(restauranteId);
     res.status(200).json(empleados);
   } catch (err) {
     console.error('[Backend] Error al obtener empleados por restaurante:', err.message);

@@ -14,7 +14,7 @@ function mostrarMensaje(msg, tipo = 'success') {
   setTimeout(() => toast.remove(), 3000);
 }
 
-    async function cargarEmpleados() {
+async function cargarEmpleados() {
   if (!idRestauranteEmpleado) return;
 
   try {
@@ -33,6 +33,7 @@ function mostrarMensaje(msg, tipo = 'success') {
       fila.innerHTML = `
         <td>${emp.nombre}</td>
         <td>${new Date(emp.creado_en).toLocaleString('es-ES')}</td>
+            <td>${emp.rol}</td> <!-- Agregado -->
       `;
       tbody.appendChild(fila);
     });
@@ -77,9 +78,9 @@ async function registrarEventosEmpleado() {
       });
       mostrarMensaje(result.mensaje || 'Empleado agregado exitosamente', 'success');
       form.reset();
-    await cargarEmpleados(); // ✅ recargar la tabla
+      await cargarEmpleados(); // ✅ recargar la tabla
 
-    
+
 
     } catch (error) {
       const mensajes = Array.isArray(error.error) ? error.error.join(' | ') : (error.error || 'Error general');
@@ -95,7 +96,7 @@ async function registrarEventosEmpleado() {
     const data = await res.json();
     setIdRestauranteEmpleados(data.id);
     registrarEventosEmpleado();
-        await cargarEmpleados(); // ✅ cargar empleados al entrar
+    await cargarEmpleados(); // ✅ cargar empleados al entrar
 
   } catch {
     mostrarMensaje('Error al obtener restaurante', 'error');
