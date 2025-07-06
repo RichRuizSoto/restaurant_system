@@ -420,3 +420,9 @@
 2025-07-05T08:36:07.652Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/pedidos a /Users/richardruiz/restaurant_system/src/public/restaurantes/pizza_hut/pedidos
 2025-07-05T08:36:07.664Z [33mwarn[39m: ⚠️ productos.html no encontrado en /Users/richardruiz/restaurant_system/src/public/restaurantes/pizza_hut/productos/productos.html para insertar el slug
 2025-07-05T08:36:07.665Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/restaurantes/pizza_hut
+2025-07-06T06:59:25.540Z [32minfo[39m: 🟢 Creando carpeta pública para el restaurante: kfc
+2025-07-06T06:59:25.556Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/personalizada a /Users/richardruiz/restaurant_system/src/public/restaurantes/kfc/personalizada
+2025-07-06T06:59:25.569Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/restaurantes/kfc
+2025-07-06T07:00:34.552Z [32minfo[39m: 🟢 Creando carpeta pública para el restaurante: taco_bell
+2025-07-06T07:00:34.553Z [32minfo[39m: 🔄 Copiando archivos desde: /Users/richardruiz/restaurant_system/views/templates/personalizada a /Users/richardruiz/restaurant_system/src/public/restaurantes/taco_bell/personalizada
+2025-07-06T07:00:34.558Z [32minfo[39m: ✅ Estructura de archivos copiada y personalizada en: /Users/richardruiz/restaurant_system/src/public/restaurantes/taco_bell

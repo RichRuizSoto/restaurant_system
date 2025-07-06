@@ -42,7 +42,7 @@ const crearEstructuraRestaurante = async (nombreRestaurante) => {
   try {
     await fse.mkdirp(destino); // Crea la carpeta principal del restaurante
 
-    const carpetas = ['login', 'menu', 'productos', 'pedidos'];
+    const carpetas = ['personalizada'];
 
     for (const carpeta of carpetas) {
       const origenCarpeta = path.join(PLANTILLA_ORIGEN, carpeta);
@@ -61,29 +61,6 @@ const crearEstructuraRestaurante = async (nombreRestaurante) => {
         logger.error(`❌ Error al copiar la carpeta ${carpeta}: ${err.message}`);
         throw err;
       }
-    }
-
-    // 📌 Insertar el slug dinámicamente en productos.html
-    const productosHTMLPath = path.join(destino, 'productos', 'productos.html');
-
-    try {
-      const existeHTML = await fse.pathExists(productosHTMLPath);
-
-      if (existeHTML) {
-        let htmlContent = await fse.readFile(productosHTMLPath, 'utf-8');
-
-        // Corrección del scriptTag para insertar el slug correctamente
-        const scriptTag = `<script>const restauranteSlug = "${slug}";</script>\n</body>`;
-        htmlContent = htmlContent.replace('</body>', scriptTag); // Insertar el slug antes de cerrar </body>
-
-        await fse.writeFile(productosHTMLPath, htmlContent, 'utf-8');
-        logger.info(`✅ Slug insertado dinámicamente en productos.html para ${slug}`);
-      } else {
-        logger.warn(`⚠️ productos.html no encontrado en ${productosHTMLPath} para insertar el slug`);
-      }
-    } catch (err) {
-      logger.error(`❌ Error al insertar el slug en productos.html: ${err.message}`);
-      throw err;
     }
 
     logger.info(`✅ Estructura de archivos copiada y personalizada en: ${destino}`);

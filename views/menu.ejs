@@ -10,10 +10,12 @@
 
   <!-- Estilos -->
   <link rel="stylesheet" href="/styles/menu/styles.css" />
+  <link rel="stylesheet" href="/restaurantes/<%= slug %>/personalizada/styles.css" />
 
   <!-- Restaurante ID disponible para JS -->
   <script>
     window.restauranteId = <%= restaurante.id %>;
+    window.restauranteSlug = "<%= slug %>";
   </script>
 
 </head>
