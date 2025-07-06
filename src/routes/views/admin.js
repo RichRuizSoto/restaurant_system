@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const restaurantesService = require('../../services/restaurantesService');
 
-const { isAuthenticated } = require('../../middlewares/auth');
-
 // Ruta protegida con autenticación
 router.get('/:slug', async (req, res) => {
   const { slug } = req.params;

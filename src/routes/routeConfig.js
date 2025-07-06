@@ -17,11 +17,6 @@ const adminViewRoutes = require('./views/admin');
 const usuariosViewRoutes = require('./views/usuarios');
 
 
-const {
-  isAuthenticated,
-  checkRoleAccess
-} = require('../middlewares/auth');
-
 module.exports = (app) => {
   // Rutas públicas (no necesitan autenticación)
   app.use('/api/auth', authRoutes);
