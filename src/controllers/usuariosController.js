@@ -104,10 +104,12 @@ exports.crearEmpleado = async (req, res) => {
 
   try {
     const result = await usuariosService.crearEmpleado(nombreEmpleado, claveEmpleado, restauranteId);
-    const CantPerfilesRegistrados = await usuariosService.contarPerfilesPorRestaurante(restauranteId);
+    const PerfilesRegistrados = await usuariosService.mostrarPerfilesPorRestaurante(restauranteId);
+    const cantPerfilesRegistrados = PerfilesRegistrados.length;
 
     const io = req.app.get('io');
-    io.to(`restaurante_${restauranteId}`).emit('CantPerfilesRegistrados', CantPerfilesRegistrados);
+    io.to(`restaurante_${restauranteId}`).emit('CantPerfilesRegistrados', cantPerfilesRegistrados);
+    io.to(`restaurante_${restauranteId}`).emit('PerfilesRegistrados', PerfilesRegistrados);
 
     res.status(201).json(result); // Devolver mensaje de éxito
   } catch (err) {

@@ -1,9 +1,36 @@
+const socket = io(); // esto debe estar al principio
+
 async function fetchJSON(url, options = {}) {
   const res = await fetch(url, options);
   const data = await res.json();
   if (!res.ok) throw data;
   return data;
 }
+
+socket.on('PerfilesRegistrados', (perfiles) => {
+  const tbody = document.querySelector('#tabla-empleados tbody');
+  tbody.innerHTML = '';
+
+  if (perfiles.length === 0) {
+    const fila = document.createElement('tr');
+    fila.innerHTML = `<td colspan="3">No hay empleados registrados aún.</td>`;
+    return tbody.appendChild(fila);
+  }
+
+  perfiles.forEach(emp => {
+    const fila = document.createElement('tr');
+    fila.innerHTML = `
+      <td>${emp.nombre}</td>
+      <td>${new Date(emp.creado_en).toLocaleString('es-ES')}</td>
+      <td>${emp.rol}</td>
+    `;
+    tbody.appendChild(fila);
+  });
+
+  empleadosGlobal = perfiles; // ✅ Actualiza la variable global
+});
+
+
 
 function mostrarMensaje(msg, tipo = 'success') {
   const container = document.getElementById('toast-container');
@@ -116,7 +143,6 @@ async function registrarEventosEmpleado() {
       });
       mostrarMensaje(result.mensaje || 'Empleado agregado exitosamente', 'success');
       form.reset();
-      await cargarEmpleados(); // ✅ recargar la tabla
 
 
 
@@ -133,6 +159,7 @@ async function registrarEventosEmpleado() {
     const res = await fetch(`/api/restaurantes/${slug}`);
     const data = await res.json();
     setIdRestauranteEmpleados(data.id);
+socket.emit('unirseARestaurante', data.id);
     registrarEventosEmpleado();
     await cargarEmpleados(); // ✅ cargar empleados al entrar
     configurarOrdenamiento(); // 🧠 activar ordenamiento
