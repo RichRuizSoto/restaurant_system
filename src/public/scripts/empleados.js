@@ -14,33 +14,71 @@ function mostrarMensaje(msg, tipo = 'success') {
   setTimeout(() => toast.remove(), 3000);
 }
 
+let empleadosGlobal = [];
+
 async function cargarEmpleados() {
   if (!idRestauranteEmpleado) return;
 
   try {
-    const empleados = await fetchJSON(`/api/usuarios/empleados/por-restaurante/${idRestauranteEmpleado}`);
-    const tbody = document.querySelector('#tabla-empleados tbody');
-    tbody.innerHTML = ''; // Limpiar antes de renderizar
-
-    if (empleados.length === 0) {
-      const fila = document.createElement('tr');
-      fila.innerHTML = `<td colspan="2">No hay empleados registrados aún.</td>`;
-      return tbody.appendChild(fila);
-    }
-
-    empleados.forEach(emp => {
-      const fila = document.createElement('tr');
-      fila.innerHTML = `
-        <td>${emp.nombre}</td>
-        <td>${new Date(emp.creado_en).toLocaleString('es-ES')}</td>
-            <td>${emp.rol}</td> <!-- Agregado -->
-      `;
-      tbody.appendChild(fila);
-    });
+    empleadosGlobal = await fetchJSON(`/api/usuarios/empleados/por-restaurante/${idRestauranteEmpleado}`);
+    renderizarTabla(empleadosGlobal);
   } catch (error) {
     mostrarMensaje('Error al cargar empleados', 'error');
   }
 }
+
+function renderizarTabla(empleados) {
+  const tbody = document.querySelector('#tabla-empleados tbody');
+  tbody.innerHTML = '';
+
+  if (empleados.length === 0) {
+    const fila = document.createElement('tr');
+    fila.innerHTML = `<td colspan="3">No hay empleados registrados aún.</td>`;
+    return tbody.appendChild(fila);
+  }
+
+  empleados.forEach(emp => {
+    const fila = document.createElement('tr');
+    fila.innerHTML = `
+      <td>${emp.nombre}</td>
+      <td>${new Date(emp.creado_en).toLocaleString('es-ES')}</td>
+      <td>${emp.rol}</td>
+    `;
+    tbody.appendChild(fila);
+  });
+}
+
+function ordenarPor(campo, tipo = 'string') {
+  let ordenAsc = true;
+  return function () {
+    empleadosGlobal.sort((a, b) => {
+      let valA = a[campo];
+      let valB = b[campo];
+
+      if (tipo === 'date') {
+        valA = new Date(valA);
+        valB = new Date(valB);
+      } else {
+        valA = valA.toString().toLowerCase();
+        valB = valB.toString().toLowerCase();
+      }
+
+      if (valA < valB) return ordenAsc ? -1 : 1;
+      if (valA > valB) return ordenAsc ? 1 : -1;
+      return 0;
+    });
+
+    renderizarTabla(empleadosGlobal);
+    ordenAsc = !ordenAsc;
+  };
+}
+
+function configurarOrdenamiento() {
+  document.getElementById('th-nombre').addEventListener('click', ordenarPor('nombre'));
+  document.getElementById('th-fecha').addEventListener('click', ordenarPor('creado_en', 'date'));
+  document.getElementById('th-rol').addEventListener('click', ordenarPor('rol'));
+}
+
 
 
 let idRestauranteEmpleado = null;
@@ -97,6 +135,7 @@ async function registrarEventosEmpleado() {
     setIdRestauranteEmpleados(data.id);
     registrarEventosEmpleado();
     await cargarEmpleados(); // ✅ cargar empleados al entrar
+    configurarOrdenamiento(); // 🧠 activar ordenamiento
 
   } catch {
     mostrarMensaje('Error al obtener restaurante', 'error');
