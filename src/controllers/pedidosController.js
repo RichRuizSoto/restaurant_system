@@ -163,12 +163,19 @@ exports.actualizarEstadoPedido = async (req, res, next) => {
     });
 
     //Uso de WebSocket para segun estado
+    const ingresosHoy = await gananciasService.obtenerIngresosHoy(restauranteId);
+    const lista = await pedidosService.obtenerUltimosPedidos(restauranteId);
+
     if (nuevoEstado === 'listo') {
-      io.to(`sala_${restauranteId}_${id}`).emit('nuevoEstadoPedido', 'listo');
+      io.to(`sala_${restauranteId}_${id}`).emit('nuevoEstadoPedido', nuevoEstado);
+      io.to(`restaurante_${restauranteId}`).emit('cambioEstado', lista);
     } 
     if (nuevoEstado === 'pagado') {
-       const ingresosHoy = await gananciasService.obtenerIngresosHoy(restauranteId);
       io.to(`restaurante_${restauranteId}`).emit('ingresosHoy', ingresosHoy);
+      io.to(`restaurante_${restauranteId}`).emit('cambioEstado', lista);
+    }
+    if (nuevoEstado === 'cancelado') {
+      io.to(`restaurante_${restauranteId}`).emit('cambioEstado', lista);
     }
     
     res.json({

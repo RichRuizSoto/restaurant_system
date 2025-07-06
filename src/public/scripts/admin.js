@@ -60,6 +60,41 @@ socket.on('CantPerfilesRegistrados', (CantPerfilesRegistrados) => {
   PerfilesRegistrados.textContent = CantPerfilesRegistrados;
 });
 
+socket.on('cambioEstado', (lista) => {
+  const nuevaLista = document.getElementById("tabla-actividad-reciente");
+
+  // Limpiar la tabla antes de volver a renderizar
+  nuevaLista.innerHTML = '';
+
+  lista.forEach(pedido => {
+    const fila = document.createElement("tr");
+
+    const estadoMap = {
+      solicitado: "pending",
+      listo: "preparing",
+      pagado: "delivered",
+      cancelado: "cancelled"
+    };
+    const estadoClase = estadoMap[pedido.estado] || "pending";
+
+    const horaPedido = new Date(pedido.creado_en).toLocaleTimeString("es-ES", {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    });
+
+    fila.innerHTML = `
+      <td>#${pedido.numero_orden}</td>
+      <td>${pedido.nombre || "Cliente"}</td>
+      <td>₡${parseFloat(pedido.total).toFixed(2)}</td>
+      <td><span class="badge ${estadoClase}">${pedido.estado.charAt(0).toUpperCase() + pedido.estado.slice(1)}</span></td>
+      <td>${horaPedido}</td>
+    `;
+    
+    nuevaLista.appendChild(fila); // 🟢 usar la referencia correcta
+  });
+});
+
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     //Renderizado KPIs e Info

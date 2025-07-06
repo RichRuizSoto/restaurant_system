@@ -11,4 +11,4 @@ exports.obtenerIngresosHoy = async (idRestaurante) => {
 
   const [rows] = await db.query(query, [idRestaurante]);
   return rows[0].ingresosHoy || 0;
-};
+}; 
