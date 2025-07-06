@@ -55,6 +55,10 @@ socket.on('productosActivos', (cantidadProductosAct) => {
   estado.textContent = cantidadProductosAct;
 });
 
+socket.on('CantPerfilesRegistrados', (CantPerfilesRegistrados) => {
+  const PerfilesRegistrados = document.getElementById("perfiles-registrados");
+  PerfilesRegistrados.textContent = CantPerfilesRegistrados;
+});
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {

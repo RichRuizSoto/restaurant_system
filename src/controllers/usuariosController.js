@@ -104,6 +104,11 @@ exports.crearEmpleado = async (req, res) => {
 
   try {
     const result = await usuariosService.crearEmpleado(nombreEmpleado, claveEmpleado, restauranteId);
+    const CantPerfilesRegistrados = await usuariosService.contarPerfilesPorRestaurante(restauranteId);
+
+    const io = req.app.get('io');
+    io.to(`restaurante_${restauranteId}`).emit('CantPerfilesRegistrados', CantPerfilesRegistrados);
+
     res.status(201).json(result); // Devolver mensaje de éxito
   } catch (err) {
     console.error('[Backend] Error al crear el empleado:', err.message);
