@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-      "crear:gestor": "node src/public/scripts/crearGestor.js"
+    "crear:gestor": "node src/public/scripts/crearGestor.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -15,7 +15,7 @@
     "dotenv": "^16.5.0",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
-    "express-session": "^1.18.1",
+    "express-session": "^1.18.2",
     "fs-extra": "^11.3.0",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.14.1",

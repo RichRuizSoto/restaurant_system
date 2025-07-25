@@ -208,3 +208,30 @@ exports.eliminarEmpleado = async (id) => {
     throw new Error('Error inesperado al eliminar empleado');
   }
 };
+
+const bcrypt = require('bcrypt');
+
+exports.obtenerUsuarioPorCredenciales = async (nombre, clave, rol) => {
+  try {
+    const query = `SELECT * FROM usuarios WHERE nombre = ? AND rol = ? LIMIT 1`;
+    const [usuarios] = await db.execute(query, [nombre, rol]);
+
+    if (usuarios.length === 0) {
+      return null; // No existe usuario con ese nombre y rol
+    }
+
+    const usuario = usuarios[0];
+
+    // Comparar la clave ingresada con la hash almacenada
+    const esValido = await bcrypt.compare(clave, usuario.clave);
+
+    if (esValido) {
+      return usuario; // Credenciales válidas
+    } else {
+      return null; // Contraseña incorrecta
+    }
+  } catch (err) {
+    console.error('[Backend] Error al obtener usuario por credenciales:', err);
+    throw new Error('Error inesperado al obtener usuario');
+  }
+};

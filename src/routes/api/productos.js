@@ -8,5 +8,4 @@ router.get('/:restId/:id', productosController.obtenerProductoPorId);
 router.put('/:restId/:id', productosController.actualizarProducto);
 router.get('/activos/count/:idRestaurante', productosController.contarProductosActivos);
 
-
 module.exports = router;

@@ -5,6 +5,7 @@ const pedidosRoutes = require('./api/pedidos');
 const usuariosRoutes = require('./api/usuarios');
 const categoriasRoutes = require('./api/categorias');
 const gananciasRoutes = require('./api/ganancias');
+const authRoutes = require('./api/auth');
 
 const restauranteViewRoutes = require('./views/restaurantes');
 const gestorViewRoutes = require('./views/gestores');
@@ -26,6 +27,8 @@ module.exports = (app) => {
   app.use('/auth', authViewRoutes);
   app.use('/menu', menuViewRoutes); // Todos los roles y clientes sin login
 
+  app.use('/api/auth', authRoutes);
+  
   // Rutas API protegidas
   app.use('/api/productos', isAuthenticated, authorizeRoles('admin', 'gestor'), productosRoutes);
   app.use('/api/restaurantes', isAuthenticated, authorizeRoles('admin', 'gestor'), restauranteRoutes);
