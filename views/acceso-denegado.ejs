@@ -2,17 +2,19 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Acceso Denegado</title>
   <link rel="stylesheet" href="/styles/system/access-denied.css" />
 </head>
 <body>
-  <div class="card">
-    <div class="emoji">⛔</div>
+  <main class="card" role="alert" aria-live="assertive">
+    <div class="emoji" aria-hidden="true">⛔</div>
     <h2>Acceso denegado</h2>
     <p>Tu rol actual no tiene permiso para acceder a esta sección del sistema.</p>
-  </div>
+  </main>
 
   <script>
+    // Elimina ruta de retorno guardada en sesión (por seguridad)
     sessionStorage.removeItem('returnTo');
   </script>
 </body>
