@@ -1,23 +1,20 @@
-// Guardar returnTo inmediatamente al cargar el script
-const urlParams = new URLSearchParams(window.location.search);
-const returnTo = urlParams.get('returnTo');
-if (returnTo) {
-  console.log("Guardando returnTo en sessionStorage:", returnTo);
-  sessionStorage.setItem("returnTo", returnTo);
-}
+console.log("✅ login.js cargado correctamente");
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("#loginForm");
   const nombreInput = document.getElementById("nombre");
   const claveInput = document.getElementById("clave");
   const rolSelect = document.getElementById("rol");
+  const returnToField = document.getElementById("returnToField");
 
-  // Guardar returnTo si está en la URL
+  // Obtener returnTo desde la URL y asignarlo al campo oculto
   const urlParams = new URLSearchParams(window.location.search);
   const returnTo = urlParams.get('returnTo');
-  if (returnTo) {
-    console.log("Guardando returnTo en sessionStorage:", returnTo);
-    sessionStorage.setItem("returnTo", returnTo);
+  console.log("🔍 Parámetro returnTo:", returnTo);
+
+  if (returnTo && returnToField) {
+    console.log("💾 Asignando returnTo al input oculto:", returnTo);
+    returnToField.value = returnTo;
   }
 
   form.addEventListener("submit", async (e) => {
@@ -27,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const nombre = nombreInput.value.trim();
     const clave = claveInput.value.trim();
     const rol = rolSelect.value;
+    const storedReturnTo = returnToField.value;
 
     let mensajeError = "";
 
@@ -39,13 +37,12 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    try {
-      const storedReturnTo = sessionStorage.getItem("returnTo");
-      if (!storedReturnTo) {
-        mostrarError("No hay una ruta de retorno válida. Intenta ingresar desde una página protegida.");
-        return;
-      }
+    if (!storedReturnTo) {
+      mostrarError("No hay una ruta de retorno válida. Intenta ingresar desde una página protegida.");
+      return;
+    }
 
+    try {
       const response = await fetch("/api/auth/login", {
         method: "POST",
         headers: {
@@ -57,10 +54,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const data = await response.json();
 
-      console.log("Redireccionando a:", data.redirectUrl);
+      console.log("🔁 Redireccionando a:", data.redirectUrl);
 
       if (response.ok && data.redirectUrl) {
-        sessionStorage.removeItem("returnTo");
         window.location.href = data.redirectUrl;
       } else {
         let mensaje = data.error || "Error al iniciar sesión.";
