@@ -213,23 +213,23 @@ const bcrypt = require('bcrypt');
 
 exports.obtenerUsuarioPorCredenciales = async (nombre, clave, rol) => {
   try {
-    const query = `SELECT * FROM usuarios WHERE nombre = ? AND rol = ? LIMIT 1`;
+    const query = `SELECT id, nombre, rol, clave, id_restaurante FROM usuarios WHERE nombre = ? AND rol = ? LIMIT 1`;
     const [usuarios] = await db.execute(query, [nombre, rol]);
 
     if (usuarios.length === 0) {
-      return null; // No existe usuario con ese nombre y rol
+      return null; // Usuario no encontrado
     }
 
     const usuario = usuarios[0];
 
-    // Comparar la clave ingresada con la hash almacenada
+    // Validar clave con bcrypt
     const esValido = await bcrypt.compare(clave, usuario.clave);
+    if (!esValido) return null;
 
-    if (esValido) {
-      return usuario; // Credenciales válidas
-    } else {
-      return null; // Contraseña incorrecta
-    }
+    // No devolvemos la contraseña (clave) a quien llama esta función
+    const { clave: _, ...usuarioSinClave } = usuario;
+
+    return usuarioSinClave;
   } catch (err) {
     console.error('[Backend] Error al obtener usuario por credenciales:', err);
     throw new Error('Error inesperado al obtener usuario');

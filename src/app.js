@@ -25,7 +25,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'default_secret_fallback',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 300000 } // 1 hora
+  cookie: { maxAge: 30000 } // 1 hora
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));

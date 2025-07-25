@@ -19,7 +19,7 @@ const usuariosViewRoutes = require('./views/usuarios');
 // Middlewares
 const { isAuthenticated } = require('../middleware/auth');
 const { authorizeRoles } = require('../middleware/roles');
-const { restrictToOwnRestaurante } = require('../middleware/restauranteAccess');
+
 
 
 module.exports = (app) => {
@@ -39,11 +39,11 @@ module.exports = (app) => {
   app.use('/api/ganancias', isAuthenticated, authorizeRoles('admin', 'gestor'), gananciasRoutes);
 
   // Vistas protegidas
-  app.use('/productos', isAuthenticated, authorizeRoles('admin', 'gestor'), restrictToOwnRestaurante, restauranteViewRoutes);
+  app.use('/productos', isAuthenticated, authorizeRoles('admin', 'gestor'), restauranteViewRoutes);
   app.use('/gestores', isAuthenticated, authorizeRoles('gestor'), gestorViewRoutes);
-  app.use('/pedidos', isAuthenticated, authorizeRoles('admin', 'gestor', 'empleado'), restrictToOwnRestaurante, pedidosViewRoutes);
-  app.use('/admin', isAuthenticated, authorizeRoles('admin', 'gestor'), restrictToOwnRestaurante, adminViewRoutes);
-  app.use('/crear-empleado', isAuthenticated, authorizeRoles('admin', 'gestor'), restrictToOwnRestaurante, usuariosViewRoutes);
+  app.use('/pedidos', isAuthenticated, authorizeRoles('admin', 'gestor', 'empleado'), pedidosViewRoutes);
+  app.use('/admin', isAuthenticated, authorizeRoles('admin', 'gestor'), adminViewRoutes);
+  app.use('/crear-empleado', isAuthenticated, authorizeRoles('admin', 'gestor'), usuariosViewRoutes);
 
   // Rutas de error y fallback
   app.use('/', errorViewRoutes);
