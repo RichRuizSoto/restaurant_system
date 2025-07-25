@@ -49,7 +49,7 @@ async function restrictToOwnRestaurante(req, res, next) {
       return res.status(403).render('acceso-denegado');
     }
 
-    if (user.rol === 'admin' || user.restauranteId === targetRestauranteId) {
+    if (user.rol === 'gestor' || user.restauranteId === targetRestauranteId) {
     console.log('Acceso permitido');
     return next();
     } else {
