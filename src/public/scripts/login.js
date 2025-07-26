@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let mensajeError = "";
 
+    // Validaciones
     if (!validarNombre()) mensajeError += "El nombre de usuario es obligatorio.<br>";
     if (!validarClave()) mensajeError += "La contraseña debe tener al menos 8 caracteres, incluir letras y números.<br>";
     if (!validarRol()) mensajeError += "Debes seleccionar un rol.";
@@ -37,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    // Verifica si returnTo es válido
     if (!storedReturnTo) {
       mostrarError("No hay una ruta de retorno válida. Intenta ingresar desde una página protegida.");
       return;
@@ -52,25 +54,33 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify({ nombre, clave, rol, returnTo: storedReturnTo }),
       });
 
+      // Aquí se maneja el caso del error 401
+      if (!response.ok) {
+        const errorData = await response.json();
+        let mensaje = errorData.error || "Error al iniciar sesión.";
+
+        // Verificamos si es un error de acceso denegado
+        if (response.status === 401) {
+          mensaje = "Acceso no autorizado. Verifica tus credenciales o permisos.";
+        }
+
+        mostrarError(mensaje);
+        return;
+      }
+
       const data = await response.json();
 
       console.log("🔁 Redireccionando a:", data.redirectUrl);
 
-      if (response.ok && data.redirectUrl) {
+      if (data.redirectUrl) {
         window.location.href = data.redirectUrl;
       } else {
-        let mensaje = data.error || "Error al iniciar sesión.";
-
-        if (mensaje === "Acceso denegado para este rol") {
-          mensaje = "No tienes permisos suficientes con el rol seleccionado.";
-        }
-
-        mostrarError(mensaje);
+        mostrarError("No se proporcionó una URL de redirección válida.");
       }
 
     } catch (error) {
       mostrarError("Hubo un error al procesar la solicitud.");
-      console.error(error);
+      console.error(error);  // Esto ahora solo se ejecutará si hay un error fuera de la respuesta HTTP (conexión, etc.)
     }
   });
 
@@ -93,6 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return false;
     }
     if (!claveRegex.test(clave)) {
+      mostrarErrorCampo(claveInput, "La contraseña debe tener al menos 8 caracteres, incluir letras y números.");
       return false;
     }
     limpiarErrorCampo(claveInput);
@@ -109,21 +120,17 @@ document.addEventListener("DOMContentLoaded", () => {
     return true;
   }
 
-function mostrarError(mensaje) {
-  const container = document.getElementById("formErrorContainer");
-  container.innerHTML = `<div class="error-message">${mensaje}</div>`;
-  container.style.display = "block"; // 👈 mostrar si hay error
-}
+  function mostrarError(mensaje) {
+    const container = document.getElementById("formErrorContainer");
+    container.innerHTML = `<div class="error-message">${mensaje}</div>`;
+    container.style.display = "block"; // 👈 mostrar si hay error
+  }
 
-
-
-function limpiarErroresGenerales() {
-  const container = document.getElementById("formErrorContainer");
-  container.innerHTML = "";
-  container.style.display = "none"; // 👈 ocultar si no hay error
-}
-
-
+  function limpiarErroresGenerales() {
+    const container = document.getElementById("formErrorContainer");
+    container.innerHTML = "";
+    container.style.display = "none"; // 👈 ocultar si no hay error
+  }
 
   function mostrarErrorCampo(campo, mensaje) {
     let errorSpan = campo.parentElement.querySelector(".error-text");

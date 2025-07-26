@@ -17,18 +17,9 @@ async function restrictToOwnRestaurante(req, res, next) {
   let targetRestauranteId = null;
 
   try {
-    if (path.startsWith('/productos/') && slug) {
-      console.log('Buscando restaurante asociado al producto...');
-      const [[producto]] = await db.query(
-        'SELECT id_restaurante FROM productos WHERE slug = ?',
-        [slug]
-      );
-      targetRestauranteId = producto?.id_restaurante;
-      if (!targetRestauranteId) {
-        console.log(`Producto con slug ${slug} no encontrado.`);
-      }
-    } else if (
-      (path.startsWith('/pedidos/') ||
+    if (
+      (path.startsWith('/productos/') ||
+        path.startsWith('/pedidos/') ||
         path.startsWith('/admin/') ||
         path.startsWith('/menu/') ||
         slug)

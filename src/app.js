@@ -1,4 +1,3 @@
-// app.js
 const express = require('express');
 const path = require('path');
 const dotenv = require('dotenv');
@@ -25,7 +24,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'default_secret_fallback',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 30000 } // 1 hora
+  cookie: { maxAge: 3 * 60000 } 
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
