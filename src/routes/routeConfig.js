@@ -33,7 +33,7 @@ module.exports = (app) => {
   app.use('/api/productos', isAuthenticated, authorizeRoles('admin', 'gestor'), productosRoutes);
   app.use('/api/restaurantes', isAuthenticated, authorizeRoles('admin', 'gestor'), restauranteRoutes);
   app.use('/api/gestor', isAuthenticated, authorizeRoles('gestor'), gestorRoutes);
-  app.use('/api/pedidos', isAuthenticated, authorizeRoles('admin', 'gestor', 'empleado'), pedidosRoutes);
+  app.use('/api/pedidos', pedidosRoutes);
   app.use('/api/usuarios', isAuthenticated, authorizeRoles('admin', 'gestor'), usuariosRoutes);
   app.use('/api/categorias', isAuthenticated, authorizeRoles('admin', 'gestor'), categoriasRoutes);
   app.use('/api/ganancias', isAuthenticated, authorizeRoles('admin', 'gestor'), gananciasRoutes);
