@@ -93,7 +93,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return false;
     }
     if (!claveRegex.test(clave)) {
-      mostrarErrorCampo(claveInput, "Debe tener al menos 8 caracteres, incluir letras y números.");
       return false;
     }
     limpiarErrorCampo(claveInput);
@@ -110,17 +109,21 @@ document.addEventListener("DOMContentLoaded", () => {
     return true;
   }
 
-  function mostrarError(mensaje) {
-    const errorDiv = document.createElement("div");
-    errorDiv.className = "error-message";
-    errorDiv.innerHTML = mensaje;
-    form.insertBefore(errorDiv, form.firstChild);
-  }
+function mostrarError(mensaje) {
+  const container = document.getElementById("formErrorContainer");
+  container.innerHTML = `<div class="error-message">${mensaje}</div>`;
+  container.style.display = "block"; // 👈 mostrar si hay error
+}
 
-  function limpiarErroresGenerales() {
-    const existingError = document.querySelector(".error-message");
-    if (existingError) existingError.remove();
-  }
+
+
+function limpiarErroresGenerales() {
+  const container = document.getElementById("formErrorContainer");
+  container.innerHTML = "";
+  container.style.display = "none"; // 👈 ocultar si no hay error
+}
+
+
 
   function mostrarErrorCampo(campo, mensaje) {
     let errorSpan = campo.parentElement.querySelector(".error-text");
