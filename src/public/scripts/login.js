@@ -26,6 +26,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const rol = rolSelect.value;
     const storedReturnTo = returnToField.value;
 
+    // Obtener el token CSRF desde el formulario
+    const csrfToken = document.querySelector('input[name="_csrf"]').value;
+
     let mensajeError = "";
 
     // Validaciones
@@ -49,8 +52,9 @@ document.addEventListener("DOMContentLoaded", () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "CSRF-Token": csrfToken, // Enviamos el token CSRF en los headers
         },
-        credentials: "include",
+        credentials: "include", // Esto es necesario para incluir las cookies de sesión
         body: JSON.stringify({ nombre, clave, rol, returnTo: storedReturnTo }),
       });
 

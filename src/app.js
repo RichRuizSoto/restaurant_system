@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const morgan = require('morgan'); // Importar Morgan
 const rateLimit = require('express-rate-limit'); // Importar express-rate-limit
+const csrf = require('csurf'); // Importar csurf para CSRF Protection
 
 const routeConfig = require('./routes/routeConfig');
 
@@ -29,8 +30,12 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'default_secret_fallback',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 3 * 60000 } 
+  cookie: { maxAge: 0.5 * 60000 } 
 }));
+
+// CSRF Protection Middleware
+const csrfProtection = csrf({ cookie: true }); // Usamos cookies para almacenar el token CSRF
+app.use(csrfProtection);
 
 // Limitar intentos de login (Rate Limiting)
 const loginRateLimiter = rateLimit({
@@ -46,6 +51,12 @@ app.use('/api/auth/login', loginRateLimiter);
 
 // Rutas y middlewares
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Agregar el token CSRF a las vistas (en cada respuesta HTML)
+app.use((req, res, next) => {
+  res.locals.csrfToken = req.csrfToken(); // Esto hace que el token esté disponible en las vistas
+  next();
+});
 
 routeConfig(app);
 

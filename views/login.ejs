@@ -12,7 +12,6 @@
     background-color: #272727;
   }
 </style>
-
 </head>
 <body>
   <div class="login-container">
@@ -25,12 +24,13 @@
       <div class="error-message"><%= error %></div>
     <% } %>
 
-    <!-- Aquí removemos el action y el método POST -->
-    <form id="loginForm" autocomplete="off">
+    <!-- Agregamos el token CSRF como un campo oculto -->
+    <form id="loginForm" action="/api/auth/login" method="POST" autocomplete="off">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>" /> <!-- Token CSRF aquí -->
       <input type="hidden" name="returnTo" id="returnToField" value="">
 
-  <!-- Contenedor para errores generales -->
-<div id="formErrorContainer"></div>
+      <!-- Contenedor para errores generales -->
+      <div id="formErrorContainer"></div>
 
       <div class="form-group">
         <label for="nombre">Nombre de usuario</label>
