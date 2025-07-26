@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const morgan = require('morgan'); // Importar Morgan
+const rateLimit = require('express-rate-limit'); // Importar express-rate-limit
 
 const routeConfig = require('./routes/routeConfig');
 
@@ -31,6 +32,19 @@ app.use(session({
   cookie: { maxAge: 3 * 60000 } 
 }));
 
+// Limitar intentos de login (Rate Limiting)
+const loginRateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  max: 5, // Limita a 5 intentos
+  message: 'Demasiados intentos de inicio de sesión, por favor inténtelo más tarde.',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Aplica el Rate Limiting solo a la ruta de login
+app.use('/api/auth/login', loginRateLimiter);
+
+// Rutas y middlewares
 app.use(express.static(path.join(__dirname, 'public')));
 
 routeConfig(app);
