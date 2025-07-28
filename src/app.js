@@ -25,7 +25,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'default_secret_fallback',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 0.5 * 60000 }
+  cookie: { maxAge: 5 * 60000 }
 }));
 
 const csrfProtection = csrf({ cookie: true });

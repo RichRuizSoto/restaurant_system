@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const sonidoNotificacion = new Audio('/sounds/notificacion.mp3');
   const formServicio = document.getElementById('form-servicio');
   let tipoServicioSeleccionado = null;
+  const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
 
 
   // Conectar a WebSocket y unirse a la sala
@@ -217,7 +219,10 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const res = await fetch('/api/pedidos', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'CSRF-Token': csrfToken  // <- este es clave
+        },
         body: JSON.stringify(pedido)
       });
 

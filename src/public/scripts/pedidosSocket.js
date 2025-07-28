@@ -232,12 +232,21 @@ function cerrarModal() {
 
 // 🔁 Actualizar estado de pedido
 function actualizarEstadoPedido(idPedido, nuevoEstado, restauranteId) {
-  fetch(`/api/pedidos/${idPedido}/estado`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ nuevoEstado, restauranteId })
-  })
-    .then(res => res.json())
+    fetch(`/api/pedidos/${idPedido}/estado`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'CSRF-Token': window.csrfToken  // 👈 Token incluido
+      },
+      body: JSON.stringify({ nuevoEstado, restauranteId })
+    })
+    .then(async res => {
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(`Error ${res.status}: ${text}`);
+      }
+      return res.json();
+    })
     .then(data => {
       if (data.pedido) {
         notificarEstadoActualizado(idPedido, nuevoEstado, data.pedido.numero_orden);
