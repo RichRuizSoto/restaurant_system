@@ -21,12 +21,30 @@ os.makedirs(profile_path, exist_ok=True)
 # ✨ Genera una respuesta según el estado del pedido
 def generar_respuesta_para_estado(estado, numero_orden):
     respuestas = {
-        "solicitado": f"Hola! Hemos recibido tu pedido #{numero_orden}. Ya lo estamos preparando. Gracias por tu confianza.",
-        "listo": f"Tu pedido #{numero_orden} está listo para ser entregado. ¡Gracias por esperar!",
-        "pagado": f"Confirmamos el pago del pedido #{numero_orden}. ¡Gracias por tu compra!",
-        "cancelado": f"Tu pedido #{numero_orden} ha sido cancelado. Si necesitas ayuda, estamos para servirte."
+        "solicitado": (
+            f"¡Hola! Queremos confirmarte que hemos recibido tu pedido #{numero_orden}. "
+            "Nuestro equipo ya está trabajando para prepararlo con mucho cuidado. "
+            "Gracias por confiar en nosotros."
+        ),
+        "listo": (
+            f"Nos complace informarte que tu pedido #{numero_orden} está listo para ser entregado. "
+            "Agradecemos tu paciencia y esperamos que lo disfrutes!."
+        ),
+        "pagado": (
+            f"Confirmamos la recepción del pago correspondiente al pedido #{numero_orden}. "
+            "Gracias por elegirnos, estamos a tu disposición para cualquier consulta."
+        ),
+        "cancelado": (
+            f"Lamentamos informarte que el pedido #{numero_orden} ha sido cancelado. "
+            "Si necesitas asistencia o deseas más información, por favor no dudes en contactarnos. "
+            "Estamos aquí para ayudarte."
+        )
     }
-    return respuestas.get(estado.lower(), f"El estado de tu pedido #{numero_orden} ha cambiado a: {estado}.")
+    return respuestas.get(
+        estado.lower(),
+        f"El estado de tu pedido #{numero_orden} ha cambiado a: '{estado}'. "
+        "Si tienes alguna pregunta o requieres asistencia, estamos disponibles para ayudarte."
+    )
 
 # 📖 Lee los datos del archivo .txt
 def leer_datos_archivo(ruta_archivo):
