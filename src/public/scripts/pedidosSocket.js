@@ -307,14 +307,21 @@ function cambiarSeccionActiva(seccion) {
 
 // Genera .txt
 function notificarEstadoTxt(id, telefono, estado, numero_orden) {
+  // Validación del número de teléfono
+  if (!telefono || telefono.length < 8) {
+    alert("⚠️ El número de teléfono debe tener al menos 8 caracteres.");
+    return;
+  }
+
   const contenido = `${telefono}\n${estado}\n${numero_orden}`;
   const blob = new Blob([contenido], { type: "text/plain" });
   const url = URL.createObjectURL(blob);
 
   const a = document.createElement("a");
   a.href = url;
-  a.download = `mensaje_${id}.txt`;
+  a.download = `msg${id}.txt`;
   a.click();
 
   URL.revokeObjectURL(url);
 }
+

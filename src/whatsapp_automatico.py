@@ -13,7 +13,7 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
 # 📁 Rutas
-carpeta_datos = "/Users/richardruiz/selenium_profiles/data"
+carpeta_datos = os.path.expanduser("~/Downloads")
 lock_file = "/Users/richardruiz/selenium_profiles/automation.lock"
 profile_path = "/Users/richardruiz/selenium_profiles/shared_profile"
 os.makedirs(profile_path, exist_ok=True)
@@ -145,15 +145,42 @@ def procesar_archivo(archivo):
             print("🔓 Lock liberado. Puede iniciar otra instancia.")
 
 # 👀 Manejador de eventos: observa archivos nuevos
+import os
+from watchdog.events import FileSystemEventHandler
+import time
+
 class WatcherHandler(FileSystemEventHandler):
     def on_created(self, event):
         if event.is_directory:
             return
-        if event.src_path.endswith(".txt"):
-            time.sleep(0.5)
-            if os.path.exists(event.src_path):
-                print(f"📥 Nuevo archivo detectado: {event.src_path}")
+
+        nombre_archivo = os.path.basename(event.src_path)
+
+        # Verifica que sea un .txt y que comience con "msg"
+        if not (nombre_archivo.endswith(".txt") and nombre_archivo.startswith("msg")):
+            return
+
+        # Espera a que termine de descargarse
+        time.sleep(0.5)
+
+        if not os.path.exists(event.src_path):
+            return
+
+        print(f"📥 Archivo detectado: {event.src_path}")
+
+        try:
+            with open(event.src_path, "r", encoding="utf-8") as f:
+                lineas = f.read().splitlines()
+
+            if len(lineas) == 3 and all(lineas):
+                print("✅ Formato válido. Procesando...")
                 procesar_archivo(event.src_path)
+            else:
+                pass
+
+        except Exception as e:
+            print(f"❌ Error leyendo el archivo: {e}")
+
 
 # 🏁 Punto de entrada
 if __name__ == "__main__":
