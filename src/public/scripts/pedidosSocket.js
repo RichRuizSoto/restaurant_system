@@ -30,7 +30,26 @@ document.addEventListener('DOMContentLoaded', () => {
     agregarPedidoAlDOM(pedido);
     sonidoNotificacion.play();
     notificarEstadoActualizado(pedido.id, pedido.estado, pedido.numero_orden);
+    generarYDescargarTxt(pedido);
   });
+
+  function generarYDescargarTxt(pedido) {
+    const contenido = `${pedido.telefono}\n${pedido.estado}`;
+    const blob = new Blob([contenido], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `mensaje_${Date.now()}_${pedido.id}.txt`;
+    a.click();
+
+    // Revoke la URL después de usarla
+    URL.revokeObjectURL(url);
+  }
+
+
+
+
 
   socket.onAny((event, ...args) => {
     console.log(`📥 Evento recibido: ${event}`, args);

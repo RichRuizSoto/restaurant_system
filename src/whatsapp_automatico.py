@@ -33,6 +33,10 @@ def escribir_lento(elemento, texto, delay=0.2):
         time.sleep(delay)
 
 def procesar_archivo(archivo):
+    if not os.path.exists(archivo):
+        print(f"⚠️ Archivo no encontrado al intentar procesar: {archivo}")
+        return
+
     # Evitar que varios procesos corran a la vez
     while os.path.exists(lock_file):
         print("🔒 Otra automatización está corriendo. Esperando 5 segundos...")
@@ -113,15 +117,17 @@ def procesar_archivo(archivo):
             os.remove(lock_file)
             print("🔓 Lock liberado. Puede iniciar otra instancia.")
 
-
 class WatcherHandler(FileSystemEventHandler):
     def on_created(self, event):
         if event.is_directory:
             return
         if event.src_path.endswith(".txt"):
-            print(f"📥 Nuevo archivo detectado: {event.src_path}")
-            procesar_archivo(event.src_path)
-
+            time.sleep(0.5)  # Esperar medio segundo para asegurar que se haya terminado de escribir
+            if os.path.exists(event.src_path):
+                print(f"📥 Nuevo archivo detectado: {event.src_path}")
+                procesar_archivo(event.src_path)
+            else:
+                print(f"\n")
 
 if __name__ == "__main__":
     print("🚀 Monitoreando carpeta para nuevos mensajes...")

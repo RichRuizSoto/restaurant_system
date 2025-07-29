@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (tipoServicioSeleccionado === 'restaurante') {
       mesa = parseInt(document.getElementById('mesa')?.value);
       telefono = document.getElementById('telefono')?.value.trim();
-      
+
       if (!mesa || mesa <= 0 || !telefono)  {
         return showNotification('Ingresa un número de mesa válido y un número de telefono', 'warning');
       }
@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'CSRF-Token': csrfToken  // <- este es clave
+          'CSRF-Token': csrfToken 
         },
         body: JSON.stringify(pedido)
       });

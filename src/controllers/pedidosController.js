@@ -162,6 +162,7 @@ exports.actualizarEstadoPedido = async (req, res, next) => {
       }))
     });
 
+
     //Uso de WebSocket para segun estado
     const ingresosHoy = await gananciasService.obtenerIngresosHoy(restauranteId);
     const lista = await pedidosService.obtenerUltimosPedidos(restauranteId);
