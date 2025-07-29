@@ -358,7 +358,7 @@ exports.obtenerCantidadPedidosHoy = async (restId) => {
 
 exports.obtenerUltimosPedidos = async (idRestaurante) => {
   const [result] = await db.query(`
-    SELECT numero_orden, nombre, total, estado, creado_en
+    SELECT numero_orden, nombre, telefono, total, estado, creado_en
     FROM pedidos
     WHERE id_restaurante = ?
     ORDER BY creado_en DESC

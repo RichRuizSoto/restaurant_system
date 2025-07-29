@@ -192,8 +192,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } else if (tipoServicioSeleccionado === 'restaurante') {
       mesa = parseInt(document.getElementById('mesa')?.value);
-      if (!mesa || mesa <= 0) {
-        return showNotification('Ingresa un número de mesa válido', 'warning');
+      telefono = document.getElementById('telefono')?.value.trim();
+      
+      if (!mesa || mesa <= 0 || !telefono)  {
+        return showNotification('Ingresa un número de mesa válido y un número de telefono', 'warning');
       }
     }
 
@@ -312,6 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (tipoServicioSeleccionado === 'restaurante') {
         formServicio.innerHTML = `
         <input type="number" id="mesa" min="1" placeholder="Número de mesa" required />
+        <input type="tel" id="telefono" placeholder="Teléfono" required />
       `;
       }
     });

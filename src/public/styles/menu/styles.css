@@ -176,14 +176,14 @@ main {
   margin: 0.5rem 0;
 }
 
-#mesa {
+/* #mesa {
   width: 100%;
   padding: 0.6rem;
   border: 1px solid #ccc;
   border-radius: 8px;
   margin-bottom: 1rem;
   font-size: 0.95rem;
-}
+} */
 
 #btn-enviar-pedido {
   width: 100%;
