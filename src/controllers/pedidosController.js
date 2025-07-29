@@ -46,7 +46,12 @@ exports.recibirPedido = async (req, res) => {
 
     const io = req.app.get('io');
     console.log('📡 Emitiendo nuevoPedido con datos completos:', nuevoPedido);
-    io.to(`restaurante_${nuevoPedido.id_restaurante}`).emit('nuevoPedido', nuevoPedido);
+    console.log('📡 Tiempo promedio:', promedio);
+/*     io.to(`restaurante_${nuevoPedido.id_restaurante}`).emit('nuevoPedido', nuevoPedido, promedio);
+ */
+io.to(`restaurante_${nuevoPedido.id_restaurante}`).emit('nuevoPedido', nuevoPedido);
+
+
 
     res.status(201).json({
       data: nuevoPedido,
@@ -148,12 +153,13 @@ exports.actualizarEstadoPedido = async (req, res, next) => {
     const productos = await pedidosService.obtenerProductosPorPedido(pedidoActualizado.id);
 
     io.to(`restaurante_${pedidoActualizado.id_restaurante}`).emit('estadoPedidoActualizado', {
-      idPedido: pedidoActualizado.id,
-      nuevoEstado: pedidoActualizado.estado,
+      id: pedidoActualizado.id,
+      estado: pedidoActualizado.estado,
       numero_orden: pedidoActualizado.numero_orden,
       mesa: pedidoActualizado.mesa,
       total: pedidoActualizado.total,
       creado_en: pedidoActualizado.creado_en,
+      telefono: pedidoActualizado.telefono, 
       productos: productos.map(prod => ({
         id_producto: prod.id_producto,
         cantidad: prod.cantidad,
@@ -161,6 +167,7 @@ exports.actualizarEstadoPedido = async (req, res, next) => {
         nombre: prod.nombre
       }))
     });
+
 
 
     //Uso de WebSocket para segun estado

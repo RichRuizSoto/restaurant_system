@@ -17,36 +17,26 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   //Asegura que aparecezca en tiempo real el pedido recien creado
-  socket.on('nuevoPedido', (pedido) => {
-    console.log('[WS] 🆕 Nuevo pedido recibido:', pedido);
+socket.on('nuevoPedido', (pedido) => {
+  console.log('[WS] 🆕 Nuevo pedido recibido:', pedido);
 
-    if (pedido.estado !== 'solicitado') {
-      console.warn('⛔ Pedido ignorado por estado no válido:', pedido.estado);
-      return;
-    }
-
-    socket.emit('unirseASalaExclusiva', restauranteId, pedido.id);
-
-    agregarPedidoAlDOM(pedido);
-    sonidoNotificacion.play();
-    notificarEstadoActualizado(pedido.id, pedido.estado, pedido.numero_orden);
-    generarYDescargarTxt(pedido);
-  });
-
-  function generarYDescargarTxt(pedido) {
-    const contenido = `${pedido.telefono}\n${pedido.estado}`;
-    const blob = new Blob([contenido], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `mensaje_${Date.now()}_${pedido.id}.txt`;
-    a.click();
-
-    // Revoke la URL después de usarla
-    URL.revokeObjectURL(url);
+  if (!pedido || !pedido.estado) {
+    console.error('⛔ Pedido inválido o sin estado:', pedido);
+    return;
   }
 
+  if (pedido.estado !== 'solicitado') {
+    console.warn('⛔ Pedido ignorado por estado no válido:', pedido.estado);
+    return;
+  }
+
+  socket.emit('unirseASalaExclusiva', restauranteId, pedido.id);
+
+  agregarPedidoAlDOM(pedido);
+  sonidoNotificacion.play();
+  notificarEstadoActualizado(pedido.id, pedido.estado, pedido.numero_orden);
+notificarEstadoTxt(pedido.id, pedido.telefono, pedido.estado, pedido.numero_orden);
+});
 
 
 
@@ -63,19 +53,20 @@ document.addEventListener('DOMContentLoaded', () => {
   socket.on('estadoPedidoActualizado', (data) => {
     console.log('[WS] 🔁 Pedido actualizado:', data);
 
-    document.getElementById(`pedido-${data.idPedido}`)?.remove();
+    document.getElementById(`pedido-${data.id}`)?.remove();
 
     agregarPedidoAlDOM({
       ...data,
-      id: data.idPedido,
-      estado: data.nuevoEstado
+      id: data.id,
+      estado: data.estado
     });
 
-    if (['solicitado', 'listo'].includes(data.nuevoEstado)) {
+    if (['solicitado', 'listo'].includes(data.estado)) {
       sonidoNotificacion.play();
     }
 
-    notificarEstadoActualizado(data.idPedido, data.nuevoEstado, data.numero_orden);
+    notificarEstadoActualizado(data.id, data.estado, data.numero_orden);
+notificarEstadoTxt(data.id, data.telefono, data.estado, data.numero_orden);
   });
 
   // 🧭 Navegación entre secciones
@@ -312,4 +303,18 @@ function cambiarSeccionActiva(seccion) {
 
   document.getElementById(`${seccion}-section`)?.classList.add('active');
   document.querySelector(`.nav-button[data-seccion="${seccion}"]`)?.classList.add('active');
+}
+
+// Genera .txt
+function notificarEstadoTxt(id, telefono, estado, numero_orden) {
+  const contenido = `${telefono}\n${estado}\n${numero_orden}`;
+  const blob = new Blob([contenido], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `mensaje_${id}.txt`;
+  a.click();
+
+  URL.revokeObjectURL(url);
 }
