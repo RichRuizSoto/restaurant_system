@@ -69,7 +69,6 @@ def procesar_archivo(archivo):
         print(f"⚠️ Archivo no encontrado al intentar procesar: {archivo}")
         return
 
-    # Lock para evitar procesos simultáneos
     while os.path.exists(lock_file):
         print("🔒 Otra automatización está corriendo. Esperando 5 segundos...")
         time.sleep(5)
@@ -85,11 +84,11 @@ def procesar_archivo(archivo):
         options = Options()
         options.add_argument(f"--user-data-dir={profile_path}")
         options.add_argument("--window-size=400,400")
+        options.add_argument("--headless=new")  # ✅ MODO INVISIBLE
 
         service = Service(ChromeDriverManager().install())
         driver = webdriver.Chrome(service=service, options=options)
         driver.get("https://web.whatsapp.com")
-        driver.minimize_window()
 
         wait = WebDriverWait(driver, 60)
 
@@ -145,10 +144,6 @@ def procesar_archivo(archivo):
             print("🔓 Lock liberado. Puede iniciar otra instancia.")
 
 # 👀 Manejador de eventos: observa archivos nuevos
-import os
-from watchdog.events import FileSystemEventHandler
-import time
-
 class WatcherHandler(FileSystemEventHandler):
     def on_created(self, event):
         if event.is_directory:
@@ -156,11 +151,10 @@ class WatcherHandler(FileSystemEventHandler):
 
         nombre_archivo = os.path.basename(event.src_path)
 
-        # Verifica que sea un .txt y que comience con "msg"
+        # ✅ Verifica nombre y extensión
         if not (nombre_archivo.endswith(".txt") and nombre_archivo.startswith("msg")):
             return
 
-        # Espera a que termine de descargarse
         time.sleep(0.5)
 
         if not os.path.exists(event.src_path):
@@ -175,12 +169,8 @@ class WatcherHandler(FileSystemEventHandler):
             if len(lineas) == 3 and all(lineas):
                 print("✅ Formato válido. Procesando...")
                 procesar_archivo(event.src_path)
-            else:
-                pass
-
         except Exception as e:
             print(f"❌ Error leyendo el archivo: {e}")
-
 
 # 🏁 Punto de entrada
 if __name__ == "__main__":
