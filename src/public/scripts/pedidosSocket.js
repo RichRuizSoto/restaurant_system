@@ -17,26 +17,26 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   //Asegura que aparecezca en tiempo real el pedido recien creado
-socket.on('nuevoPedido', (pedido) => {
-  console.log('[WS] 🆕 Nuevo pedido recibido:', pedido);
+  socket.on('nuevoPedido', (pedido) => {
+    console.log('[WS] 🆕 Nuevo pedido recibido:', pedido);
 
-  if (!pedido || !pedido.estado) {
-    console.error('⛔ Pedido inválido o sin estado:', pedido);
-    return;
-  }
+    if (!pedido || !pedido.estado) {
+      console.error('⛔ Pedido inválido o sin estado:', pedido);
+      return;
+    }
 
-  if (pedido.estado !== 'solicitado') {
-    console.warn('⛔ Pedido ignorado por estado no válido:', pedido.estado);
-    return;
-  }
+    if (pedido.estado !== 'solicitado') {
+      console.warn('⛔ Pedido ignorado por estado no válido:', pedido.estado);
+      return;
+    }
 
-  socket.emit('unirseASalaExclusiva', restauranteId, pedido.id);
+    socket.emit('unirseASalaExclusiva', restauranteId, pedido.id);
 
-  agregarPedidoAlDOM(pedido);
-  sonidoNotificacion.play();
-  notificarEstadoActualizado(pedido.id, pedido.estado, pedido.numero_orden);
-notificarEstadoTxt(pedido.id, pedido.telefono, pedido.estado, pedido.numero_orden);
-});
+    agregarPedidoAlDOM(pedido);
+    sonidoNotificacion.play();
+    notificarEstadoActualizado(pedido.id, pedido.estado, pedido.numero_orden);
+    notificarEstadoTxt(pedido.id, pedido.telefono, pedido.estado, pedido.numero_orden);
+  });
 
 
 
@@ -66,7 +66,7 @@ notificarEstadoTxt(pedido.id, pedido.telefono, pedido.estado, pedido.numero_orde
     }
 
     notificarEstadoActualizado(data.id, data.estado, data.numero_orden);
-notificarEstadoTxt(data.id, data.telefono, data.estado, data.numero_orden);
+    notificarEstadoTxt(data.id, data.telefono, data.estado, data.numero_orden);
   });
 
   // 🧭 Navegación entre secciones
@@ -80,6 +80,22 @@ notificarEstadoTxt(data.id, data.telefono, data.estado, data.numero_orden);
   cargarPedidosIniciales();
 
 });
+
+// Inicializar estado del toggle desde localStorage
+const toggleInput = document.getElementById('toggle-txt');
+const savedToggle = localStorage.getItem('toggleNotificacionesWA');
+
+if (savedToggle === 'on') {
+  toggleInput.checked = true;
+} else {
+  toggleInput.checked = false; // por defecto
+}
+
+// Guardar cambios de estado en localStorage
+toggleInput.addEventListener('change', () => {
+  localStorage.setItem('toggleNotificacionesWA', toggleInput.checked ? 'on' : 'off');
+});
+
 
 // Cargar pedidos existentes en estado 'solicitado' al iniciar
 async function cargarPedidosIniciales() {
@@ -242,14 +258,14 @@ function cerrarModal() {
 
 // 🔁 Actualizar estado de pedido
 function actualizarEstadoPedido(idPedido, nuevoEstado, restauranteId) {
-    fetch(`/api/pedidos/${idPedido}/estado`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'CSRF-Token': window.csrfToken  // 👈 Token incluido
-      },
-      body: JSON.stringify({ nuevoEstado, restauranteId })
-    })
+  fetch(`/api/pedidos/${idPedido}/estado`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'CSRF-Token': window.csrfToken  // 👈 Token incluido
+    },
+    body: JSON.stringify({ nuevoEstado, restauranteId })
+  })
     .then(async res => {
       if (!res.ok) {
         const text = await res.text();
@@ -263,7 +279,7 @@ function actualizarEstadoPedido(idPedido, nuevoEstado, restauranteId) {
 
 
 
-        
+
 
       }
     })
@@ -307,9 +323,14 @@ function cambiarSeccionActiva(seccion) {
 
 // Genera .txt
 function notificarEstadoTxt(id, telefono, estado, numero_orden) {
+  const toggle = document.getElementById('toggle-txt');
+  if (!toggle || !toggle.checked) {
+    console.log('🔕 Generación de archivo .txt desactivada.');
+    return;
+  }
+
   // Validación del número de teléfono
   if (!telefono || telefono.length < 8) {
-    alert("⚠️ El número de teléfono debe tener al menos 8 caracteres.");
     return;
   }
 
